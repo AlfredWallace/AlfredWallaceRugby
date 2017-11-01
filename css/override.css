@@ -1,0 +1,48 @@
+.navbar-toggle.awr-navbar-toggle {
+    margin-right: 0;
+}
+.form-group-lg .select2-container--bootstrap .select2-selection--single {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.awr-side .awr-rank {
+    padding-right: 0;
+}
+.awr-side .awr-rank > input {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.awr-side .awr-score {
+    padding: 0;
+}
+.awr-side .awr-score > input {
+    border-radius: 0;
+}
+
+.awr-side .awr-result {
+    padding-left: 0;
+}
+.awr-side .awr-result > input {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.awr-side input.form-control {
+    padding: 10px;
+}
+footer.navbar {
+    min-height: 67px;
+}
+@media (max-width: 767px) {
+    #about.well {
+        border-radius: 0;
+    }
+}
+@media (min-width: 768px) {
+    .tab-pane.awr-tab-pane {
+        display: block;
+    }
+}

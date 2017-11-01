@@ -1,0 +1,13 @@
+<tr ng-repeat="team in rankRowCtrl.orderedTeams"
+    ng-class="{success:rankRowCtrl.wentUp(team), danger:rankRowCtrl.wentDown(team), info:rankRowCtrl.isInvolved(team)}">
+    <td class="col-xs-3">
+        <strong>{{ rankRowCtrl.getCurrentPos(team) }}</strong>&nbsp;
+        <small>({{ rankRowCtrl.getPreviousPos(team) }})</small>
+    </td>
+    <td class="text-right"><span class="tLogo20x {{ team.abbr }}"></span></td>
+    <td><strong>{{ team.name }}</strong></td>
+    <td class="col-xs-4">
+        <strong>{{ rankRowCtrl.getCurrentRank(team) }}</strong>&nbsp;
+        <small>({{ rankRowCtrl.getPreviousRank(team) }})</small>
+    </td>
+</tr>

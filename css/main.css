@@ -1,0 +1,74 @@
+body {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.awr-xs-h1 {
+    line-height: 1.4em;
+    font-size: 35px;
+}
+.awr-step-display {
+    margin-top: 6px;
+    font-size: 24px;
+}
+.awr-match {
+    border-top: 1px solid rgb(231, 231, 231);
+    border-bottom: 1px solid rgb(231, 231, 231);
+    margin-bottom: 20px;
+    background-color: rgb(245, 245, 245);
+    padding-top: 10px;
+}
+.awr-match.awr-is-step {
+    background-color: rgb(222, 235, 255);
+}
+.awr-match .awr-title {
+    font-size: 28px;
+}
+.awr-match > div {
+    margin-bottom: 10px;
+}
+#rankings .awr-title {
+    font-size: 20px;
+}
+#rankings .awr-subtitle {
+    font-size: 15px;
+    color: gray;
+}
+.awr-side.awr-side-home {
+    margin-bottom: 10px;
+}
+
+.select2-team-table {
+    display: table;
+}
+.select2-team-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+.select2-team-cell.tLogo20x {
+    margin-right: 10px;
+}
+.awr-text-center-xs {
+    text-align: center;
+}
+.awr-paypal {
+    padding-top: 11px;
+}
+
+@media (min-width: 768px) {
+    body {
+        margin-top: 85px;
+        margin-bottom: 0;
+    }
+    .awr-match {
+        border-radius: 6px;
+        border-left: 1px solid rgb(231, 231, 231);
+        border-right: 1px solid rgb(231, 231, 231);
+    }
+    .awr-text-center-xs {
+        text-align: left;
+    }
+}

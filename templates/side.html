@@ -1,0 +1,21 @@
+<div class="row form-group-lg">
+    <div class="col-xs-12">
+        <select title="{{ sideCtrl.side.label }} team selector" ng-model="sideCtrl.side.teamId"
+                ng-change="sideCtrl.side.changeTeam(sideCtrl.teams)"
+                ng-options="team.id as team.name for team in sideCtrl.teams">
+            <option value=""></option>
+        </select>
+    </div>
+    <div class="col-xs-4 awr-rank">
+        <input type="number" step="0.01" class="form-control" title="{{ sideCtrl.side.label }} team rank"
+               ng-value="sideCtrl.side.roundedPts" ng-readonly="sideCtrl.side.hasRealTeam" placeholder="rank">
+    </div>
+    <div class="col-xs-4 awr-score">
+        <input type="number" step="1" class="form-control" title="{{ sideCtrl.side.label }} team score"
+               ng-model="sideCtrl.side.score" placeholder="score">
+    </div>
+    <div class="col-xs-4 awr-result">
+        <input type="text" class="form-control" title="{{ sideCtrl.side.label }} team result" readonly
+               ng-model="sideCtrl.side.roundedRes" placeholder="result">
+    </div>
+</div>

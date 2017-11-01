@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2011 - 2017 Arthur FALQUE PIERROTIN
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+-->
+<!--
+The webservice URL used in this page (http://cmsapi.pulselive.com/rugby/rankings/mru.json)
+is a webservice owned by World Rugby and used on their website : http://www.worldrugby.org/rankings/mru
+I found it thanks to Rawling, his websites, and his github projects listed below :
+https://rawling.github.io/wr-calc/
+https://github.com/rawling/wr-calc
+http://irbrankingcalculator.azurewebsites.net/
+-->
+<html lang="en" ng-app="alfredWallaceRugby">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description"
+          content="Tool to predict the changes that could happen in the World Rugby rankings
+          after an international game.">
+    <title>Rugby union world rankings calculator</title>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bower_components/select2/dist/css/select2.min.css" rel="stylesheet">
+    <link href="bower_components/select2-bootstrap-theme/dist/select2-bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/override.css" rel="stylesheet">
+    <link href="css/world-rugby.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="img/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="img/apple-touch-icon-60x60.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="img/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="img/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="img/apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="img/favicon-196x196.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="img/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="img/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="img/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="img/favicon-128.png" sizes="128x128" />
+    <meta name="application-name" content="&nbsp;"/>
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileImage" content="img/mstile-144x144.png" />
+    <meta name="msapplication-square70x70logo" content="img/mstile-70x70.png" />
+    <meta name="msapplication-square150x150logo" content="img/mstile-150x150.png" />
+    <meta name="msapplication-wide310x150logo" content="img/mstile-310x150.png" />
+    <meta name="msapplication-square310x310logo" content="img/mstile-310x310.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<body ng-cloak ng-controller="GlobalController as globCtrl">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-2 col-sm-2">
+                <a href="/">
+                    <img class="visible-xs-inline" alt="Alfred Wallace Rugby logo" src="img/awr-logo-2017-50.png">
+                    <img class="hidden-xs" alt="Alfred Wallace Rugby logo" src="img/awr-logo-2017-75.png">
+                </a>
+            </div>
+            <div class="col-xs-8 col-sm-8">
+                <a href="/">
+                    <span class="visible-xs-block text-center awr-xs-h1">AWR</span>
+                    <h1 class="hidden-xs text-center">Alfred Wallace Rugby
+                        <small class="hidden-xs hidden-sm hidden-md">- rugby union world ranking calculator</small>
+                    </h1>
+                </a>
+            </div>
+            <div class="col-xs-2 col-sm-8">
+                <button type="button" class="navbar-toggle awr-navbar-toggle collapsed visible-xs-inline-block"
+                        data-toggle="collapse" data-target="#main-navbar" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+        </div>
+        <div class="collapse navbar-collapse hidden-sm hidden-md hidden-lg" id="main-navbar" awr-navbar-directive>
+            <ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
+                <li role="presentation" ng-click="globCtrl.selectNavItem('calculator')"
+                    ng-class="{ active:globCtrl.isSelected('calculator') }">
+                    <a href="#calculator" aria-controls="calculator" role="tab" data-toggle="tab">Calculator</a>
+                </li>
+                <li role="presentation" ng-click="globCtrl.selectNavItem('rankings')"
+                    ng-class="{ active:globCtrl.isSelected('rankings') }">
+                    <a href="#rankings" aria-controls="rankings" role="tab" data-toggle="tab">Rankings</a>
+                </li>
+                <li role="presentation" ng-click="globCtrl.selectNavItem('about')"
+                    ng-class="{ active:globCtrl.isSelected('about') }">
+                    <a href="#about" aria-controls="about" role="tab" data-toggle="tab">About</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container" ng-swipe-left="globCtrl.swipeLeft()" ng-swipe-right="globCtrl.swipeRight()">
+    <div class="row tab-content">
+        <div role="tabpanel" class="tab-pane col-xs-12 col-lg-8 awr-tab-pane" id="calculator"
+             ng-class="{ active:globCtrl.isSelected('calculator') }">
+            <div class="row hidden-xs">
+                <div awr-calculate-directive class="col-xs-12 well well-sm" calculate-all="globCtrl.calculateAll()">
+                </div>
+            </div>
+            <div class="row" ng-repeat="match in globCtrl.matchList">
+                <div awr-match-directive match="match" class="col-xs-12"
+                     match-list="globCtrl.matchList" teams="globCtrl.teams"></div>
+            </div>
+            <div class="row hidden-xs">
+                <div awr-calculate-directive class="col-xs-12 well well-sm" calculate-all="globCtrl.calculateAll()">
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane col-xs-12 col-lg-4 awr-tab-pane" id="rankings"
+             ng-class="{ active:globCtrl.isSelected('rankings') }">
+            <div class="row">
+                <div awr-step-control-directive class="hidden-xs col-sm-5 col-sm-push-7 col-lg-12 col-lg-push-0"
+                     step="globCtrl.step" max-step="globCtrl.maxStep" to-int-factor="globCtrl.toIntFactor"
+                     ordered-teams="globCtrl.orderedTeams"></div>
+                <div class="awr-title text-center col-xs-12 col-sm-5 col-sm-pull-5 col-lg-12 col-lg-pull-0">
+                    World Rugby official rankings
+                </div>
+                <div class="awr-subtitle text-center col-xs-12 col-sm-2 col-sm-pull-5 col-lg-12 col-lg-pull-0">
+                    {{ globCtrl.millis | date:'dd MMMM yyyy' }}
+                </div>
+                <div class="col-xs-12">
+                    <table class="table table-hover table-condensed">
+                        <thead>
+                        <tr>
+                            <th colspan="2">Rank</th>
+                            <th>Team</th>
+                            <th>Points</th>
+                        </tr>
+                        </thead>
+                        <tbody awr-rankings-row-directive ordered-teams="globCtrl.orderedTeams" step="globCtrl.step">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane col-xs-12 awr-tab-pane well well-sm" id="about"
+             ng-class="{ active:globCtrl.isSelected('about') }">
+            <p>
+                Alfred Wallace Rugby is a calculator for the rugby union world rankings
+                based on the rules defined by World Rugby.
+            </p>
+            <hr>
+            <p>
+                The formula is : <br>
+                <br>
+                R1 : the first team (T1) rank<br>
+                R2 : the second team (T2) rank<br>
+                If T1 plays at home, then H = 3, else H = 0<br>
+                RD = R1 + H - R2<br>
+                If RD > 10, then RD = 10<br>
+                If RD < -10, then RD = -10<br>
+                <br>
+                S1 : the score of T1<br>
+                S2 : the score of T2<br>
+                SD = S1 - S2<br>
+                If SD > 0, then P = (-10 - RD) / 10<br>
+                If SD < 0, then P = (10 - RD) / 10<br>
+                If SD = 0, then P = -RD / 10<br>
+                <br>
+                If |SD| > 15, then P = 1.5 * P<br>
+                If it's a World Cup match, then P = 2 * P<br>
+                <br>
+                P is now the number of points that should be exchanged, add it to the rank of the winning team and
+                substract it from the rank of the losing one.
+            </p>
+            <hr>
+            <p>
+                The official rules are explained <a href="{{ globCtrl.rulesUrl }}" target="_blank">here</a>, or on the
+                <a href="{{ globCtrl.wikiEn }}" target="_blank">english</a> wikipedia page.
+                However, the formula is much easier to understand on the
+                <a href="{{ globCtrl.wikiFr }}" target="_blank">french</a>
+                or <a href="{{ globCtrl.wikiIt }}" target="_blank">italian</a> wikipedia pages.
+            </p>
+            <hr>
+            <p>
+                There can be some slight differences (0,01) between the results of my calculator and the official
+                updates on the World Rugby website. This is due to an arbitrary rounding or miscalculation
+                on their part. You can see in the very example they produce that they are making a mistake by stating
+                that Wales (76.92) and Scotland (76.36) exchanged 0.64 points and ending up having
+                Wales at 77.57 = 76.92 + 0.65 . Maybe someone will notice one day ;)
+            </p>
+            <div class="row hidden-xs"><div awr-about-directive class="col-xs-12"></div></div>
+        </div>
+    </div>
+</div>
+
+<footer class="navbar navbar-default visible-xs-block navbar-fixed-bottom">
+    <div class="container">
+        <div class="row">
+            <div awr-calculate-directive class="col-xs-12" ng-show="globCtrl.isSelected('calculator')"
+                 calculate-all="globCtrl.calculateAll()"></div>
+            <div awr-step-control-directive class="col-xs-12" ng-show="globCtrl.isSelected('rankings')"
+                 step="globCtrl.step" max-step="globCtrl.maxStep" to-int-factor="globCtrl.toIntFactor"
+                 ordered-teams="globCtrl.orderedTeams"></div>
+            <div awr-about-directive class="col-xs-12" ng-show="globCtrl.isSelected('about')"></div>
+        </div>
+    </div>
+</footer>
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/select2/dist/js/select2.full.min.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-touch/angular-touch.min.js"></script>
+
+<script src="js/app.module.js"></script>
+
+<script src="js/controllers/global.controller.js"></script>
+
+<script src="js/directives/awr-navbar.directive.js"></script>
+<script src="js/directives/awr-step-control.directive.js"></script>
+<script src="js/directives/awr-match.directive.js"></script>
+<script src="js/directives/awr-side.directive.js"></script>
+<script src="js/directives/awr-rankings-row.directive.js"></script>
+<script src="js/directives/awr-calculate.directive.js"></script>
+<script src="js/directives/awr-about.directive.js"></script>
+
+<script src="js/services/world-rugby-get.factory.js"></script>
+<script src="js/services/math-utils.factory.js"></script>
+<script src="js/services/teams-ordering.factory.js"></script>
+<script src="js/services/match.factory.js"></script>
+<script src="js/services/side.factory.js"></script>
+<script src="js/services/team.factory.js"></script>
+<script src="js/services/get-team.factory.js"></script>
+<script src="js/services/matches-ordering.factory.js"></script>
+
+<!-- GOOGLE ANALYTICS -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-35564654-1', 'auto');
+    ga('send', 'pageview');
+</script>
+</body>
+</html>

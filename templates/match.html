@@ -1,0 +1,74 @@
+<div class="awr-match row" ng-class="{ 'awr-is-step':matchCtrl.match.isStep }">
+    <div class="col-xs-12 col-sm-2">
+        <div class="row">
+            <div class="col-xs-6 col-sm-12 awr-title awr-text-center-xs">Match {{ matchCtrl.match.number }}</div>
+            <div class="col-xs-6 col-sm-12 awr-title awr-text-center-xs"
+                 ng-show="matchCtrl.match.isStep">Step {{ matchCtrl.match.step }}</div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-10">
+        <div class="row">
+            <div class="awr-side awr-side-home col-xs-12 col-sm-6"
+                 awr-side-directive side="matchCtrl.match.home" teams="matchCtrl.teams"></div>
+            <div class="awr-side awr-side-away col-xs-12 col-sm-6"
+                 awr-side-directive side="matchCtrl.match.away" teams="matchCtrl.teams"></div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-3">
+        <div class="row">
+            <div class="col-xs-4 col-sm-12 awr-text-center-xs">
+                <label class="checkbox-inline">
+                    <input type="checkbox" title="Neutral ground"
+                           ng-model="matchCtrl.match.neutralGround"> Neutral ground
+                </label>
+            </div>
+            <div class="col-xs-4 col-sm-12 awr-text-center-xs">
+                <label class="checkbox-inline">
+                    <input type="checkbox" title="World Cup" ng-model="matchCtrl.match.worldCup"> World Cup
+                </label>
+            </div>
+            <div class="col-xs-4 col-sm-12 awr-text-center-xs">
+                <label class="checkbox-inline">
+                    <input type="checkbox" title="Ignore" ng-model="matchCtrl.match.ignore"> Ignore
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-9">
+        <div class="btn-group btn-group-justified" role="group">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-lg btn-danger awr-btn-delete"
+                        ng-disabled="matchCtrl.matchList.length === 1">
+                    <span class="glyphicon glyphicon-minus"></span>
+                    <span class="sr-only">Delete match</span>
+                </button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-lg btn-warning awr-btn-reset">
+                    <span class="glyphicon glyphicon-erase"></span>
+                    <span class="sr-only">Reset match</span>
+                </button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-lg btn-default awr-btn-move-up"
+                        ng-disabled="matchCtrl.match.pos === 0">
+                    <span class="glyphicon glyphicon-triangle-top"></span>
+                    <span class="sr-only">Move match up</span>
+                </button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-lg btn-default awr-btn-move-down"
+                        ng-disabled="matchCtrl.match.pos === matchCtrl.matchList.length - 1">
+                    <span class="glyphicon glyphicon-triangle-bottom"></span>
+                    <span class="sr-only">Move match down</span>
+                </button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-lg btn-info awr-btn-add">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span class="sr-only">Add match below</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
