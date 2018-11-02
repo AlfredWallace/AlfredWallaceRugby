@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  source:
+    build: ./docker/source
+    container_name: awr_vue
+    working_dir: /code
+    expose:
+      - 9000
+    restart: always
+
+  web:
+    build: ./docker/web
+    container_name: awr_nginx
+    depends_on:
+      - source
+    ports:
+      - 80:80
+    restart: always
