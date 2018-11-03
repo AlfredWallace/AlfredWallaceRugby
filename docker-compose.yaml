@@ -4,10 +4,15 @@ services:
   source:
     build: ./docker/source
     container_name: awr_vue
-    working_dir: /code
+    working_dir: /var/www/awr
     expose:
       - 9000
+    ports:
+      - 8080:8080
+      - 8000:8000
     restart: always
+    volumes:
+      - ./front:/var/www/awr
 
   web:
     build: ./docker/web
@@ -17,3 +22,5 @@ services:
     ports:
       - 80:80
     restart: always
+    volumes:
+      - ./front:/var/www/awr
