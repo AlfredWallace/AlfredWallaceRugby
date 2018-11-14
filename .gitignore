@@ -2,3 +2,4 @@
 .DS_Store
 front/node_modules/
 front/dist/
+deploy.sh
