@@ -12,7 +12,12 @@ new Vue({
   data: {
     xPosInit: null,
     xPos: null,
-    swipeThreshold: 30
+    swipeThreshold: 30,
+    routesOrders: [
+      'home',
+      'rankings',
+      'about'
+    ]
   },
   mounted: function () {
     let vm = this
@@ -24,10 +29,17 @@ new Vue({
       vm.xPos = event.touches[0].clientX
     })
     vm.$el.addEventListener('touchend', function () {
-      console.log('xPosInit', vm.xPosInit)
-      console.log('xPos', vm.xPos)
-      console.log('abs(xPosInit - xPos)', Math.abs(vm.xPosInit - vm.xPos))
-      console.log('abs(xPosInit - xPos) > 30 ?', Math.abs(vm.xPosInit - vm.xPos) > vm.swipeThreshold)
+      let posDiff = vm.xPos - vm.xPosInit
+
+      if (Math.abs(posDiff) > vm.swipeThreshold) {
+        let currentRouteIndex = vm.routesOrders.indexOf(vm.$route.name)
+
+        if (currentRouteIndex > -1) {
+          let nextRouteIndex = (currentRouteIndex - Math.sign(posDiff) + 3) % 3
+
+          vm.$router.push({ name: vm.routesOrders[nextRouteIndex] })
+        }
+      }
     })
   }
 }).$mount('#app')
