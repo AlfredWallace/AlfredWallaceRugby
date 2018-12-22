@@ -11,8 +11,11 @@ new Vue({
   render: h => h(App),
   data: {
     xPosInit: null,
+    yPosInit: null,
     xPos: null,
-    swipeThreshold: 30,
+    yPos: null,
+    swipeThreshold: 100,
+    verticalSwipeThreshold: 100,
     routesOrders: [
       'home',
       'rankings',
@@ -24,14 +27,16 @@ new Vue({
 
     vm.$el.addEventListener('touchstart', function (event) {
       vm.xPosInit = vm.xPos = event.touches[0].clientX
+      vm.yPosInit = vm.yPos = event.touches[0].clientY
     })
     vm.$el.addEventListener('touchmove', function () {
       vm.xPos = event.touches[0].clientX
+      vm.yPos = event.touches[0].clientY
     })
     vm.$el.addEventListener('touchend', function () {
       let posDiff = vm.xPos - vm.xPosInit
 
-      if (Math.abs(posDiff) > vm.swipeThreshold) {
+      if (Math.abs(posDiff) > vm.swipeThreshold && Math.abs(vm.yPos - vm.yPosInit) <= vm.verticalSwipeThreshold) {
         let currentRouteIndex = vm.routesOrders.indexOf(vm.$route.name)
 
         if (currentRouteIndex > -1) {
