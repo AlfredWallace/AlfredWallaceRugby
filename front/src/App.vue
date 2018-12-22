@@ -1,14 +1,79 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/rankings">Rankings</router-link> |
+      <router-link to="/">Home</router-link>
+      |
+      <router-link to="/rankings">Rankings</router-link>
+      |
       <router-link to="/about">About</router-link>
     </div>
-    <router-view/>
-    <router-view name="footer"/>
+    <transition :name="bodyTransition">
+      <router-view/>
+    </transition>
+    <transition name="fade">
+      <router-view name="footer"/>
+    </transition>
   </div>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      xPosInit: null,
+      yPosInit: null,
+      xPos: null,
+      yPos: null,
+      swipeThreshold: 100,
+      verticalSwipeThreshold: 100,
+      routesOrders: [
+        'home',
+        'rankings',
+        'about'
+      ],
+      bodyTransition: null
+    }
+  },
+  mounted: function () {
+    let vm = this
+
+    vm.$el.addEventListener('touchstart', function (event) {
+      vm.xPosInit = vm.xPos = event.touches[0].clientX
+      vm.yPosInit = vm.yPos = event.touches[0].clientY
+    })
+    vm.$el.addEventListener('touchmove', function () {
+      vm.xPos = event.touches[0].clientX
+      vm.yPos = event.touches[0].clientY
+    })
+    vm.$el.addEventListener('touchend', function () {
+      let posDiff = vm.xPos - vm.xPosInit
+
+      if (Math.abs(posDiff) > vm.swipeThreshold && Math.abs(vm.yPos - vm.yPosInit) <= vm.verticalSwipeThreshold) {
+        let currentRouteIndex = vm.routesOrders.indexOf(vm.$route.name)
+
+        if (currentRouteIndex > -1) {
+          let nextRouteIndex = currentRouteIndex - Math.sign(posDiff)
+
+          if (nextRouteIndex >= 0 && nextRouteIndex < vm.routesOrders.length) {
+            vm.$router.push({ name: vm.routesOrders[nextRouteIndex] })
+          }
+        }
+      }
+    })
+  },
+  watch: {
+    '$route' (to, from) {
+      if (from.name === 'home') {
+        this.bodyTransition = to.name === 'rankings' ? 'swipe-left' : 'fade'
+      } else if (from.name === 'rankings') {
+        this.bodyTransition = to.name === 'home' ? 'swipe-right' : 'swipe-left'
+      } else if (from.name === 'about') {
+        this.bodyTransition = to.name === 'home' ? 'fade' : 'swipe-right'
+      }
+    }
+  }
+}
+</script>
 
 <style lang="scss">
   @import '../src/assets/css/normalize.css';
@@ -18,10 +83,36 @@
     bottom: 0;
     width: 100%;
     height: 10%;
-    background-color: white;
+    background-color: darkseagreen;
   }
 
-  button {
+  .swipe-left-enter-active, .swipe-left-leave-active, .swipe-right-enter-active, .swipe-right-leave-active {
+    transition: all .5s ease;
+    position: absolute;
+  }
 
+  .swipe-left-enter, .swipe-right-leave-to {
+    transform: translateX(100%);
+  }
+
+  .swipe-left-leave-to, .swipe-right-enter {
+    transform: translateX(-100%);
+  }
+
+  .swipe-left-leave, .swipe-left-enter-to, .swipe-right-leave, .swipe-right-enter-to {
+    transform: translateX(0px);
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s ease;
+    position: absolute;
+  }
+
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+
+  .fade-leave, .fade-enter-to {
+    opacity: 1;
   }
 </style>
