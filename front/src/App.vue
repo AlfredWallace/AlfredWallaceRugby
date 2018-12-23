@@ -7,10 +7,10 @@
       |
       <router-link to="/about">About</router-link>
     </div>
-    <transition :name="bodyTransition">
+    <transition :name="bodyTransitionName" :mode="bodyTransitionMode">
       <router-view/>
     </transition>
-    <transition name="fade">
+    <transition name="fade" mode="out-in">
       <router-view name="footer"/>
     </transition>
   </div>
@@ -26,12 +26,45 @@ export default {
       yPos: null,
       swipeThreshold: 100,
       verticalSwipeThreshold: 100,
-      routesOrders: [
+      routesOrder: [
         'home',
         'rankings',
         'about'
       ],
-      bodyTransition: null
+      bodyTransitions: {
+        home: {
+          rankings: {
+            name: 'swipe-left',
+            mode: null
+          },
+          about: {
+            name: 'fade',
+            mode: 'out-in'
+          }
+        },
+        rankings: {
+          home: {
+            name: 'swipe-right',
+            mode: null
+          },
+          about: {
+            name: 'swipe-left',
+            mode: null
+          }
+        },
+        about: {
+          home: {
+            name: 'fade',
+            mode: 'out-in'
+          },
+          rankings: {
+            name: 'swipe-right',
+            mode: null
+          }
+        }
+      },
+      bodyTransitionName: null,
+      bodyTransitionMode: null
     }
   },
   mounted: function () {
@@ -49,13 +82,13 @@ export default {
       let posDiff = vm.xPos - vm.xPosInit
 
       if (Math.abs(posDiff) > vm.swipeThreshold && Math.abs(vm.yPos - vm.yPosInit) <= vm.verticalSwipeThreshold) {
-        let currentRouteIndex = vm.routesOrders.indexOf(vm.$route.name)
+        let currentRouteIndex = vm.routesOrder.indexOf(vm.$route.name)
 
         if (currentRouteIndex > -1) {
           let nextRouteIndex = currentRouteIndex - Math.sign(posDiff)
 
-          if (nextRouteIndex >= 0 && nextRouteIndex < vm.routesOrders.length) {
-            vm.$router.push({ name: vm.routesOrders[nextRouteIndex] })
+          if (nextRouteIndex >= 0 && nextRouteIndex < vm.routesOrder.length) {
+            vm.$router.push({ name: vm.routesOrder[nextRouteIndex] })
           }
         }
       }
@@ -63,12 +96,10 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      if (from.name === 'home') {
-        this.bodyTransition = to.name === 'rankings' ? 'swipe-left' : 'fade'
-      } else if (from.name === 'rankings') {
-        this.bodyTransition = to.name === 'home' ? 'swipe-right' : 'swipe-left'
-      } else if (from.name === 'about') {
-        this.bodyTransition = to.name === 'home' ? 'fade' : 'swipe-right'
+      if (from.matched.length > 0 && to.matched.length > 0) {
+        let bodyTransition = this.bodyTransitions[from.name][to.name]
+        this.bodyTransitionName = bodyTransition.name
+        this.bodyTransitionMode = bodyTransition.mode
       }
     }
   }
@@ -87,7 +118,7 @@ export default {
   }
 
   .swipe-left-enter-active, .swipe-left-leave-active, .swipe-right-enter-active, .swipe-right-leave-active {
-    transition: all .5s ease;
+    transition: all .3s ease;
     position: absolute;
   }
 
@@ -104,7 +135,7 @@ export default {
   }
 
   .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s ease;
+    transition: opacity .3s ease;
     position: absolute;
   }
 
