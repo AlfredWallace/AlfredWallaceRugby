@@ -1,9 +1,17 @@
 <template>
   <div id="app">
     <header id="nav">
-      <router-link :class="navLinkClasses.home" to="/">Calculator</router-link>
-      <router-link :class="navLinkClasses.rankings" to="/rankings">Rankings</router-link>
-      <router-link :class="navLinkClasses.about" to="/about">About</router-link>
+      <router-link :class="navLinkClasses.home" to="/">
+        <font-awesome-icon icon="calculator" v-if="$route.name !== 'home'"/>
+        <span v-if="$route.name === 'home'">Calculator</span></router-link>
+      <router-link :class="navLinkClasses.rankings" to="/rankings">
+        <font-awesome-icon icon="list-ol" v-if="$route.name !== 'rankings'"/>
+        <span v-if="$route.name === 'rankings'">Rankings</span>
+      </router-link>
+      <router-link :class="navLinkClasses.about" to="/about">
+        <font-awesome-icon icon="info-circle" v-if="$route.name !== 'about'"/>
+        <span v-if="$route.name === 'about'">About</span>
+      </router-link>
     </header>
     <transition :name="bodyTransition.name" :mode="bodyTransition.mode">
       <router-view/>
@@ -75,7 +83,7 @@ export default {
   },
   methods: {
     checkPath (path) {
-      return window.location.pathname.replace(/\//g,'') === path ? 'selected' : null
+      return window.location.pathname.replace(/\//g, '') === path ? 'selected' : null
     }
   },
   mounted: function () {
@@ -133,11 +141,12 @@ export default {
     justify-content: space-around;
 
     a {
+      flex-grow: 1;
       background-color: beige;
       transition: all .3s ease;
 
       &.selected {
-        flex-grow: 1;
+        flex-grow: 2;
       }
     }
   }

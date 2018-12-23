@@ -2,6 +2,15 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCalculator, faListOl, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faCalculator)
+library.add(faListOl)
+library.add(faInfoCircle)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
 
