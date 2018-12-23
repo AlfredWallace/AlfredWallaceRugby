@@ -1,13 +1,11 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>
-      |
-      <router-link to="/rankings">Rankings</router-link>
-      |
-      <router-link to="/about">About</router-link>
-    </div>
-    <transition :name="bodyTransitionName" :mode="bodyTransitionMode">
+    <header id="nav">
+      <router-link :class="navLinkClasses.home" to="/">Calculator</router-link>
+      <router-link :class="navLinkClasses.rankings" to="/rankings">Rankings</router-link>
+      <router-link :class="navLinkClasses.about" to="/about">About</router-link>
+    </header>
+    <transition :name="bodyTransition.name" :mode="bodyTransition.mode">
       <router-view/>
     </transition>
     <transition name="fade" mode="out-in">
@@ -18,6 +16,7 @@
 
 <script>
 export default {
+  name: 'app',
   data () {
     return {
       xPosInit: null,
@@ -31,6 +30,10 @@ export default {
         'rankings',
         'about'
       ],
+      bodyTransition: {
+        name: null,
+        mode: null
+      },
       bodyTransitions: {
         home: {
           rankings: {
@@ -63,8 +66,16 @@ export default {
           }
         }
       },
-      bodyTransitionName: null,
-      bodyTransitionMode: null
+      navLinkClasses: {
+        home: this.checkPath('home'),
+        rankings: this.checkPath('rankings'),
+        about: this.checkPath('about')
+      }
+    }
+  },
+  methods: {
+    checkPath (path) {
+      return window.location.pathname.replace(/\//g,'') === path ? 'selected' : null
     }
   },
   mounted: function () {
@@ -96,10 +107,15 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      if (from.matched.length > 0 && to.matched.length > 0) {
-        let bodyTransition = this.bodyTransitions[from.name][to.name]
-        this.bodyTransitionName = bodyTransition.name
-        this.bodyTransitionMode = bodyTransition.mode
+      if (to.matched.length > 0) {
+        this.navLinkClasses = {
+          home: to.name === 'home' ? 'selected' : null,
+          rankings: to.name === 'rankings' ? 'selected' : null,
+          about: to.name === 'about' ? 'selected' : null
+        }
+        if (from.matched.length > 0) {
+          this.bodyTransition = this.bodyTransitions[from.name][to.name]
+        }
       }
     }
   }
@@ -108,6 +124,23 @@ export default {
 
 <style lang="scss">
   @import '../src/assets/css/normalize.css';
+
+  header {
+    width: 100%;
+    height: 10%;
+    background-color: lightskyblue;
+    display: flex;
+    justify-content: space-around;
+
+    a {
+      background-color: beige;
+      transition: all .3s ease;
+
+      &.selected {
+        flex-grow: 1;
+      }
+    }
+  }
 
   footer {
     position: fixed;
