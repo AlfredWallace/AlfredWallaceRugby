@@ -1,5 +1,5 @@
 <template>
-    <div class="rankings">
+    <div class="rankings main-content">
       <h1>Rankings</h1>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium vulputate sapien nec sagittis.
       Facilisis gravida neque convallis a cras semper auctor neque. Consectetur purus ut faucibus pulvinar. Cursus euismod quis viverra nibh cras pulvinar mattis nunc

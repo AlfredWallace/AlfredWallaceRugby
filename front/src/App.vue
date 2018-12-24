@@ -1,16 +1,14 @@
 <template>
   <div id="app">
     <header id="nav">
-      <router-link :class="navLinkClasses.home" to="/">
-        <font-awesome-icon icon="calculator" v-if="$route.name !== 'home'"/>
-        <span v-if="$route.name === 'home'">Calculator</span></router-link>
-      <router-link :class="navLinkClasses.rankings" to="/rankings">
-        <font-awesome-icon icon="list-ol" v-if="$route.name !== 'rankings'"/>
-        <span v-if="$route.name === 'rankings'">Rankings</span>
+      <router-link to="/">
+        <font-awesome-icon icon="calculator" :class="getNavLinkFaClasses('')"/>
       </router-link>
-      <router-link :class="navLinkClasses.about" to="/about">
-        <font-awesome-icon icon="info-circle" v-if="$route.name !== 'about'"/>
-        <span v-if="$route.name === 'about'">About</span>
+      <router-link to="/rankings">
+        <font-awesome-icon icon="list-ol" :class="getNavLinkFaClasses('rankings')"/>
+      </router-link>
+      <router-link to="/about">
+        <font-awesome-icon icon="info-circle" :class="getNavLinkFaClasses('about')"/>
       </router-link>
     </header>
     <transition :name="bodyTransition.name" :mode="bodyTransition.mode">
@@ -73,17 +71,12 @@ export default {
             mode: null
           }
         }
-      },
-      navLinkClasses: {
-        home: this.checkPath('home'),
-        rankings: this.checkPath('rankings'),
-        about: this.checkPath('about')
       }
     }
   },
   methods: {
-    checkPath (path) {
-      return window.location.pathname.replace(/\//g, '') === path ? 'selected' : null
+    getNavLinkFaClasses (path) {
+      return window.location.pathname.replace(/\//g, '') === path ? 'fa-2x' : 'fa-lg'
     }
   },
   mounted: function () {
@@ -115,15 +108,8 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      if (to.matched.length > 0) {
-        this.navLinkClasses = {
-          home: to.name === 'home' ? 'selected' : null,
-          rankings: to.name === 'rankings' ? 'selected' : null,
-          about: to.name === 'about' ? 'selected' : null
-        }
-        if (from.matched.length > 0) {
-          this.bodyTransition = this.bodyTransitions[from.name][to.name]
-        }
+      if (to.matched.length > 0 && from.matched.length > 0) {
+        this.bodyTransition = this.bodyTransitions[from.name][to.name]
       }
     }
   }
@@ -133,35 +119,46 @@ export default {
 <style lang="scss">
   @import '../src/assets/css/normalize.css';
 
+  $headerHeight: 7vh;
+  $transitionSpeed: .3s;
+
   header {
-    width: 100%;
-    height: 10%;
-    background-color: lightskyblue;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: $headerHeight;
     display: flex;
     justify-content: space-around;
+    align-items: center;
+    background-color: red;
 
     a {
-      flex-grow: 1;
-      background-color: beige;
-      transition: all .3s ease;
-
-      &.selected {
-        flex-grow: 2;
-      }
+      text-align: center;
+      color: white;
+      background-color: blue;
     }
   }
 
   footer {
     position: fixed;
     bottom: 0;
-    width: 100%;
-    height: 10%;
+    left: 0;
+    width: 100vw;
+    height: 10vh;
     background-color: darkseagreen;
   }
 
-  .swipe-left-enter-active, .swipe-left-leave-active, .swipe-right-enter-active, .swipe-right-leave-active {
-    transition: all .3s ease;
+  body {
+    margin-top: $headerHeight;
+  }
+
+  .main-content {
     position: absolute;
+  }
+
+  .swipe-left-enter-active, .swipe-left-leave-active, .swipe-right-enter-active, .swipe-right-leave-active {
+    transition: all $transitionSpeed ease;
   }
 
   .swipe-left-enter, .swipe-right-leave-to {
@@ -177,8 +174,7 @@ export default {
   }
 
   .fade-enter-active, .fade-leave-active {
-    transition: opacity .3s ease;
-    position: absolute;
+    transition: opacity $transitionSpeed ease;
   }
 
   .fade-enter, .fade-leave-to {
