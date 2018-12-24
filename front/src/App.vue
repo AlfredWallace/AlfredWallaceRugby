@@ -118,43 +118,60 @@ export default {
 
 <style lang="scss">
   @import '../src/assets/css/normalize.css';
+  @import '../src/assets/css/globals.scss';
 
-  $headerHeight: 7vh;
-  $transitionSpeed: .3s;
+  @mixin vertical-box-shadow($direction) {
+    $y: 2px;
+
+    @if $direction == 'up' {
+      $y: -2px;
+    }
+
+    -webkit-box-shadow: 0px $y 5px 0px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px $y 5px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px $y 5px 0px rgba(0, 0, 0, 0.3);
+  }
+
+  @mixin sticky($position, $height) {
+    position: fixed;
+    left: 0;
+    z-index: 1;
+    width: 100vw;
+    height: $height;
+    #{$position}: 0;
+  }
+
+  html {
+    background-color: $background-color;
+  }
 
   header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: $headerHeight;
+    @include sticky('top', $header-height);
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: lightskyblue;
+    background-color: $background-color;
+    @include vertical-box-shadow('down');
 
     a {
       text-align: center;
-      background-color: beige;
+      background-color: $primary-color;
       flex-grow: 1;
+    }
 
-      svg {
-        transition: all $transitionSpeed ease;
-      }
+    svg {
+      transition: all $transition-speed ease;
     }
   }
 
-  footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100vw;
-    height: 10vh;
-    background-color: darkseagreen;
+  body {
+    margin-top: $header-height;
   }
 
-  body {
-    margin-top: $headerHeight;
+  footer {
+    @include sticky('bottom', 10vh);
+    background-color: $background-color;
+    @include vertical-box-shadow('up');
   }
 
   .main-content {
@@ -162,7 +179,7 @@ export default {
   }
 
   .swipe-left-enter-active, .swipe-left-leave-active, .swipe-right-enter-active, .swipe-right-leave-active {
-    transition: all $transitionSpeed ease;
+    transition: all $transition-speed ease;
   }
 
   .swipe-left-enter, .swipe-right-leave-to {
@@ -178,7 +195,7 @@ export default {
   }
 
   .fade-enter-active, .fade-leave-active {
-    transition: opacity $transitionSpeed ease;
+    transition: opacity $transition-speed ease;
   }
 
   .fade-enter, .fade-leave-to {
