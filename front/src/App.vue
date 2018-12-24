@@ -131,12 +131,16 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: red;
+    background-color: lightskyblue;
 
     a {
       text-align: center;
-      color: white;
-      background-color: blue;
+      background-color: beige;
+      flex-grow: 1;
+
+      svg {
+        transition: all $transitionSpeed ease;
+      }
     }
   }
 
