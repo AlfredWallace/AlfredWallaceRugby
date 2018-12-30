@@ -1,25 +1,25 @@
 <template>
   <div id="app">
-    <header :class="{ 'left-handed': isLeftHanded}">
-      <span class="hand-switch" :class="{ 'left-handed': isLeftHanded}">
-        switch to {{ isLeftHanded ? 'right-handed' : 'left-handed' }}
+    <transition-group tag="header" :class="{ 'left-handed': isLeftHanded}" name="flip-list">
+      <span class="hand-switch" :class="{ 'left-handed': isLeftHanded}" :key="0">
+        <a href="#" @click="isLeftHanded = !isLeftHanded">switch to {{ isLeftHanded ? 'right-handed' : 'left-handed' }}</a>
       </span>
-      <span class="nav-item">
+      <span class="nav-item" :key="1">
         <router-link to="/">
           <font-awesome-icon icon="calculator" :class="getNavLinkFaClasses('')"/>
         </router-link>
       </span>
-      <span class="nav-item">
+      <span class="nav-item" :key="2">
         <router-link to="/rankings">
           <font-awesome-icon icon="list-ol" :class="getNavLinkFaClasses('rankings')"/>
         </router-link>
       </span>
-      <span class="nav-item">
+      <span class="nav-item" :key="3">
         <router-link to="/about">
           <font-awesome-icon icon="info-circle" :class="getNavLinkFaClasses('about')"/>
         </router-link>
       </span>
-    </header>
+      </transition-group>
     <transition :name="bodyTransition.name" :mode="bodyTransition.mode">
       <router-view/>
     </transition>
@@ -160,5 +160,9 @@ export default {
 
   .fade-leave, .fade-enter-to {
     opacity: 1;
+  }
+
+  .flip-list-move {
+    transition: transform $transition-speed ease;
   }
 </style>
