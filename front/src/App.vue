@@ -1,17 +1,20 @@
 <template>
   <div id="app">
-    <header id="nav">
-      <span>
+    <header :class="{ 'left-handed': isLeftHanded}">
+      <span class="hand-switch" :class="{ 'left-handed': isLeftHanded}">
+        switch to {{ isLeftHanded ? 'right-handed' : 'left-handed' }}
+      </span>
+      <span class="nav-item">
         <router-link to="/">
           <font-awesome-icon icon="calculator" :class="getNavLinkFaClasses('')"/>
         </router-link>
       </span>
-      <span>
+      <span class="nav-item">
         <router-link to="/rankings">
           <font-awesome-icon icon="list-ol" :class="getNavLinkFaClasses('rankings')"/>
         </router-link>
       </span>
-      <span>
+      <span class="nav-item">
         <router-link to="/about">
           <font-awesome-icon icon="info-circle" :class="getNavLinkFaClasses('about')"/>
         </router-link>
@@ -37,6 +40,7 @@ export default {
       yPos: null,
       swipeThreshold: 100,
       verticalSwipeThreshold: 100,
+      isLeftHanded: false,
       routesOrder: [
         'home',
         'rankings',

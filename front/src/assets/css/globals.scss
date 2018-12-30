@@ -2,7 +2,7 @@ $background-color: #fff2de;
 $primary-color: #5a7d7f;
 $primary-color-hover: #5a7d7f;
 
-$header-height: 10vh;
+$sticky-height: 10vh;
 $transition-speed: .3s;
 
 @mixin vertical-box-shadow($direction) {
@@ -28,10 +28,14 @@ $transition-speed: .3s;
 
 html {
   background-color: $background-color;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-variant: normal;
 }
 
 header {
-  @include sticky('top', $header-height);
+  @include sticky('top', $sticky-height);
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -41,6 +45,14 @@ header {
   & > * {
     text-align: center;
     flex-basis: 33%;
+    order: 1;
+  }
+
+  & > .hand-switch {
+    display: none;
+    margin: 0 auto 0 2%;
+    white-space: nowrap;
+    order: 0;
   }
 
   svg {
@@ -49,15 +61,20 @@ header {
 
   a {
     color: $primary-color;
+
+    &:hover, &:visited, &:focus {
+      color: $primary-color;
+      text-decoration: none;
+    }
   }
 }
 
 body {
-  margin-top: $header-height;
+  margin-top: $sticky-height;
 }
 
 footer {
-  @include sticky('bottom', 10vh);
+  @include sticky('bottom', $sticky-height);
   background-color: $background-color;
   @include vertical-box-shadow('up');
 }
@@ -66,5 +83,39 @@ button {
   background-color: $primary-color;
   border: 0;
   padding: 2%;
+  cursor: pointer;
   @include vertical-box-shadow('down');
+}
+
+@media screen and (orientation: landscape) {
+  $sticky-height-landscape: $sticky-height * 1.2;
+
+  header, footer {
+    height: $sticky-height-landscape;
+  }
+
+  header {
+    justify-content: flex-end;
+
+    &.left-handed {
+      justify-content: flex-start;
+    }
+
+    & > * {
+      flex-basis: 15%;
+    }
+
+    & > .hand-switch {
+      display: block;
+
+      &.left-handed {
+        order: 2;
+        margin: 0 2% 0 auto;
+      }
+    }
+  }
+
+  body {
+    margin-top: $sticky-height-landscape;
+  }
 }
