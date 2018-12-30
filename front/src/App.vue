@@ -1,15 +1,21 @@
 <template>
   <div id="app">
     <header id="nav">
-      <router-link to="/">
-        <font-awesome-icon icon="calculator" :class="getNavLinkFaClasses('')"/>
-      </router-link>
-      <router-link to="/rankings">
-        <font-awesome-icon icon="list-ol" :class="getNavLinkFaClasses('rankings')"/>
-      </router-link>
-      <router-link to="/about">
-        <font-awesome-icon icon="info-circle" :class="getNavLinkFaClasses('about')"/>
-      </router-link>
+      <span>
+        <router-link to="/">
+          <font-awesome-icon icon="calculator" :class="getNavLinkFaClasses('')"/>
+        </router-link>
+      </span>
+      <span>
+        <router-link to="/rankings">
+          <font-awesome-icon icon="list-ol" :class="getNavLinkFaClasses('rankings')"/>
+        </router-link>
+      </span>
+      <span>
+        <router-link to="/about">
+          <font-awesome-icon icon="info-circle" :class="getNavLinkFaClasses('about')"/>
+        </router-link>
+      </span>
     </header>
     <transition :name="bodyTransition.name" :mode="bodyTransition.mode">
       <router-view/>
@@ -119,60 +125,6 @@ export default {
 <style lang="scss">
   @import '../src/assets/css/normalize.css';
   @import '../src/assets/css/globals.scss';
-
-  @mixin vertical-box-shadow($direction) {
-    $y: 2px;
-
-    @if $direction == 'up' {
-      $y: -2px;
-    }
-
-    -webkit-box-shadow: 0px $y 5px 0px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 0px $y 5px 0px rgba(0, 0, 0, 0.3);
-    box-shadow: 0px $y 5px 0px rgba(0, 0, 0, 0.3);
-  }
-
-  @mixin sticky($position, $height) {
-    position: fixed;
-    left: 0;
-    z-index: 1;
-    width: 100vw;
-    height: $height;
-    #{$position}: 0;
-  }
-
-  html {
-    background-color: $background-color;
-  }
-
-  header {
-    @include sticky('top', $header-height);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: $background-color;
-    @include vertical-box-shadow('down');
-
-    a {
-      text-align: center;
-      background-color: $primary-color;
-      flex-grow: 1;
-    }
-
-    svg {
-      transition: all $transition-speed ease;
-    }
-  }
-
-  body {
-    margin-top: $header-height;
-  }
-
-  footer {
-    @include sticky('bottom', 10vh);
-    background-color: $background-color;
-    @include vertical-box-shadow('up');
-  }
 
   .main-content {
     position: absolute;

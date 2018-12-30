@@ -1,5 +1,70 @@
 $background-color: #fff2de;
 $primary-color: #5a7d7f;
+$primary-color-hover: #5a7d7f;
 
-$header-height: 7vh;
+$header-height: 10vh;
 $transition-speed: .3s;
+
+@mixin vertical-box-shadow($direction) {
+  $y: 2px;
+
+  @if $direction == 'up' {
+    $y: -2px;
+  }
+
+  -webkit-box-shadow: 0 $y 5px 0 rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 $y 5px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 $y 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+@mixin sticky($position, $height) {
+  position: fixed;
+  left: 0;
+  z-index: 1;
+  width: 100vw;
+  height: $height;
+  #{$position}: 0;
+}
+
+html {
+  background-color: $background-color;
+}
+
+header {
+  @include sticky('top', $header-height);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: $background-color;
+  @include vertical-box-shadow('down');
+
+  & > * {
+    text-align: center;
+    flex-basis: 33%;
+  }
+
+  svg {
+    transition: all $transition-speed ease;
+  }
+
+  a {
+    color: $primary-color;
+  }
+}
+
+body {
+  margin-top: $header-height;
+}
+
+footer {
+  @include sticky('bottom', 10vh);
+  background-color: $background-color;
+  @include vertical-box-shadow('up');
+}
+
+button {
+  background-color: $primary-color;
+  border: 0;
+  padding: 2%;
+  @include vertical-box-shadow('down');
+}
