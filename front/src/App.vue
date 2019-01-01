@@ -19,7 +19,7 @@
           <font-awesome-icon icon="info-circle" :class="getNavLinkFaClasses('about')"/>
         </router-link>
       </span>
-      </transition-group>
+    </transition-group>
     <transition :name="bodyTransition.name" :mode="bodyTransition.mode">
       <router-view/>
     </transition>
@@ -135,19 +135,34 @@ export default {
   }
 
   .swipe-left-enter-active, .swipe-left-leave-active, .swipe-right-enter-active, .swipe-right-leave-active {
-    transition: all $transition-speed ease;
+    -webkit-transition: -webkit-transform $transition-speed ease;
+    -moz-transition: transform $transition-speed ease;
+    -o-transition: transform $transition-speed ease;
+    transition: transform $transition-speed ease;
   }
 
   .swipe-left-enter, .swipe-right-leave-to {
-    transform: translateX(100%);
+    -webkit-transform: translateX(100%) translateZ(0);
+    -moz-transform: translateX(100%) translateZ(0);
+    -ms-transform: translateX(100%) translateZ(0);
+    -o-transform: translateX(100%) translateZ(0);
+    transform: translateX(100%) translateZ(0);
   }
 
   .swipe-left-leave-to, .swipe-right-enter {
-    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%) translateZ(0);
+    -moz-transform: translateX(-100%) translateZ(0);
+    -ms-transform: translateX(-100%) translateZ(0);
+    -o-transform: translateX(-100%) translateZ(0);
+    transform: translateX(-100%) translateZ(0);
   }
 
   .swipe-left-leave, .swipe-left-enter-to, .swipe-right-leave, .swipe-right-enter-to {
-    transform: translateX(0px);
+    -webkit-transform: translateX(0) translateZ(0);
+    -moz-transform: translateX(0) translateZ(0);
+    -ms-transform: translateX(0) translateZ(0);
+    -o-transform: translateX(0) translateZ(0);
+    transform: translateX(0) translateZ(0);
   }
 
   .fade-enter-active, .fade-leave-active {
@@ -163,6 +178,9 @@ export default {
   }
 
   .flip-list-move {
+    -webkit-transition: -webkit-transform $transition-speed ease;
+    -moz-transition: transform $transition-speed ease;
+    -o-transition: transform $transition-speed ease;
     transition: transform $transition-speed ease;
   }
 </style>
