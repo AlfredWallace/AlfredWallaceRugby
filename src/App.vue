@@ -1,34 +1,36 @@
 <template>
-  <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
-    </v-app-bar>
+  <div id="app">
+    <v-app>
 
-    <v-content>
-      <HelloWorld />
-    </v-content>
-  </v-app>
+      <v-content>
+      </v-content>
+
+      <v-bottom-navigation app shift grow class="hidden-md-and-up">
+
+        <v-btn>
+          <span>Rankings</span>
+          <v-icon>mdi-format-list-numbered</v-icon>
+        </v-btn>
+
+        <v-btn>
+          <span>Calculator</span>
+          <v-icon>mdi-calculator</v-icon>
+        </v-btn>
+
+        <v-btn>
+          <span>About</span>
+          <v-icon>mdi-information</v-icon>
+        </v-btn>
+
+      </v-bottom-navigation>
+    </v-app>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld,
-  },
   data: () => ({
     //
   }),
