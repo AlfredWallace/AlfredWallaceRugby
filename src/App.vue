@@ -57,11 +57,18 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 
 export default {
   name: 'App',
   data: () => ({
     drawer: null,
   }),
+  methods: {
+    ...mapActions(['setTeams']),
+  },
+  created() {
+    this.setTeams();
+  },
 };
 </script>
