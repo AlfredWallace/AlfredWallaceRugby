@@ -48,9 +48,9 @@
       <v-content>
         <router-view />
 
-        <v-btn fab fixed bottom right>
-          <v-icon>mdi-account</v-icon>
-        </v-btn>
+<!--        <v-btn fab fixed bottom right>-->
+<!--          <v-icon>mdi-account</v-icon>-->
+<!--        </v-btn>-->
       </v-content>
     </v-app>
   </div>
