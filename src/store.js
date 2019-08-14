@@ -4,9 +4,13 @@ import axios from 'axios';
 
 Vue.use(Vuex);
 
+function roundPoints(points) {
+  return Math.round((Math.round(points * 1000) / 1000) * 100) / 100;
+}
+
 export default new Vuex.Store({
   state: {
-    teams: null,
+    teams: [],
     freshnessTimestamp: null,
   },
   mutations: {
@@ -29,8 +33,10 @@ export default new Vuex.Store({
       name: team.team.name,
       abbr: team.team.abbreviation,
       rank: team.pos,
+      previousRank: team.previousPos,
       points: team.pts,
-      roundedPoints: Math.round((Math.round(team.pts * 1000) / 1000) * 100) / 100,
+      roundedPoints: roundPoints(team.pts),
+      roundedPreviousPoints: roundPoints(team.previousPts),
     })) : []),
   },
 });
