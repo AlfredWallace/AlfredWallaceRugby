@@ -10,33 +10,46 @@ function roundPoints(points) {
 
 export default new Vuex.Store({
   state: {
-    teams: [],
-    freshnessTimestamp: null,
+    currentStep: 0,
+    rankingSteps: [],
+    rankingFreshness: null,
   },
   mutations: {
-    INIT_STATE: (state, payload) => {
-      state.teams = payload.entries;
-      state.freshnessTimestamp = payload.effective.millis;
+    INIT_STATE: (state, { teams, timestamp }) => {
+      state.rankingSteps.push(teams);
+      state.rankingFreshness = timestamp;
+    },
+    RESET_STATE: (state) => {
+      state.currentStep = 0;
+      const initialRanking = state.rankingSteps[0];
+      state.rankingSteps = [];
+      state.rankingSteps.push(initialRanking);
     },
   },
   actions: {
     setTeams: ({ commit }) => {
       axios.get('http://cmsapi.pulselive.com/rugby/rankings/mru.json')
         .then((response) => {
-          commit('INIT_STATE', response.data);
+          const normalizedTeams = response.data.entries.map(team => ({
+            id: team.team.id,
+            name: team.team.name,
+            abbr: team.team.abbreviation,
+            rank: team.pos,
+            previousRank: team.previousPos,
+            points: team.pts,
+            previousPoints: team.previousPts,
+            roundedPoints: roundPoints(team.pts),
+            roundedPreviousPoints: roundPoints(team.previousPts),
+          }));
+
+          commit('INIT_STATE', {
+            teams: normalizedTeams,
+            timestamp: response.data.effective.millis,
+          });
         });
     },
   },
   getters: {
-    normalizedTeams: state => (state.teams ? state.teams.map(team => ({
-      id: team.team.id,
-      name: team.team.name,
-      abbr: team.team.abbreviation,
-      rank: team.pos,
-      previousRank: team.previousPos,
-      points: team.pts,
-      roundedPoints: roundPoints(team.pts),
-      roundedPreviousPoints: roundPoints(team.previousPts),
-    })) : []),
+    currentTeams: state => state.rankingSteps[state.currentStep] || [],
   },
 });

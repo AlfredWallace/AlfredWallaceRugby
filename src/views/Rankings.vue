@@ -7,8 +7,8 @@
 
       <v-data-table
         :headers="headers"
-        :items="normalizedTeams"
-        :items-per-page="normalizedTeams.length"
+        :items="currentTeams"
+        :items-per-page="currentTeams.length"
         :mobile-breakpoint="0"
         disable-pagination
         hide-default-footer
@@ -77,7 +77,7 @@ export default {
     RankCell,
   },
   computed: {
-    ...mapGetters(['normalizedTeams']),
+    ...mapGetters(['currentTeams']),
   },
   methods: {},
 };
