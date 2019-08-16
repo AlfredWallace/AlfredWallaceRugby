@@ -8,28 +8,19 @@
         <v-toolbar-title>Alfred Wallace Rugby</v-toolbar-title>
       </v-app-bar>
 
-      <v-navigation-drawer app v-model="drawer">
+      <v-navigation-drawer touchless app v-model="drawer">
 
         <v-subheader>Navigation</v-subheader>
 
         <v-divider></v-divider>
 
         <v-list nav>
-          <v-list-item link :to="{ name: 'rankings' }" exact>
+          <v-list-item link :to="{ name: 'home' }" exact>
             <v-list-item-icon>
-              <v-icon>mdi-format-list-numbered</v-icon>
+              <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <span>Rankings</span>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item link :to="{ name: 'calculator' }" exact>
-            <v-list-item-icon>
-              <v-icon>mdi-calculator</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <span>Calculator</span>
+              <span>Home</span>
             </v-list-item-content>
           </v-list-item>
 
