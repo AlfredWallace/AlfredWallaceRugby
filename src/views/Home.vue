@@ -10,12 +10,18 @@
       </v-window-item>
     </v-window>
 
-    <div v-else class="d-flex">
-      <v-card>
-      <RankingTable></RankingTable>
-      </v-card>
-      <Calculator></Calculator>
-    </div>
+    <v-container v-else>
+      <v-row>
+        <v-col>
+          <v-card class="pa-4">
+            <RankingTable></RankingTable>
+          </v-card>
+        </v-col>
+        <v-col>
+          <Calculator></Calculator>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 

@@ -1,23 +1,56 @@
 <template>
-  <v-card>
-    <v-autocomplete
-      v-model="home.team"
-      return-object
-      :items="teams"
-      item-value="id"
-      item-text="name"
-    >
-    </v-autocomplete>
+  <v-card class="pa-4">
+    <v-container>
+      <v-row>
+        <v-col>
+          <v-autocomplete
+            v-model="home.team"
+            return-object
+            :items="teams"
+            item-value="id"
+            item-text="name"
+          >
+          </v-autocomplete>
+        </v-col>
+      </v-row>
 
-    <v-autocomplete
-      v-model="away.team"
-      return-object
-      :items="teams"
-      item-value="id"
-      item-text="name"
-    >
-    </v-autocomplete>
+      <v-row>
+        <v-col>
+          <v-text-field></v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field v-model="home.score"></v-text-field>
+        </v-col>
+        <v-col>
 
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col>
+          <v-autocomplete
+            v-model="away.team"
+            return-object
+            :items="teams"
+            item-value="id"
+            item-text="name"
+          >
+          </v-autocomplete>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col>
+          <v-text-field></v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field></v-text-field>
+        </v-col>
+        <v-col>
+
+        </v-col>
+      </v-row>
+    </v-container>
   </v-card>
 </template>
 
@@ -40,6 +73,7 @@ export default {
   },
   computed: {
     ...mapState('team', ['teams']),
+    ...mapState(['currentStep']),
   },
 };
 </script>
