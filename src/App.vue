@@ -56,10 +56,10 @@ export default {
     drawer: null,
   }),
   methods: {
-    ...mapActions(['setTeams']),
+    ...mapActions(['initStore']),
   },
   created() {
-    this.setTeams();
+    this.initStore();
   },
 };
 </script>

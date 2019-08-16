@@ -1,8 +1,8 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="currentTeams"
-    :items-per-page="currentTeams.length"
+    :items="teams"
+    :items-per-page="teams.length"
     :mobile-breakpoint="0"
     disable-pagination
     hide-default-footer
@@ -12,26 +12,29 @@
     </template>
 
     <template v-slot:item.rank="{ item }">
-      <RankCell>
-        <template v-slot:first>{{ item.rank }}</template>
-        <template v-slot:second>({{ item.previousRank }})</template>
+      <RankCell :step="currentStep">
+        <template v-slot:first>{{ item.ranks[currentStep] }}</template>
+        <template v-if="currentStep" v-slot:second>({{ item.ranks[currentStep - 1] }})</template>
       </RankCell>
     </template>
 
     <template v-slot:item.team="{ item }">
-      <RankCell :class="{ 'flex-column': $vuetify.breakpoint.xsOnly }">
-        <template v-slot:first>
-          <v-img src="../assets/nz.svg" max-width="40px"></v-img>
-        </template>
-        <template v-slot:second>{{ $vuetify.breakpoint.xsOnly ? item.abbr : item.name }}
-        </template>
-      </RankCell>
+      <div class="d-flex align-center flex-nowrap"
+           :class="{ 'flex-column': $vuetify.breakpoint.xsOnly }"
+      >
+        <v-img src="../assets/nz.svg" max-width="40px"></v-img>
+        <span>
+          {{ $vuetify.breakpoint.xsOnly ? item.abbreviation : item.name }}
+        </span>
+      </div>
     </template>
 
     <template v-slot:item.points="{ item }">
-      <RankCell :class="{ 'flex-column': $vuetify.breakpoint.xsOnly }">
-        <template v-slot:first>{{ item.roundedPoints }}</template>
-        <template v-slot:second>({{ item.roundedPreviousPoints }})</template>
+      <RankCell :step="currentStep" :class="{ 'flex-column': $vuetify.breakpoint.xsOnly }">
+        <template v-slot:first>{{ item.points[currentStep].rounded }}</template>
+        <template v-if="currentStep" v-slot:second>
+          ({{ item.points[currentStep - 1].rounded }})
+        </template>
       </RankCell>
     </template>
 
@@ -39,7 +42,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 import RankCell from './RankCell.vue';
 
 export default {
@@ -70,7 +73,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['currentTeams']),
+    ...mapState('team', ['teams']),
+    ...mapState(['currentStep']),
   },
 };
 </script>
