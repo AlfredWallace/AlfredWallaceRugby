@@ -1,78 +1,109 @@
 <template>
-  <v-card class="pa-4">
-    <v-container>
-      <v-row>
-        <v-col cols="8">
-          <v-autocomplete
-            v-model="home.team"
-            return-object
-            :items="teams"
-            item-value="id"
-            item-text="name"
-          >
-          </v-autocomplete>
-        </v-col>
-        <v-col>
-          <span>{{ home.team ? home.team.points[currentStep].rounded : null }}</span>
-        </v-col>
-      </v-row>
+  <v-card class="pa-0">
+    <!--    <v-card-title>Match</v-card-title>-->
 
-      <v-row>
-        <v-col cols="8">
-          <v-text-field v-model="home.score"></v-text-field>
-        </v-col>
-        <v-col>
+    <v-form ref="matchForm">
+      <v-container>
+        <v-row>
+          <v-col cols="12">
+            <v-autocomplete
+              v-model="match.homeTeam"
+              return-object
+              :items="teams"
+              item-value="id"
+              item-text="name"
+              dense
+              solo
+            >
+            </v-autocomplete>
+          </v-col>
 
-        </v-col>
-      </v-row>
+          <v-col cols="4">
+            {{ match.homeTeam ? match.homeTeam.points[currentStep].rounded : null }}
+          </v-col>
 
-      <v-row>
-        <v-col cols="8">
-          <v-autocomplete
-            v-model="away.team"
-            return-object
-            :items="teams"
-            item-value="id"
-            item-text="name"
-          >
-          </v-autocomplete>
-        </v-col>
-        <v-col>
-          {{ away.team ? away.team.points[currentStep].rounded : null }}
-        </v-col>
-      </v-row>
+          <v-col cols="4">
+            <v-text-field
+              type="number"
+              v-model="match.homeScore"
+              :rules="[validation.required, validation.integer]"
+              solo
+            >
+            </v-text-field>
+          </v-col>
 
-      <v-row>
-        <v-col cols="8">
-          <v-text-field v-model="away.score"></v-text-field>
-        </v-col>
-        <v-col>
+          <v-col cols="4">
 
-        </v-col>
-      </v-row>
-    </v-container>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="12">
+            <v-autocomplete
+              v-model="match.awayTeam"
+              return-object
+              :items="teams"
+              item-value="id"
+              item-text="name"
+              dense
+              solo
+            >
+            </v-autocomplete>
+          </v-col>
+
+          <v-col cols="4">
+            {{ match.awayTeam ? match.awayTeam.points[currentStep].rounded : null }}
+          </v-col>
+
+          <v-col cols="4">
+            <v-text-field
+              type="number"
+              v-model="match.awayScore"
+              :rules="[validation.required, validation.integer]"
+              solo
+            >
+            </v-text-field>
+          </v-col>
+
+          <v-col cols="4">
+
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
+
+    <v-card-actions class="d-flex justify-space-between">
+      <v-btn color="error">
+        <v-icon>mdi-minus</v-icon>
+      </v-btn>
+      <v-btn color="warning">
+        <v-icon>mdi-eraser</v-icon>
+      </v-btn>
+      <v-btn>
+        <v-icon>mdi-chevron-down</v-icon>
+      </v-btn>
+      <v-btn>
+        <v-icon>mdi-chevron-up</v-icon>
+      </v-btn>
+      <v-btn color="info">
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
 <script>
 import { mapState } from 'vuex';
+import Match from '../classes/Match';
 
 export default {
   name: 'Match',
   data() {
     return {
-      home: {
-        team: null,
-        score: null,
-      },
-      away: {
-        team: null,
-        score: null,
-      },
+      match: new Match(),
       validation: {
         required: val => !!val || 'Required.',
-        integer: val => (!Number.isNaN(val) && Number.isInteger(val)) || 'Must be an integer.',
-        number: val => Number.isNaN(val) || 'Must be an number.',
+        integer: val => /^[0-9]+$/.test(val) || 'Must be an positive integer.',
       },
     };
   },
@@ -81,6 +112,7 @@ export default {
     ...mapState(['currentStep']),
   },
 };
+
 </script>
 
 <style scoped>

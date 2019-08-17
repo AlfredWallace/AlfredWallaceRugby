@@ -39,9 +39,9 @@
       <v-content>
         <router-view />
 
-<!--        <v-btn fab fixed bottom right>-->
-<!--          <v-icon>mdi-account</v-icon>-->
-<!--        </v-btn>-->
+        <v-btn fab fixed bottom right color="success">
+          <v-icon>mdi-checkbox-marked-circle</v-icon>
+        </v-btn>
       </v-content>
     </v-app>
   </div>
@@ -57,6 +57,11 @@ export default {
   }),
   methods: {
     ...mapActions(['initStore']),
+    // validate() {
+    //   const res = this.$refs.matchForm.validate();
+    //   console.log(res);
+    //   return res;
+    // },
   },
   created() {
     this.initStore();
