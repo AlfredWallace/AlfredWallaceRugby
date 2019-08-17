@@ -2,7 +2,7 @@
   <v-card class="pa-4">
     <v-container>
       <v-row>
-        <v-col>
+        <v-col cols="8">
           <v-autocomplete
             v-model="home.team"
             return-object
@@ -12,13 +12,13 @@
           >
           </v-autocomplete>
         </v-col>
+        <v-col>
+          <span>{{ home.team ? home.team.points[currentStep].rounded : null }}</span>
+        </v-col>
       </v-row>
 
       <v-row>
-        <v-col>
-          <v-text-field></v-text-field>
-        </v-col>
-        <v-col>
+        <v-col cols="8">
           <v-text-field v-model="home.score"></v-text-field>
         </v-col>
         <v-col>
@@ -27,7 +27,7 @@
       </v-row>
 
       <v-row>
-        <v-col>
+        <v-col cols="8">
           <v-autocomplete
             v-model="away.team"
             return-object
@@ -37,14 +37,14 @@
           >
           </v-autocomplete>
         </v-col>
+        <v-col>
+          {{ away.team ? away.team.points[currentStep].rounded : null }}
+        </v-col>
       </v-row>
 
       <v-row>
-        <v-col>
-          <v-text-field></v-text-field>
-        </v-col>
-        <v-col>
-          <v-text-field></v-text-field>
+        <v-col cols="8">
+          <v-text-field v-model="away.score"></v-text-field>
         </v-col>
         <v-col>
 
@@ -68,6 +68,11 @@ export default {
       away: {
         team: null,
         score: null,
+      },
+      validation: {
+        required: val => !!val || 'Required.',
+        integer: val => (!Number.isNaN(val) && Number.isInteger(val)) || 'Must be an integer.',
+        number: val => Number.isNaN(val) || 'Must be an number.',
       },
     };
   },
