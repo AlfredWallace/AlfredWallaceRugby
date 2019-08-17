@@ -4,7 +4,10 @@
     :items="teams"
     :items-per-page="teams.length"
     :mobile-breakpoint="0"
+    :class="{ 'mb-12': $vuetify.breakpoint.xsOnly, 'pb-12': $vuetify.breakpoint.xsOnly }"
+    class="monospaced"
     disable-pagination
+    disable-sort
     hide-default-footer
   >
     <template v-slot:item.actions="{ item }">
@@ -19,14 +22,12 @@
     </template>
 
     <template v-slot:item.team="{ item }">
-      <div class="d-flex align-center flex-nowrap"
-           :class="{ 'flex-column': $vuetify.breakpoint.xsOnly }"
-      >
-        <v-img src="../assets/nz.svg" max-width="40px"></v-img>
-        <span>
+        <v-chip outlined pill>
+          <v-avatar left>
+            <v-img :src="flagPath(item.abbreviation)"></v-img>
+          </v-avatar>
           {{ $vuetify.breakpoint.xsOnly ? item.abbreviation : item.name }}
-        </span>
-      </div>
+        </v-chip>
     </template>
 
     <template v-slot:item.points="{ item }">
@@ -76,9 +77,15 @@ export default {
     ...mapState('team', ['teams']),
     ...mapState(['currentStep']),
   },
+  methods: {
+    flagPath(countryCode) {
+      try {
+        return require(`../assets/${countryCode.toLowerCase()}.svg`);
+      } catch (e) {
+        return require('../assets/nzl.svg');
+      }
+    },
+  },
 };
+
 </script>
-
-<style scoped>
-
-</style>

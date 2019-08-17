@@ -68,3 +68,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.monospaced {
+  font-family: 'Roboto Mono', monospace;
+}
+</style>
