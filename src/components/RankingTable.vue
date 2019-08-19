@@ -15,23 +15,23 @@
     </template>
 
     <template v-slot:item.rank="{ item }">
-      <RankCell :step="currentStep">
+      <RankCell :step="currentStep" :class="rankCellClasses">
         <template v-slot:first>{{ item.ranks[currentStep] }}</template>
         <template v-if="currentStep" v-slot:second>({{ item.ranks[currentStep - 1] }})</template>
       </RankCell>
     </template>
 
     <template v-slot:item.team="{ item }">
-        <v-chip outlined pill>
-          <v-avatar left>
-            <v-img :src="flagPath(item.abbreviation)"></v-img>
-          </v-avatar>
-          {{ $vuetify.breakpoint.xsOnly ? item.abbreviation : item.name }}
-        </v-chip>
+      <v-chip outlined pill>
+        <v-avatar left>
+          <v-img :src="flagPath(item.abbreviation)"></v-img>
+        </v-avatar>
+        {{ $vuetify.breakpoint.xsOnly ? item.abbreviation : item.name }}
+      </v-chip>
     </template>
 
     <template v-slot:item.points="{ item }">
-      <RankCell :step="currentStep" :class="{ 'flex-column': $vuetify.breakpoint.xsOnly }">
+      <RankCell :step="currentStep" :class="rankCellClasses">
         <template v-slot:first>{{ item.points[currentStep].rounded }}</template>
         <template v-if="currentStep" v-slot:second>
           ({{ item.points[currentStep - 1].rounded }})
@@ -71,6 +71,9 @@ export default {
           value: 'points',
         },
       ],
+      rankCellClasses: {
+        'flex-column py-1': this.$vuetify.breakpoint.xsOnly,
+      },
     };
   },
   computed: {

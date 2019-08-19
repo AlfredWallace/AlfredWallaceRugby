@@ -3,8 +3,8 @@
     <span class="subtitle-1">
       <slot name="first"></slot>
     </span>
-    &nbsp;
-    <span v-if="data.attrs.step" class="font-weight-light subtitle-2">
+    <span v-if="!data.attrs.step">&nbsp;</span>
+    <span v-if="data.attrs.step" class="font-weight-light subtitle-2 font-italic">
       <slot name="second"></slot>
     </span>
   </div>
