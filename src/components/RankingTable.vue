@@ -3,9 +3,9 @@
     <table>
       <thead>
       <th></th>
-      <th>Rank</th>
-      <th>Team</th>
-      <th>Points</th>
+      <th :class="tHeadClasses">Rank</th>
+      <th :class="tHeadClasses">Team</th>
+      <th :class="tHeadClasses">Points</th>
       </thead>
       <tbody>
       <tr v-for="team in teams" :key="team.id">
@@ -13,21 +13,45 @@
           <!--          <v-icon>mdi-arrow-up-bold-box</v-icon>-->
         </td>
         <td>
-          <RankCell :step="currentStep" :class="rankCellClasses">
-            <template v-slot:first>{{ team.ranks[currentStep] }}</template>
-            <template v-if="currentStep" v-slot:second>({{ team.ranks[currentStep - 1] }})
+          <RankCell :showSecondSlot="currentStep" :class="rankCellClasses">
+            <template v-slot:first>
+              <span :class="rankCellSlotsClasses.first">
+                {{ team.ranks[currentStep] }}
+              </span>
+            </template>
+            <template v-if="currentStep" v-slot:second>
+              &nbsp;
+              <span :class="rankCellSlotsClasses.second">
+                ({{ team.ranks[currentStep - 1] }})
+              </span>
             </template>
           </RankCell>
         </td>
         <td>
-          <img :src="flagPath(team.abbreviation)" width="40" />
-          {{ $vuetify.breakpoint.xsOnly ? team.abbreviation : team.name }}
+          <RankCell :showSecondSlot="true" :class="rankCellClasses">
+            <template v-slot:first>
+              <img :src="flagPath(team.abbreviation)" width="40" />
+            </template>
+            <template v-slot:second>
+              <span v-if="$vuetify.breakpoint.smAndUp">&nbsp;</span>
+              <span class="font-weight-bold">
+                {{ $vuetify.breakpoint.xsOnly ? team.abbreviation : team.name }}
+              </span>
+            </template>
+          </RankCell>
         </td>
         <td>
-          <RankCell :step="currentStep" :class="rankCellClasses">
-            <template v-slot:first>{{ team.points[currentStep].rounded }}</template>
+          <RankCell :showSecondSlot="currentStep" :class="rankCellClasses">
+            <template v-slot:first>
+              <span :class="rankCellSlotsClasses.first">
+                {{ team.points[currentStep].rounded }}
+              </span>
+            </template>
             <template v-if="currentStep" v-slot:second>
-              ({{ team.points[currentStep - 1].rounded }})
+              &nbsp;
+              <span :class="rankCellSlotsClasses.second">
+                ({{ team.points[currentStep - 1].rounded }})
+              </span>
             </template>
           </RankCell>
         </td>
@@ -49,7 +73,14 @@ export default {
   data() {
     return {
       rankCellClasses: {
-        'flex-column py-1': this.$vuetify.breakpoint.xsOnly,
+        'flex-column py-1 justify-space-around': this.$vuetify.breakpoint.xsOnly,
+      },
+      tHeadClasses: {
+        'text-center': this.$vuetify.breakpoint.xsOnly,
+      },
+      rankCellSlotsClasses: {
+        first: 'font-weight-bold subtitle-1',
+        second: 'font-italic subtitle-2',
       },
     };
   },
