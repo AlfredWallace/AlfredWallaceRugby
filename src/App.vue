@@ -39,9 +39,9 @@
       <v-content>
         <router-view />
 
-        <v-btn fab fixed bottom right color="success">
-          <v-icon>mdi-checkbox-marked-circle</v-icon>
-        </v-btn>
+<!--        <v-btn fab fixed bottom right color="success">-->
+<!--          <v-icon>mdi-checkbox-marked-circle</v-icon>-->
+<!--        </v-btn>-->
       </v-content>
     </v-app>
   </div>
