@@ -5,6 +5,7 @@
       :items="teams"
       :items-per-page="itemsPerPage"
       :page.sync="page"
+      :mobile-breakpoint="0"
       disable-sort
       hide-default-footer
       hide-default-header
@@ -29,10 +30,10 @@
       <template v-slot:item.team="{ item }">
         <RankCell :showSecondSlot="true">
           <template v-slot:first>
-            <img :src="flagPath(item.abbreviation)" width="40" />
+            <img :src="flagPath(item.abbreviation)" width="30" />
           </template>
           <template v-slot:second>
-            <span v-if="$vuetify.breakpoint.smAndUp">&nbsp;</span>
+            &nbsp;
             <span class="font-weight-bold">
             {{ $vuetify.breakpoint.xsOnly ? item.abbreviation : item.name }}
           </span>
@@ -76,8 +77,8 @@ export default {
       itemsPerPage: 20,
       classes: {
         slots: {
-          first: 'font-weight-bold subtitle-1',
-          second: 'font-italic subtitle-2',
+          first: 'font-weight-bold body-2',
+          second: 'font-italic caption',
         },
       },
       headers: [
