@@ -1,15 +1,13 @@
 <template>
   <div id="app">
     <v-app>
-
-      <v-app-bar app elevate-on-scroll>
+      <v-app-bar app>
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
         <v-toolbar-title>Alfred Wallace Rugby</v-toolbar-title>
       </v-app-bar>
 
       <v-navigation-drawer touchless app v-model="drawer">
-
         <v-subheader>Navigation</v-subheader>
 
         <v-divider></v-divider>
@@ -33,15 +31,10 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
-
       </v-navigation-drawer>
 
       <v-content>
-        <router-view />
-
-<!--        <v-btn fab fixed bottom right color="success">-->
-<!--          <v-icon>mdi-checkbox-marked-circle</v-icon>-->
-<!--        </v-btn>-->
+        <router-view></router-view>
       </v-content>
     </v-app>
   </div>

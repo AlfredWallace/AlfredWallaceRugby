@@ -1,14 +1,28 @@
 <template>
   <div>
-    <v-window v-if="$vuetify.breakpoint.smAndDown">
-      <v-window-item>
-        <RankingTable></RankingTable>
-      </v-window-item>
+    <div v-if="$vuetify.breakpoint.smAndDown">
+      <v-window v-model="step">
+        <v-window-item :value="1">
+          <RankingTable></RankingTable>
+        </v-window-item>
 
-      <v-window-item>
-        <Calculator></Calculator>
-      </v-window-item>
-    </v-window>
+        <v-window-item :value="2">
+          <Calculator></Calculator>
+        </v-window-item>
+      </v-window>
+
+      <v-footer fixed padless elevation="10">
+        <v-window touchless v-model="step">
+          <v-window-item :value="1">
+            Ranking actions
+          </v-window-item>
+
+          <v-window-item :value="2">
+            Calculator actions
+          </v-window-item>
+        </v-window>
+      </v-footer>
+    </div>
 
     <v-container v-else>
       <v-row>
@@ -33,6 +47,11 @@ export default {
   components: {
     RankingTable,
     Calculator,
+  },
+  data() {
+    return {
+      step: 1,
+    };
   },
 };
 </script>
