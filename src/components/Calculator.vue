@@ -1,11 +1,7 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col v-for="(match, index) in matches" :key="index">
-        <Match :match="match"></Match>
-      </v-col>
-    </v-row>
-  </v-container>
+  <div>
+    <Match v-for="(match, index) in matches" :key="index" :match="match"></Match>
+  </div>
 </template>
 
 <script>

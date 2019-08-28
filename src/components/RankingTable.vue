@@ -1,61 +1,67 @@
 <template>
-  <v-data-table
+  <v-card
     class="mb-12"
-    :headers="headers"
-    :items="teams"
-    :items-per-page="itemsPerPage"
-    :page.sync="page"
-    :mobile-breakpoint="0"
-    disable-sort
-    hide-default-footer
-    dense
+    :class="[ $vuetify.breakpoint.smAndDown ? 'pb-4' : 'pa-4' ]"
+    :outlined="$vuetify.breakpoint.smAndDown"
   >
-    <template v-slot:item.rank="{ item }">
-      <RankCell :showSecondSlot="currentStep">
-        <template v-slot:first>
+    <v-data-table
+      :headers="headers"
+      :items="teams"
+      :items-per-page="itemsPerPage"
+      :page.sync="page"
+      :mobile-breakpoint="0"
+      disable-sort
+      hide-default-footer
+    >
+      <template v-slot:item.rank="{ item }">
+        <RankCell :showSecondSlot="currentStep">
+          <template v-slot:first>
         <span :class="classes.slots.first">
           {{ item.ranks[currentStep] }}
         </span>
-        </template>
-        <template v-if="currentStep" v-slot:second>
-          &nbsp;
-          <span :class="classes.slots.second">
+          </template>
+          <template v-if="currentStep" v-slot:second>
+            &nbsp;
+            <span :class="classes.slots.second">
           ({{ item.ranks[currentStep - 1] }})
         </span>
-        </template>
-      </RankCell>
-    </template>
+          </template>
+        </RankCell>
+      </template>
 
-    <template v-slot:item.team="{ item }">
-      <RankCell :showSecondSlot="true">
-        <template v-slot:first>
-          <img :src="flagPath(item.abbreviation)" width="30" />
-        </template>
-        <template v-slot:second>
-          &nbsp;
-          <span class="font-weight-bold">
+      <template v-slot:item.team="{ item }">
+        <RankCell :showSecondSlot="true">
+          <template v-slot:first>
+            <img :src="flagPath(item.abbreviation)" width="30" />
+          </template>
+          <template v-slot:second>
+            &nbsp;
+            <span class="font-weight-bold">
           {{ $vuetify.breakpoint.xsOnly ? item.abbreviation : item.name }}
         </span>
-        </template>
-      </RankCell>
-    </template>
+          </template>
+        </RankCell>
+      </template>
 
-    <template v-slot:item.points="{ item }">
-      <RankCell :showSecondSlot="currentStep">
-        <template v-slot:first>
+      <template v-slot:item.points="{ item }">
+        <RankCell :showSecondSlot="currentStep">
+          <template v-slot:first>
         <span :class="classes.slots.first">
           {{ item.points[currentStep].rounded }}
         </span>
-        </template>
-        <template v-if="currentStep" v-slot:second>
-          &nbsp;
-          <span :class="classes.slots.second">
+          </template>
+          <template v-if="currentStep" v-slot:second>
+            &nbsp;
+            <span :class="classes.slots.second">
           ({{ item.points[currentStep - 1].rounded }})
         </span>
-        </template>
-      </RankCell>
-    </template>
-  </v-data-table>
+          </template>
+        </RankCell>
+      </template>
+    </v-data-table>
+
+    <v-pagination v-model="page" :length="nbPages"></v-pagination>
+  </v-card>
 </template>
 
 <script>

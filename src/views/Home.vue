@@ -27,9 +27,7 @@
     <v-container v-else>
       <v-row>
         <v-col>
-          <v-card class="pa-4">
-            <RankingTable></RankingTable>
-          </v-card>
+          <RankingTable></RankingTable>
         </v-col>
         <v-col>
           <Calculator></Calculator>

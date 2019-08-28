@@ -1,5 +1,8 @@
 <template>
-  <v-card :outlined="$vuetify.breakpoint.smAndDown">
+  <v-card
+    :outlined="$vuetify.breakpoint.smAndDown"
+    class="mb-6"
+  >
     <v-form ref="matchForm">
       <v-container>
         <MatchTeam v-model="match.home"></MatchTeam>
