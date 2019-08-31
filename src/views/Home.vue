@@ -12,15 +12,21 @@
       </v-window>
 
       <v-footer fixed padless elevation="10">
-        <v-window touchless v-model="step">
-          <v-window-item :value="1">
-            Ranking actions
-          </v-window-item>
+        <v-container class="py-0">
+          <v-row>
+            <v-col class="py-0">
+              <v-window touchless v-model="step">
+                <v-window-item :value="1">
+                  <RankingActions></RankingActions>
+                </v-window-item>
 
-          <v-window-item :value="2">
-            Calculator actions
-          </v-window-item>
-        </v-window>
+                <v-window-item :value="2">
+                  <CalculatorActions></CalculatorActions>
+                </v-window-item>
+              </v-window>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-footer>
     </div>
 
@@ -40,11 +46,15 @@
 <script>
 import RankingTable from '../components/RankingTable.vue';
 import Calculator from '../components/Calculator.vue';
+import CalculatorActions from '../components/CalculatorActions.vue';
+import RankingActions from '../components/RankingActions.vue';
 
 export default {
   components: {
     RankingTable,
+    RankingActions,
     Calculator,
+    CalculatorActions,
   },
   data() {
     return {
