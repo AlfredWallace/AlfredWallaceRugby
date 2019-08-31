@@ -1,6 +1,6 @@
 <template>
   <v-row dense>
-    <v-col cols="9">
+    <v-col cols="12">
       <v-autocomplete
         v-model="value.team"
         return-object
@@ -12,38 +12,32 @@
         outlined
       >
         <template v-slot:item="{ item }">
-          <img :src="flagPath(item.abbreviation)" width="30" />&nbsp;{{ item.name }}
+          <img :src="flagPath(item.abbreviation)" width="30" />&nbsp;
+          {{ item.name }}&nbsp;
+          ({{ item.points[currentStep].rounded }})
         </template>
+
         <template v-slot:selection="{ item }">
-          <img :src="flagPath(item.abbreviation)" width="30" />&nbsp;{{ item.name }}
+          <img :src="flagPath(item.abbreviation)" width="30" />&nbsp;
+          {{ item.name }}&nbsp;
+          ({{ item.points[currentStep].rounded }})
         </template>
       </v-autocomplete>
     </v-col>
 
-    <v-col cols="3">
+    <v-col cols="6">
       <v-text-field
         type="number"
         v-model="value.score"
         :rules="[validation.required, validation.integer]"
         placeholder="score"
-        solo
-      >
-      </v-text-field>
-    </v-col>
-
-    <v-col cols="6">
-      <v-text-field
         outlined
-        disabled
-        :value="value.team ? value.team.points[currentStep].rounded : null"
-        placeholder="points"
       >
-        <!-- TODO currentStep -1 when currentStep > 0 -->
       </v-text-field>
     </v-col>
 
     <v-col cols="6">
-      <v-text-field outlined disabled placeholder="result">
+      <v-text-field outlined disabled placeholder="new rank">
       </v-text-field>
     </v-col>
   </v-row>
