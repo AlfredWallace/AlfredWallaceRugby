@@ -67,12 +67,14 @@
 <script>
 import { mapState } from 'vuex';
 import RankCell from './RankCell.vue';
+import { countryFlagMixin } from '../mixins/countryFlagMixin';
 
 export default {
   name: 'RankingTable',
   components: {
     RankCell,
   },
+  mixins: [countryFlagMixin],
   data() {
     return {
       page: 1,
@@ -104,15 +106,6 @@ export default {
     ...mapState(['currentStep']),
     nbPages() {
       return Math.ceil(this.teams.length / this.itemsPerPage);
-    },
-  },
-  methods: {
-    flagPath(countryCode) {
-      try {
-        return require(`../assets/${countryCode.toLowerCase()}.svg`);
-      } catch (e) {
-        return require('../assets/nzl.svg');
-      }
     },
   },
 };

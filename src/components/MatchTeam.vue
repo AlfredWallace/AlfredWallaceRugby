@@ -9,8 +9,14 @@
         placeholder="pick a team"
         clearable
         dense
-        solo
+        outlined
       >
+        <template v-slot:item="{ item }">
+          <img :src="flagPath(item.abbreviation)" width="30" />&nbsp;{{ item.name }}
+        </template>
+        <template v-slot:selection="{ item }">
+          <img :src="flagPath(item.abbreviation)" width="30" />&nbsp;{{ item.name }}
+        </template>
       </v-autocomplete>
     </v-col>
 
@@ -45,9 +51,11 @@
 
 <script>
 import { mapState } from 'vuex';
+import { countryFlagMixin } from '../mixins/countryFlagMixin';
 
 export default {
   name: 'MatchTeam',
+  mixins: [countryFlagMixin],
   props: ['value'],
   data() {
     return {
