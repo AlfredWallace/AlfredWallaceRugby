@@ -13,13 +13,13 @@
       >
         <template v-slot:item="{ item }">
           <img :src="flagPath(item.abbreviation)" width="30" />&nbsp;
-          {{ item.name }}&nbsp;
+          {{ shortenString(item.name, 20) }}&nbsp;
           ({{ item.points[currentStep].rounded }})
         </template>
 
         <template v-slot:selection="{ item }">
           <img :src="flagPath(item.abbreviation)" width="30" />&nbsp;
-          {{ item.name }}&nbsp;
+          {{ shortenString(item.name, 15) }}&nbsp;
           ({{ item.points[currentStep].rounded }})
         </template>
       </v-autocomplete>
@@ -62,6 +62,12 @@ export default {
   computed: {
     ...mapState('team', ['teams']),
     ...mapState(['currentStep']),
+  },
+  methods: {
+    shortenString(str, len) {
+      const end = '...';
+      return str.length <= len ? str : `${str.substring(0, len - end.length - 1)}${end}`;
+    },
   },
 };
 </script>

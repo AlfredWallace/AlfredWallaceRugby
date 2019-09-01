@@ -10,9 +10,10 @@ export default class Team {
     this.initialRank = rank;
     this.initialPoints = points;
     this.ranks = [];
-    this.ranks.push(rank);
-    this.ranks.push(rank);
     this.points = [];
+
+    this.ranks.push(rank);
+    this.ranks.push(rank);
     this.points.push({
       raw: points,
       rounded: roundPoints(points).toFixed(2),
