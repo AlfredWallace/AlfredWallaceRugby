@@ -1,8 +1,8 @@
 export const countryFlagMixin = {
   methods: {
-    flagPath(countryCode) {
+    flagPath(team) {
       try {
-        return require(`../assets/${countryCode.toLowerCase()}.svg`);
+        return require(`../assets/${team.abbreviation.toLowerCase()}.svg`);
       } catch (e) {
         return require('../assets/nzl.svg');
       }

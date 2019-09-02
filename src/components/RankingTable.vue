@@ -32,7 +32,7 @@
       <template v-slot:item.team="{ item }">
         <RankCell :showSecondSlot="true">
           <template v-slot:first>
-            <img :src="flagPath(item.abbreviation)" width="30" />
+            <img :src="flagPath(item)" width="30" />
           </template>
           <template v-slot:second>
             &nbsp;
