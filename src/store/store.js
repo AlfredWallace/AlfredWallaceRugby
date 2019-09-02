@@ -12,12 +12,18 @@ export default new Vuex.Store({
     match,
   },
   state: {
-    currentStep: 1,
+    currentStep: 0,
     rankingFreshness: null,
   },
   mutations: {
     INIT_STATE: (state, timestamp) => {
       state.rankingFreshness = timestamp;
+    },
+    STEP_UP: (state) => {
+      state.currentStep += 1;
+    },
+    STEP_DOWN: (state) => {
+      state.currentStep -= 1;
     },
   },
   actions: {
@@ -27,6 +33,12 @@ export default new Vuex.Store({
           dispatch('team/initTeams', response.data.entries);
           commit('INIT_STATE', response.data.effective.millis);
         });
+    },
+    stepUp: ({ commit }) => {
+      commit('STEP_UP');
+    },
+    stepDown: ({ commit }) => {
+      commit('STEP_DOWN');
     },
   },
 });

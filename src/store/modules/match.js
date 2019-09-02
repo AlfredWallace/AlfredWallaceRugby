@@ -5,8 +5,9 @@ export default {
   state: {
     matches: [
       new Match(),
-      new Match(),
-      new Match(),
     ],
+  },
+  getters: {
+    nbSteps: state => state.matches.filter(match => !match.ignore).length,
   },
 };
