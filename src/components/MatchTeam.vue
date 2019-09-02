@@ -7,20 +7,24 @@
         :items="teams"
         item-text="name"
         placeholder="pick a team"
-        clearable
         dense
         outlined
+        auto-select-first
       >
         <template v-slot:item="{ item }">
-          <img :src="flagPath(item.abbreviation)" width="30" />&nbsp;
-          {{ shortenString(item.name, 20) }}&nbsp;
-          ({{ item.points[currentStep].rounded }})
+          <v-row class="truncatedParent">
+            <v-col cols="2"><img :src="flagPath(item.abbreviation)" width="30" /></v-col>
+            <v-col cols="7" class="text-truncate">{{ item.name }}</v-col>
+            <v-col cols="3" class="text-no-wrap">({{ item.points[currentStep].rounded }})</v-col>
+          </v-row>
         </template>
 
         <template v-slot:selection="{ item }">
-          <img :src="flagPath(item.abbreviation)" width="30" />&nbsp;
-          {{ shortenString(item.name, 15) }}&nbsp;
-          ({{ item.points[currentStep].rounded }})
+          <v-row class="truncatedParent">
+            <v-col cols="2"><img :src="flagPath(item.abbreviation)" width="30" /></v-col>
+            <v-col cols="7" class="text-truncate">{{ item.name }}</v-col>
+            <v-col cols="3" class="text-no-wrap">({{ item.points[currentStep].rounded }})</v-col>
+          </v-row>
         </template>
       </v-autocomplete>
     </v-col>
@@ -63,11 +67,12 @@ export default {
     ...mapState('team', ['teams']),
     ...mapState(['currentStep']),
   },
-  methods: {
-    shortenString(str, len) {
-      const end = '...';
-      return str.length <= len ? str : `${str.substring(0, len - end.length - 1)}${end}`;
-    },
-  },
 };
 </script>
+
+<style scoped>
+  /* Hack to prevent the parent of an element with .text-truncate from expanding */
+  .truncatedParent {
+    max-width: 100%;
+  }
+</style>
