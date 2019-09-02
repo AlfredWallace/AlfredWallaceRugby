@@ -50,11 +50,6 @@ export default {
   }),
   methods: {
     ...mapActions(['initStore']),
-    // validate() {
-    //   const res = this.$refs.matchForm.validate();
-    //   console.log(res);
-    //   return res;
-    // },
   },
   created() {
     this.initStore();

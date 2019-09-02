@@ -19,14 +19,6 @@ export default new Vuex.Store({
     INIT_STATE: (state, timestamp) => {
       state.rankingFreshness = timestamp;
     },
-    // RESET_STATE: (state) => {
-    //   state.currentStep = 0;
-    //   const initialRanking = state.rankingSteps[0];
-    //   state.rankingSteps = [];
-    //   state.rankingSteps.push(initialRanking);
-    //   state.matches = [];
-    //   state.matches.push(makeMatch());
-    // },
   },
   actions: {
     initStore: ({ commit, dispatch }) => {

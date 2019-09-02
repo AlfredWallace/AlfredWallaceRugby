@@ -25,7 +25,4 @@ export default {
   actions: {
     initTeams: ({ commit }, teams) => commit('INIT_TEAMS', normalizeTeams(teams)),
   },
-  // getters: {
-  //   currentTeams: state => state.rankingSteps[state.currentStep] || [],
-  // },
 };
