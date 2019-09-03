@@ -34,7 +34,7 @@
     </v-form>
 
     <v-card-actions class="d-flex justify-end">
-      <v-btn color="error" outlined>
+      <v-btn color="error" outlined @click="deleteMatch(index)">
         Delete match no. {{ matchNumber }}
       </v-btn>
     </v-card-actions>
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import Match from '../classes/Match';
 import MatchTeam from './MatchTeam.vue';
 
@@ -60,6 +61,9 @@ export default {
       match: new Match(),
       matchNumber: this.index + 1,
     };
+  },
+  methods: {
+    ...mapActions('match', ['deleteMatch']),
   },
 };
 </script>
