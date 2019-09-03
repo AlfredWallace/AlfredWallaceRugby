@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <Match v-for="(match, index) in matches" :key="index" :match="match"></Match>
+  <div class="mb-12 pb-2">
+    <Match v-for="(match, index) in matches" :key="index" :index="index" :match="match"></Match>
   </div>
 </template>
 

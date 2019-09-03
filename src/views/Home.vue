@@ -33,6 +33,14 @@
     <v-container v-else>
       <v-row>
         <v-col>
+          <RankingActions></RankingActions>
+        </v-col>
+        <v-col>
+          <CalculatorActions></CalculatorActions>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
           <RankingTable></RankingTable>
         </v-col>
         <v-col>
