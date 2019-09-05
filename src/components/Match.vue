@@ -8,12 +8,12 @@
     </v-card-title>
     <v-form ref="matchForm">
       <v-container>
-        <MatchTeam v-model="match.home"></MatchTeam>
-        <MatchTeam v-model="match.away"></MatchTeam>
+        <MatchTeam ground="home" :index="index"></MatchTeam>
+        <MatchTeam ground="away" :index="index"></MatchTeam>
         <v-row dense>
           <v-col>
             <v-switch
-              v-model="match.neutralGround"
+              v-model="neutralGround"
               label="Played on neutral ground ?"
               hide-details
             >
@@ -23,7 +23,7 @@
         <v-row dense>
           <v-col>
             <v-switch
-              v-model="match.worldCup"
+              v-model="worldCup"
               label="World Cup match ?"
               hide-details
             >
@@ -42,8 +42,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import Match from '../classes/Match';
+import { mapActions, mapState } from 'vuex';
 import MatchTeam from './MatchTeam.vue';
 
 export default {
@@ -54,16 +53,43 @@ export default {
   props: {
     index: {
       type: Number,
+      required: true,
     },
   },
   data() {
     return {
-      match: new Match(),
       matchNumber: this.index + 1,
     };
   },
+  computed: {
+    ...mapState('match', ['matches']),
+    home: {
+      get() {
+        return this.matches[this.index].home;
+      },
+      set(value) {
+        this.updateHome({ index: this.index, value });
+      },
+    },
+    neutralGround: {
+      get() {
+        return this.matches[this.index].neutralGround;
+      },
+      set(value) {
+        this.updateNeutralGround({ index: this.index, value });
+      },
+    },
+    worldCup: {
+      get() {
+        return this.matches[this.index].worldCup;
+      },
+      set(value) {
+        this.updateWorldCup({ index: this.index, value });
+      },
+    },
+  },
   methods: {
-    ...mapActions('match', ['deleteMatch']),
+    ...mapActions('match', ['deleteMatch', 'updateNeutralGround', 'updateWorldCup', 'updateHome']),
   },
 };
 </script>

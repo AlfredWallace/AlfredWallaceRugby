@@ -13,11 +13,6 @@ export default class Team {
     this.points = [];
 
     this.ranks.push(rank);
-    this.ranks.push(rank);
-    this.points.push({
-      raw: points,
-      rounded: roundPoints(points).toFixed(2),
-    });
     this.points.push({
       raw: points,
       rounded: roundPoints(points).toFixed(2),
