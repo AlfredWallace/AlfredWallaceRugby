@@ -63,20 +63,12 @@ export default {
   },
   computed: {
     ...mapState('match', ['matches']),
-    home: {
-      get() {
-        return this.matches[this.index].home;
-      },
-      set(value) {
-        this.updateHome({ index: this.index, value });
-      },
-    },
     neutralGround: {
       get() {
         return this.matches[this.index].neutralGround;
       },
       set(value) {
-        this.updateNeutralGround({ index: this.index, value });
+        this.updateMatch({ name: 'NEUTRAL_GROUND', data: { index: this.index, value } });
       },
     },
     worldCup: {
@@ -84,12 +76,12 @@ export default {
         return this.matches[this.index].worldCup;
       },
       set(value) {
-        this.updateWorldCup({ index: this.index, value });
+        this.updateMatch({ name: 'WORLD_CUP', data: { index: this.index, value } });
       },
     },
   },
   methods: {
-    ...mapActions('match', ['deleteMatch', 'updateNeutralGround', 'updateWorldCup', 'updateHome']),
+    ...mapActions('match', ['deleteMatch', 'updateMatch']),
   },
 };
 </script>

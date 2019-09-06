@@ -16,17 +16,11 @@ export default {
     UPDATE_WORLD_CUP: (state, { index, value }) => {
       state.matches[index].worldCup = value;
     },
-    UPDATE_HOME_TEAM: (state, { index, value }) => {
-      state.matches[index].home.team = value;
+    UPDATE_TEAM: (state, { index, ground, value }) => {
+      state.matches[index][ground].team = value;
     },
-    UPDATE_AWAY_TEAM: (state, { index, value }) => {
-      state.matches[index].away.team = value;
-    },
-    UPDATE_HOME_SCORE: (state, { index, value }) => {
-      state.matches[index].home.score = value;
-    },
-    UPDATE_AWAY_SCORE: (state, { index, value }) => {
-      state.matches[index].away.score = value;
+    UPDATE_SCORE: (state, { index, ground, value }) => {
+      state.matches[index][ground].score = value;
     },
   },
   actions: {
@@ -36,23 +30,8 @@ export default {
     deleteMatch: ({ commit }, index) => {
       commit('DELETE_MATCH', index);
     },
-    updateNeutralGround: ({ commit }, payload) => {
-      commit('UPDATE_NEUTRAL_GROUND', payload);
-    },
-    updateWorldCup: ({ commit }, payload) => {
-      commit('UPDATE_WORLD_CUP', payload);
-    },
-    updateHomeTeam: ({ commit }, payload) => {
-      commit('UPDATE_HOME_TEAM', payload);
-    },
-    updateAwayTeam: ({ commit }, payload) => {
-      commit('UPDATE_AWAY_TEAM', payload);
-    },
-    updateHomeScore: ({ commit }, payload) => {
-      commit('UPDATE_HOME_SCORE', payload);
-    },
-    updateAwayScore: ({ commit }, payload) => {
-      commit('UPDATE_AWAY_SCORE', payload);
+    updateMatch: ({ commit }, { name, data }) => {
+      commit(`UPDATE_${name}`, data);
     },
   },
   getters: {

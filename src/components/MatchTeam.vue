@@ -99,11 +99,7 @@ export default {
         return this.matches[this.index][this.ground].team;
       },
       set(value) {
-        if (this.ground === 'home') {
-          this.updateHomeTeam({ index: this.index, value });
-        } else {
-          this.updateAwayTeam({ index: this.index, value });
-        }
+        this.updateMatch({ name: 'TEAM', data: { index: this.index, ground: this.ground, value } });
       },
     },
     score: {
@@ -111,16 +107,12 @@ export default {
         return this.matches[this.index][this.ground].score;
       },
       set(value) {
-        if (this.ground === 'home') {
-          this.updateHomeScore({ index: this.index, value });
-        } else {
-          this.updateAwayScore({ index: this.index, value });
-        }
+        this.updateMatch({ name: 'SCORE', data: { index: this.index, ground: this.ground, value } });
       },
     },
   },
   methods: {
-    ...mapActions('match', ['updateHomeTeam', 'updateAwayTeam', 'updateHomeScore', 'updateAwayScore']),
+    ...mapActions('match', ['updateMatch']),
   },
 };
 </script>
