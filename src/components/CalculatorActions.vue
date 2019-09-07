@@ -7,7 +7,7 @@
     </v-col>
 
     <v-col cols="6">
-      <v-btn color="info" block>
+      <v-btn color="info" block @click="calculate">
         calculate
       </v-btn>
     </v-col>
@@ -27,6 +27,9 @@ export default {
   name: 'CalculatorActions',
   methods: {
     ...mapActions('match', ['addMatch']),
+    calculate() {
+      this.$root.$emit('calculate');
+    },
   },
 };
 </script>
