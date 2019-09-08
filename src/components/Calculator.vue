@@ -21,11 +21,14 @@ export default {
   },
   mounted() {
     this.$root.$on('calculate', () => {
+      // todo reset steps
+
       for (let i = 0; i < this.$refs.matches.length; i++) {
-        this.updateMatch({
-          name: 'VALID',
-          data: { index: i, value: this.$refs.matches[i].validate() },
-        });
+        // this.updateMatch({
+        //   name: 'VALID',
+        //   data: { index: i, value: this.$refs.matches[i].validate() },
+        // });
+        this.$refs.matches[i].calculate();
       }
     });
   },

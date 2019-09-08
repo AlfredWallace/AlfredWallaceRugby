@@ -1,6 +1,4 @@
-function roundPoints(points) {
-  return Math.round((Math.round(points * 1000) / 1000) * 100) / 100;
-}
+import RoundingHelper from '../services/roundingHelper';
 
 export default class Team {
   constructor(id, name, abbreviation, rank, points) {
@@ -15,7 +13,7 @@ export default class Team {
     this.ranks.push(rank);
     this.points.push({
       raw: points,
-      rounded: roundPoints(points).toFixed(2),
+      rounded: RoundingHelper.roundPoints(points).toFixed(2),
     });
   }
 }
