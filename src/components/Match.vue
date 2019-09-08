@@ -82,11 +82,9 @@ export default {
   },
   methods: {
     ...mapActions('match', ['deleteMatch', 'updateMatch']),
-  },
-  mounted() {
-    this.$root.$on('calculate', () => {
-      this.$refs.matchForm.validate();
-    });
+    validate() {
+      return this.$refs.matchForm.validate();
+    },
   },
 };
 </script>

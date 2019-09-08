@@ -10,6 +10,6 @@ export default class Match {
     };
     this.neutralGround = false;
     this.worldCup = false;
-    this.ignore = true;
+    this.valid = false;
   }
 }

@@ -22,6 +22,9 @@ export default {
     UPDATE_SCORE: (state, { index, ground, value }) => {
       state.matches[index][ground].score = value;
     },
+    UPDATE_VALID: (state, { index, value }) => {
+      state.matches[index].valid = value;
+    },
   },
   actions: {
     addMatch: ({ commit }) => {
@@ -35,6 +38,6 @@ export default {
     },
   },
   getters: {
-    nbSteps: state => state.matches.filter(match => !match.ignore).length,
+    nbSteps: state => state.matches.filter(match => match.valid).length,
   },
 };
