@@ -86,51 +86,52 @@ export default {
     ...mapActions(['stepUp']),
     ...mapActions('match', ['deleteMatch', 'updateMatch']),
     ...mapActions('team', ['makeNewStep']),
-    // validate() {
-    //   return this.$refs.matchForm.validate();
-    // },
-    calculate() {
-      if (!this.$refs.matchForm.validate()) {
-        return;
-      }
-
-      const match = this.matches[this.index];
-      const homeAdvantage = match.neutralGround ? 0 : 3;
-      const homePoints = match.home.team.points[this.currentStep].raw;
-      const awayPoints = match.away.team.points[this.currentStep].raw;
-
-      let pointsDifference = homePoints + homeAdvantage - awayPoints;
-      if (pointsDifference < -10) {
-        pointsDifference = -10;
-      } else if (pointsDifference > 10) {
-        pointsDifference = 10;
-      }
-
-      const scoreDifference = match.home.score - match.away.score;
-      let p;
-      if (scoreDifference > 0) {
-        p = (-10 - scoreDifference) / 10;
-      } else if (scoreDifference < 0) {
-        p = (10 - scoreDifference) / 10;
-      } else {
-        p = (-scoreDifference) / 10;
-      }
-
-      if (Math.abs(scoreDifference) > 15) {
-        p *= 1.5;
-      }
-
-      if (match.worldCup) {
-        p *= 2;
-      }
-      const homeTeam = match.home.team;
-      const awayTeam = match.away.team;
-
-      this.makeNewStep({
-        home: { id: homeTeam.id, rank: homeTeam.rank, points: homePoints + p },
-        away: { id: awayTeam.id, rank: awayTeam.rank, points: awayPoints - p },
-      });
+    validate() {
+      return this.$refs.matchForm.validate();
     },
+    // todo : calculation done in store module after validation events
+    // calculate() {
+    //   if (!this.$refs.matchForm.validate()) {
+    //     return;
+    //   }
+    //
+    //   const match = this.matches[this.index];
+    //   const homeAdvantage = match.neutralGround ? 0 : 3;
+    //   const homePoints = match.home.team.points[this.currentStep].raw;
+    //   const awayPoints = match.away.team.points[this.currentStep].raw;
+    //
+    //   let pointsDifference = homePoints + homeAdvantage - awayPoints;
+    //   if (pointsDifference < -10) {
+    //     pointsDifference = -10;
+    //   } else if (pointsDifference > 10) {
+    //     pointsDifference = 10;
+    //   }
+    //
+    //   const scoreDifference = match.home.score - match.away.score;
+    //   let p;
+    //   if (scoreDifference > 0) {
+    //     p = (-10 - scoreDifference) / 10;
+    //   } else if (scoreDifference < 0) {
+    //     p = (10 - scoreDifference) / 10;
+    //   } else {
+    //     p = (-scoreDifference) / 10;
+    //   }
+    //
+    //   if (Math.abs(scoreDifference) > 15) {
+    //     p *= 1.5;
+    //   }
+    //
+    //   if (match.worldCup) {
+    //     p *= 2;
+    //   }
+    //   const homeTeam = match.home.team;
+    //   const awayTeam = match.away.team;
+    //
+    //   this.makeNewStep({
+    //     home: { id: homeTeam.id, rank: homeTeam.rank, points: homePoints + p },
+    //     away: { id: awayTeam.id, rank: awayTeam.rank, points: awayPoints - p },
+    //   });
+    // },
   },
 };
 </script>

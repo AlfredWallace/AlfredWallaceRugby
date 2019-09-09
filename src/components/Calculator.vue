@@ -20,16 +20,12 @@ export default {
     ...mapActions('match', ['updateMatch']),
   },
   mounted() {
-    this.$root.$on('calculate', () => {
-      // todo reset steps
-
+    this.$root.$on('validate', () => {
       for (let i = 0; i < this.$refs.matches.length; i++) {
-        // this.updateMatch({
-        //   name: 'VALID',
-        //   data: { index: i, value: this.$refs.matches[i].validate() },
-        // });
-        this.$refs.matches[i].calculate();
+        this.$refs.matches[i].validate();
       }
+
+      // todo emit calculate
     });
   },
 };

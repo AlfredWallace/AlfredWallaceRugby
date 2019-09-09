@@ -37,10 +37,9 @@ export default {
         }
 
         const team = state.teams[i];
+        const points = team.points[team.points.length - 1];
 
         team.ranks.push(team.ranks[team.ranks.length - 1]);
-
-        const points = team.points[team.points.length - 1];
         team.points.push({
           raw: points.raw,
           rounded: points.rounded,

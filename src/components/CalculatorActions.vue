@@ -28,7 +28,8 @@ export default {
   methods: {
     ...mapActions('match', ['addMatch']),
     calculate() {
-      this.$root.$emit('calculate');
+      // todo reset matches valid attribute + reset teams steps, then emit validate
+      this.$root.$emit('validate');
     },
   },
 };
