@@ -8,8 +8,15 @@ export default {
     ],
   },
   mutations: {
-    ADD_MATCH: state => state.matches.push(new Match()),
-    DELETE_MATCH: (state, index) => state.matches.splice(index, 1),
+    RESET_MATCHES: (state) => {
+      state.matches = [new Match()];
+    },
+    ADD_MATCH: (state) => {
+      state.matches.push(new Match());
+    },
+    DELETE_MATCH: (state, index) => {
+      state.matches.splice(index, 1);
+    },
     UPDATE_NEUTRAL_GROUND: (state, { index, value }) => {
       state.matches[index].neutralGround = value;
     },
@@ -35,6 +42,9 @@ export default {
     },
     updateMatch: ({ commit }, { name, data }) => {
       commit(`UPDATE_${name}`, data);
+    },
+    resetMatches: ({ commit }) => {
+      commit('RESET_MATCHES');
     },
   },
   getters: {

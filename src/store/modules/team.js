@@ -22,6 +22,12 @@ export default {
     INIT_TEAMS: (state, teams) => {
       state.teams = teams;
     },
+    RESET_STEPS: (state) => {
+      state.teams.forEach((team) => {
+        team.ranks = [team.ranks.shift()];
+        team.points = [team.points.shift()];
+      });
+    },
     ADD_STEP_FOR_TEAM: (state, { id, rank, points }) => {
       const team = state.teams.find(teamToFind => teamToFind.id === id);
       team.ranks.push(rank);
@@ -51,10 +57,11 @@ export default {
     initTeams: ({ commit }, teams) => {
       commit('INIT_TEAMS', normalizeTeams(teams));
     },
+    resetSteps: ({ commit }) => {
+      commit('RESET_STEPS');
+    },
     makeNewStep: ({ commit }, payload) => {
-      const homeTeamId = payload.home.id;
-      const awayTeamId = payload.away.id;
-      commit('INIT_NEW_STEP', [homeTeamId, awayTeamId]);
+      commit('INIT_NEW_STEP', [payload.home.id, payload.away.id]);
       commit('ADD_STEP_FOR_TEAM', payload.home);
       commit('ADD_STEP_FOR_TEAM', payload.away);
     },

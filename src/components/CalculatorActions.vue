@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col cols="3">
-      <v-btn color="error" block>
+      <v-btn color="error" block @click="reset">
         <v-icon>mdi-eraser</v-icon>
       </v-btn>
     </v-col>
@@ -26,10 +26,15 @@ import { mapActions } from 'vuex';
 export default {
   name: 'CalculatorActions',
   methods: {
-    ...mapActions('match', ['addMatch']),
+    ...mapActions('match', ['addMatch', 'resetMatches']),
+    ...mapActions('team', ['resetSteps']),
     calculate() {
-      // todo reset matches valid attribute + reset teams steps, then emit validate
+      this.resetSteps();
       this.$root.$emit('validate');
+    },
+    reset() {
+      this.resetSteps();
+      this.resetMatches();
     },
   },
 };

@@ -18,14 +18,14 @@ export default {
   },
   methods: {
     ...mapActions('match', ['updateMatch']),
+    ...mapActions(['calculate']),
   },
   mounted() {
     this.$root.$on('validate', () => {
       for (let i = 0; i < this.$refs.matches.length; i++) {
         this.$refs.matches[i].validate();
       }
-
-      // todo emit calculate
+      this.calculate();
     });
   },
 };
