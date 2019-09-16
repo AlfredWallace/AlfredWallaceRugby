@@ -21,11 +21,11 @@ export default {
     ...mapActions(['calculate']),
   },
   mounted() {
-    this.$root.$on('validate', () => {
-      for (let i = 0; i < this.$refs.matches.length; i++) {
-        this.$refs.matches[i].validate();
-      }
-      this.calculate();
+    this.$root.$on('calculate', () => {
+      Promise.all(this.$refs.matches.map(match => match.validate()))
+        .then(() => {
+          this.calculate();
+        });
     });
   },
 };

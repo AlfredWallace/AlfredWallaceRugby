@@ -28,9 +28,9 @@ export default {
   methods: {
     ...mapActions('match', ['addMatch', 'resetMatches']),
     ...mapActions('team', ['resetSteps']),
-    calculate() {
-      this.resetSteps();
-      this.$root.$emit('validate');
+    async calculate() {
+      await this.resetSteps();
+      this.$root.$emit('calculate');
     },
     reset() {
       this.resetSteps();

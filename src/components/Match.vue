@@ -87,7 +87,7 @@ export default {
     ...mapActions('match', ['deleteMatch', 'updateMatch']),
     ...mapActions('team', ['makeNewStep']),
     validate() {
-      this.updateMatch({
+      return this.updateMatch({
         name: 'VALID',
         data: {
           index: this.index,
