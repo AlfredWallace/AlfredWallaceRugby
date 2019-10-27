@@ -1,5 +1,5 @@
 import Team from '../../classes/Team';
-import RoundingHelper from '../../services/roundingHelper';
+import roundingHelper from '../../services/roundingHelper';
 
 function normalizeTeams(apiTeams) {
   return apiTeams.map(
@@ -33,7 +33,7 @@ export default {
       team.ranks.push(rank);
       team.points.push({
         raw: points,
-        rounded: RoundingHelper.roundPoints(points),
+        rounded: roundingHelper.roundPoints(points),
       });
     },
     INIT_NEW_STEP: (state, idsBlackList) => {
