@@ -14,7 +14,7 @@
       hide-default-footer
     >
       <template v-slot:item.rank="{ item }">
-        <RankCell :showSecondSlot="currentStep">
+        <RankingTableCell :showSecondSlot="currentStep">
           <template v-slot:first>
         <span :class="classes.slots.first">
           {{ item.ranks[currentStep] }}
@@ -26,11 +26,11 @@
           ({{ item.ranks[currentStep - 1] }})
         </span>
           </template>
-        </RankCell>
+        </RankingTableCell>
       </template>
 
       <template v-slot:item.team="{ item }">
-        <RankCell :showSecondSlot="true">
+        <RankingTableCell :showSecondSlot="true">
           <template v-slot:first>
             <img :src="flagPath(item)" width="30" />
           </template>
@@ -40,11 +40,11 @@
           {{ $vuetify.breakpoint.xsOnly ? item.abbreviation : item.name }}
         </span>
           </template>
-        </RankCell>
+        </RankingTableCell>
       </template>
 
       <template v-slot:item.points="{ item }">
-        <RankCell :showSecondSlot="currentStep">
+        <RankingTableCell :showSecondSlot="currentStep">
           <template v-slot:first>
         <span :class="classes.slots.first">
           {{ item.points[currentStep].rounded }}
@@ -56,7 +56,7 @@
           ({{ item.points[currentStep - 1].rounded }})
         </span>
           </template>
-        </RankCell>
+        </RankingTableCell>
       </template>
     </v-data-table>
 
@@ -66,13 +66,13 @@
 
 <script>
 import { mapState } from 'vuex';
-import RankCell from './RankCell.vue';
+import RankingTableCell from './RankingTableCell.vue';
 import { countryFlagMixin } from '../mixins/countryFlagMixin';
 
 export default {
   name: 'RankingTable',
   components: {
-    RankCell,
+    RankingTableCell,
   },
   mixins: [countryFlagMixin],
   data() {
