@@ -3,9 +3,7 @@ import Match from '../../classes/Match';
 export default {
   namespaced: true,
   state: {
-    matches: [
-      new Match(),
-    ],
+    matches: [],
   },
   mutations: {
     RESET_MATCHES: (state) => {

@@ -2,7 +2,7 @@
   <v-row dense>
     <v-col cols="12">
       <v-autocomplete
-        v-model="team"
+        v-model="match[ground].team"
         return-object
         :items="teams"
         item-text="name"
@@ -45,7 +45,7 @@
     <v-col cols="3">
       <v-text-field
         type="number"
-        v-model="score"
+        v-model="match[ground].score"
         :rules="[validation.required, validation.integer]"
         placeholder="score"
         outlined
@@ -63,8 +63,9 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapState } from 'vuex';
 import { countryFlagMixin } from '../mixins/countryFlagMixin';
+import Match from '../classes/Match';
 
 export default {
   name: 'MatchTeam',
@@ -81,6 +82,10 @@ export default {
         return ['home', 'away'].indexOf(value) !== -1;
       },
     },
+    match: {
+      type: Match,
+      required: true,
+    },
   },
   data() {
     return {
@@ -92,27 +97,7 @@ export default {
   },
   computed: {
     ...mapState('team', ['teams']),
-    ...mapState('match', ['matches']),
     ...mapState(['currentStep']),
-    team: {
-      get() {
-        return this.matches[this.index][this.ground].team;
-      },
-      set(value) {
-        this.updateMatch({ name: 'TEAM', data: { index: this.index, ground: this.ground, value } });
-      },
-    },
-    score: {
-      get() {
-        return this.matches[this.index][this.ground].score;
-      },
-      set(value) {
-        this.updateMatch({ name: 'SCORE', data: { index: this.index, ground: this.ground, value } });
-      },
-    },
-  },
-  methods: {
-    ...mapActions('match', ['updateMatch']),
   },
 };
 </script>

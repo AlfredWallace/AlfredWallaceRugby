@@ -21,20 +21,22 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 
 export default {
   name: 'CalculatorActions',
   methods: {
-    ...mapActions('match', ['addMatch', 'resetMatches']),
-    ...mapActions('team', ['resetSteps']),
+    addMatch() {
+      this.$root.$emit('add-match');
+    },
+    // ...mapActions('match', ['addMatch', 'resetMatches']),
+    // ...mapActions('team', ['resetSteps']),
     async calculate() {
-      await this.resetSteps();
-      this.$root.$emit('calculate');
+      // await this.resetSteps();
+      // this.$root.$emit('calculate');
     },
     reset() {
-      this.resetSteps();
-      this.resetMatches();
+      // this.resetSteps();
+      // this.resetMatches();
     },
   },
 };

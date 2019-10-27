@@ -1,32 +1,47 @@
 <template>
   <div class="mb-12 pb-2">
-    <Match v-for="(match, index) in matches" :key="index" :index="index" ref="matches"></Match>
+    <CalculatorMatch
+      v-for="(match, index) in matches"
+      ref="matches"
+      :key="index"
+      :match="match"
+      :index="index"
+      @delete-match="matches.splice(index, 1)"></CalculatorMatch>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-import Match from './Match.vue';
+// import { mapActions } from 'vuex';
+import CalculatorMatch from './CalculatorMatch.vue';
+import Match from '../classes/Match';
 
 export default {
   name: 'Calculator',
+  data() {
+    return {
+      matches: [new Match()],
+    };
+  },
   components: {
-    Match,
+    CalculatorMatch,
   },
-  computed: {
-    ...mapState('match', ['matches']),
-  },
-  methods: {
-    ...mapActions('match', ['updateMatch']),
-    ...mapActions(['calculate']),
-  },
+  // methods: {
+  //   ...mapActions('match', ['updateMatch']),
+  //   ...mapActions(['calculate']),
+  // },
   mounted() {
-    this.$root.$on('calculate', () => {
-      Promise.all(this.$refs.matches.map(match => match.validate()))
-        .then(() => {
-          this.calculate();
-        });
+    // this.$root.$on('calculate', () => {
+    //   Promise.all(this.$refs.matches.map(match => match.validate()))
+    //     .then(() => {
+    //       this.calculate();
+    //     });
+    // });
+    this.$root.$on('add-match', () => {
+      this.matches.push(new Match());
     });
+    // this.$root.$on('delete-match', (index) => {
+    //   this.matches.splice(index, 1);
+    // });
   },
 };
 </script>
