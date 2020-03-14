@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="$vuetify.breakpoint.smAndDown">
+    <div v-if="smAndDown">
       <v-window v-model="step">
         <v-window-item :value="1">
           <RankingTable></RankingTable>
@@ -66,8 +66,17 @@ export default {
   },
   data() {
     return {
+      isHydrated: false,
       step: 1
     }
+  },
+  computed: {
+    smAndDown() {
+      return this.isHydrated ? this.$vuetify.breakpoint.smAndDown : true
+    }
+  },
+  mounted() {
+    this.isHydrated = true
   }
 }
 </script>
