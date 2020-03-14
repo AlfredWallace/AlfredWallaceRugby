@@ -1,17 +1,25 @@
-import Team from '../classes/Team'
 import roundingHelper from '../services/roundingHelper.js'
 
 function normalizeTeams(apiTeams) {
-  return apiTeams.map(
-    (team) =>
-      new Team(
-        team.team.id,
-        team.team.name,
-        team.team.abbreviation,
-        team.pos,
-        team.pts
-      )
-  )
+  return apiTeams.map((apiTeam) => {
+    const team = {
+      id: apiTeam.team.id,
+      name: apiTeam.team.name,
+      abbreviation: apiTeam.team.abbreviation,
+      initialRank: apiTeam.pos,
+      initialPoints: apiTeam.pts,
+      ranks: [],
+      points: []
+    }
+
+    team.ranks.push(apiTeam.pos)
+    team.points.push({
+      raw: apiTeam.pts,
+      rounded: roundingHelper.roundPoints(apiTeam.pts).toFixed(2)
+    })
+
+    return team
+  })
 }
 
 export const state = () => ({
