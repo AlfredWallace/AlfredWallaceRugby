@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 export const state = () => ({
   currentStep: 0,
   rankingFreshness: null
@@ -18,21 +16,20 @@ export const mutations = {
 }
 
 export const actions = {
-  initStore: ({ commit, dispatch }) => {
-    axios
-      .get('http://cmsapi.pulselive.com/rugby/rankings/mru.json')
-      .then((response) => {
-        dispatch('team/initTeams', response.data.entries)
-        commit('INIT_STATE', response.data.effective.millis)
-      })
+  async nuxtServerInit({ commit, dispatch }) {
+    const worldRugbyData = await this.$axios.$get(
+      'http://cmsapi.pulselive.com/rugby/rankings/mru.json'
+    )
+    dispatch('team/initTeams', worldRugbyData.entries)
+    commit('INIT_STATE', worldRugbyData.effective.millis)
   },
-  stepUp: ({ commit }) => {
+  stepUp({ commit }) {
     commit('STEP_UP')
   },
-  stepDown: ({ commit }) => {
+  stepDown({ commit }) {
     commit('STEP_DOWN')
   },
-  calculate: ({ dispatch }) => {
+  calculate({ dispatch }) {
     // if (!this.$refs.matchForm.validate()) {
     //   return;
     // }

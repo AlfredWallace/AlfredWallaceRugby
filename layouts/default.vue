@@ -40,9 +40,6 @@
 
 <script>
 export default {
-  fetch({ store }) {
-    store.dispatch('initStore')
-  },
   data: () => ({
     drawer: null
   })
