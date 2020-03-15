@@ -1,6 +1,6 @@
 <template>
   <div>
-    Rankings
+    Calculator
   </div>
 </template>
 

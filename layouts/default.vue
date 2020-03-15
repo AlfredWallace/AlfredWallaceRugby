@@ -12,7 +12,7 @@
       <v-divider></v-divider>
 
       <v-list nav>
-        <v-list-item link :to="{ name: 'index' }" exact>
+        <v-list-item link nuxt exact :to="{ name: 'index' }">
           <v-list-item-icon>
             <v-icon>mdi-home</v-icon>
           </v-list-item-icon>
@@ -21,7 +21,16 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link :to="{ name: 'about' }" exact>
+        <v-list-item link nuxt exact :to="{ name: 'calculator' }">
+          <v-list-item-icon>
+            <v-icon>mdi-calculator</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <span>Calculator</span>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item link nuxt exact :to="{ name: 'about' }">
           <v-list-item-icon>
             <v-icon>mdi-information</v-icon>
           </v-list-item-icon>

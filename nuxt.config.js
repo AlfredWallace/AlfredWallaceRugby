@@ -1,5 +1,3 @@
-import colors from 'vuetify/es5/util/colors'
-
 export default {
   mode: 'universal',
   /*
@@ -22,7 +20,7 @@ export default {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: 'grey' },
+  loading: false,
   /*
    ** Global CSS
    */
