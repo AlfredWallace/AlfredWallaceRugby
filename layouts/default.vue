@@ -1,48 +1,25 @@
 <template>
   <v-app>
     <v-app-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
       <v-toolbar-title>Alfred Wallace Rugby</v-toolbar-title>
+
+      <template v-slot:extension>
+        <v-tabs v-model="activeTab" grow>
+          <v-tab v-for="tab in tabs" :key="tab.name" :to="tab.route" nuxt exact>
+            <v-icon>mdi-{{ tab.name }}</v-icon>
+          </v-tab>
+        </v-tabs>
+      </template>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" touchless app>
-      <v-subheader>Navigation</v-subheader>
-
-      <v-divider></v-divider>
-
-      <v-list nav>
-        <v-list-item link nuxt exact :to="{ name: 'index' }">
-          <v-list-item-icon>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <span>Home</span>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-list-item link nuxt exact :to="{ name: 'calculator' }">
-          <v-list-item-icon>
-            <v-icon>mdi-calculator</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <span>Calculator</span>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-list-item link nuxt exact :to="{ name: 'about' }">
-          <v-list-item-icon>
-            <v-icon>mdi-information</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <span>About</span>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
     <v-content>
-      <nuxt />
+      <v-tabs-items v-model="activeTab" @change="updateRouter($event)">
+        <v-tab-item v-for="tab in tabs" :key="tab.name" :value="tab.route">
+          <nuxt />
+        </v-tab-item>
+      </v-tabs-items>
     </v-content>
   </v-app>
 </template>
@@ -50,7 +27,26 @@
 <script>
 export default {
   data: () => ({
-    drawer: null
-  })
+    activeTab: null,
+    tabs: [
+      {
+        name: 'home',
+        route: '/'
+      },
+      {
+        name: 'calculator',
+        route: 'calculator'
+      },
+      {
+        name: 'information',
+        route: 'about'
+      }
+    ]
+  }),
+  methods: {
+    updateRouter(val) {
+      this.$router.push(val)
+    }
+  }
 }
 </script>
