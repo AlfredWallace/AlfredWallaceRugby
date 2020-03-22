@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-app-bar app>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    <v-app-bar app dense hide-on-scroll>
+      <v-app-bar-nav-icon><v-icon>mdi-rugby</v-icon></v-app-bar-nav-icon>
 
       <v-toolbar-title>Alfred Wallace Rugby</v-toolbar-title>
 
