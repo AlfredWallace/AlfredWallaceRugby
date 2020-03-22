@@ -17,7 +17,7 @@
     <v-content>
       <v-tabs-items v-model="activeTab" @change="updateRouter($event)">
         <v-tab-item v-for="tab in tabs" :key="tab.name" :value="tab.route">
-          <nuxt />
+          <nuxt v-if="tab.route === activeTab" />
         </v-tab-item>
       </v-tabs-items>
     </v-content>
