@@ -7,46 +7,35 @@
 
       <template v-slot:extension>
         <v-tabs v-model="activeTab" grow>
-          <v-tab v-for="tab in tabs" :key="tab.name" :to="tab.route" nuxt exact>
-            <v-icon>mdi-{{ tab.name }}</v-icon>
+          <v-tab v-for="(tab, index) in tabs" :key="index">
+            <v-icon>mdi-{{ tab }}</v-icon>
           </v-tab>
         </v-tabs>
       </template>
     </v-app-bar>
 
     <v-content>
-      <v-tabs-items v-model="activeTab" @change="updateRouter($event)">
-        <v-tab-item v-for="tab in tabs" :key="tab.name" :value="tab.route">
-          <nuxt v-if="tab.route === activeTab" />
+      <v-tabs-items v-model="activeTab">
+        <v-tab-item>
+          <RankingTable></RankingTable>
         </v-tab-item>
+        <v-tab-item> </v-tab-item>
+        <v-tab-item> </v-tab-item>
       </v-tabs-items>
     </v-content>
   </v-app>
 </template>
 
 <script>
+import RankingTable from '../components/RankingTable'
+
 export default {
+  components: {
+    RankingTable
+  },
   data: () => ({
     activeTab: null,
-    tabs: [
-      {
-        name: 'home',
-        route: '/'
-      },
-      {
-        name: 'calculator',
-        route: 'calculator'
-      },
-      {
-        name: 'information',
-        route: 'about'
-      }
-    ]
-  }),
-  methods: {
-    updateRouter(val) {
-      this.$router.push(val)
-    }
-  }
+    tabs: ['home', 'calculator', 'information']
+  })
 }
 </script>
