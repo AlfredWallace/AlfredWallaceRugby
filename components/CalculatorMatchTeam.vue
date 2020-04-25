@@ -2,9 +2,9 @@
   <v-row dense>
     <v-col cols="12">
       <v-autocomplete
-        v-model="match[ground].team"
+        v-model="side.team"
         return-object
-        :items="teams"
+        :items="teamsForCurrentStep"
         item-text="name"
         placeholder="pick a team"
         dense
@@ -14,44 +14,26 @@
       >
         <template v-slot:item="{ item }">
           <v-row class="truncatedParent">
-            <v-col cols="2" class="d-flex align-center">
-              <img :src="flagPath(item)" width="30" />
-            </v-col>
-            <v-col cols="7" class="text-truncate d-flex align-center">
+            <v-col cols="8" class="text-truncate d-flex align-center">
               {{ item.name }}
             </v-col>
-            <v-col cols="3" class="text-no-wrap d-flex align-center">
-              ({{ item.points[currentStep].rounded }})
-            </v-col>
+            <v-col cols="4" class="text-no-wrap d-flex align-center"> ({{ item.points }}) </v-col>
           </v-row>
         </template>
 
         <template v-slot:selection="{ item }">
           <v-row class="truncatedParent">
-            <v-col cols="2" class="d-flex align-center">
-              <img :src="flagPath(item)" width="30" />
-            </v-col>
-            <v-col cols="7" class="text-truncate d-flex align-center">
+            <v-col cols="8" class="text-truncate d-flex align-center">
               {{ item.name }}
             </v-col>
-            <v-col cols="3" class="text-no-wrap d-flex align-center">
-              ({{ item.points[currentStep].rounded }})
-            </v-col>
+            <v-col cols="4" class="text-no-wrap d-flex align-center"> ({{ item.points }}) </v-col>
           </v-row>
         </template>
       </v-autocomplete>
     </v-col>
 
     <v-col cols="3">
-      <v-text-field
-        v-model="match[ground].score"
-        type="number"
-        :rules="[validation.required, validation.integer]"
-        placeholder="score"
-        outlined
-        hide-details
-      >
-      </v-text-field>
+      <v-text-field v-model="side.score" type="number" :rules="[validation.required, validation.integer]" placeholder="score" outlined hide-details dense> </v-text-field>
     </v-col>
 
     <v-spacer></v-spacer>
@@ -63,8 +45,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import Match from '../classes/Match'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'MatchTeam',
@@ -73,15 +54,8 @@ export default {
       type: Number,
       required: true
     },
-    ground: {
-      type: String,
-      required: true,
-      validator(value) {
-        return ['home', 'away'].includes(value)
-      }
-    },
-    match: {
-      type: Match,
+    side: {
+      type: Object,
       required: true
     }
   },
@@ -94,8 +68,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('team', ['teams']),
-    ...mapState(['currentStep'])
+    ...mapGetters('team', ['teamsForCurrentStep'])
   }
 }
 </script>

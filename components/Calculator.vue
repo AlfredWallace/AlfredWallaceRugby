@@ -25,24 +25,24 @@ export default {
     return {
       matches: [new Match()]
     }
-  },
+  }
   // methods: {
   //   ...mapActions('match', ['updateMatch']),
   //   ...mapActions(['calculate']),
   // },
-  mounted() {
-    // this.$root.$on('calculate', () => {
-    //   Promise.all(this.$refs.matches.map(match => match.validate()))
-    //     .then(() => {
-    //       this.calculate();
-    //     });
-    // });
-    this.$root.$on('add-match', () => {
-      this.matches.push(new Match())
-    })
-    // this.$root.$on('delete-match', (index) => {
-    //   this.matches.splice(index, 1);
-    // });
-  }
+  // mounted() {
+  //   // this.$root.$on('calculate', () => {
+  //   //   Promise.all(this.$refs.matches.map(match => match.validate()))
+  //   //     .then(() => {
+  //   //       this.calculate();
+  //   //     });
+  //   // });
+  //   this.$root.$on('add-match', () => {
+  //     this.matches.push(new Match())
+  //   })
+  //   // this.$root.$on('delete-match', (index) => {
+  //   //   this.matches.splice(index, 1);
+  //   // });
+  // }
 }
 </script>
