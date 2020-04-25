@@ -64,12 +64,10 @@
 
 <script>
 import { mapState } from 'vuex'
-import { countryFlagMixin } from '../mixins/countryFlagMixin'
 import Match from '../classes/Match'
 
 export default {
   name: 'MatchTeam',
-  mixins: [countryFlagMixin],
   props: {
     index: {
       type: Number,

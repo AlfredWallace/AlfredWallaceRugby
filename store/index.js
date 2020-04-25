@@ -1,9 +1,13 @@
 export const state = () => ({
-  currentStep: 0,
+  currentStep: 1, // todo : 0
   rankingFreshness: null,
   loading: false,
   errorMessage: null
 })
+
+export const getters = {
+  isFirstStep: (state) => state.currentStep === 0
+}
 
 export const mutations = {
   INIT_STATE_LOADING: (state) => {
@@ -30,15 +34,9 @@ export const actions = {
   async nuxtServerInit({ commit, dispatch }) {
     commit('INIT_STATE_LOADING')
     try {
-      const worldRugbyData = await this.$axios.$get(
-        'https://cmsapi.pulselive.com/rugby/rankings/mru.json'
-      )
+      const worldRugbyData = await this.$axios.$get('https://cmsapi.pulselive.com/rugby/rankings/mru.json')
 
-      if (
-        !worldRugbyData.hasOwnProperty('entries') ||
-        !worldRugbyData.hasOwnProperty('effective') ||
-        !worldRugbyData.effective.hasOwnProperty('millis')
-      ) {
+      if (!worldRugbyData.hasOwnProperty('entries') || !worldRugbyData.hasOwnProperty('effective') || !worldRugbyData.effective.hasOwnProperty('millis')) {
         throw new Error('Data fetched from World Rugby is invalid')
       }
 
