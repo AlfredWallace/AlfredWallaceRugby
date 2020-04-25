@@ -1,6 +1,6 @@
 <template>
   <v-card :outlined="$vuetify.breakpoint.smAndDown" class="mb-6">
-    <!--    <v-card-title> Match no. {{ matchNumber }} </v-card-title>-->
+    <v-card-title> Match no. {{ matchNumber }} </v-card-title>
     <v-form ref="matchForm">
       <v-container>
         <CalculatorMatchTeam :index="index" :side="match.home"></CalculatorMatchTeam>

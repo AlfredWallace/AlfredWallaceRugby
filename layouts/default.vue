@@ -15,15 +15,39 @@
     </v-app-bar>
 
     <v-content>
-      <v-tabs-items v-if="smAndDown" v-model="activeTab">
-        <v-tab-item>
-          <RankingTable></RankingTable>
-        </v-tab-item>
-        <v-tab-item>
-          <Calculator></Calculator>
-        </v-tab-item>
-        <v-tab-item> </v-tab-item>
-      </v-tabs-items>
+      <div v-if="smAndDown">
+        <v-tabs-items v-model="activeTab">
+          <v-tab-item>
+            <RankingTable></RankingTable>
+            <v-bottom-navigation app grow>
+              <v-btn>
+                <v-icon>mdi-skip-backward</v-icon>
+              </v-btn>
+              <v-btn>
+                <v-icon>mdi-step-backward</v-icon>
+              </v-btn>
+              <v-btn>
+                <v-icon>mdi-step-forward</v-icon>
+              </v-btn>
+              <v-btn>
+                <v-icon>mdi-skip-forward</v-icon>
+              </v-btn>
+            </v-bottom-navigation>
+          </v-tab-item>
+          <v-tab-item>
+            <Calculator></Calculator>
+            <v-bottom-navigation app grow>
+              <v-btn>
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
+              <v-btn>
+                <v-icon>mdi-plus-box</v-icon>
+              </v-btn>
+            </v-bottom-navigation>
+          </v-tab-item>
+          <v-tab-item> </v-tab-item>
+        </v-tabs-items>
+      </div>
 
       <v-container v-else>
         <v-row>
@@ -51,11 +75,13 @@ export default {
   },
   data: () => ({
     activeTab: null,
-    tabs: ['home', 'calculator', 'information'],
+    tabs: ['format-list-numbered', 'calculator', 'information'],
     isMounted: false
   }),
-
   computed: {
+    activeFab() {
+      return this.tabs[this.activeTab]
+    },
     smAndDown() {
       return this.isMounted && this.$vuetify.breakpoint.smAndDown
     }

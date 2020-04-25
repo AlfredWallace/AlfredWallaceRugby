@@ -12,12 +12,7 @@
     </v-col>
 
     <v-col cols="3">
-      <v-btn
-        color="info"
-        block
-        :disabled="currentStep >= nbSteps"
-        @click="stepUp"
-      >
+      <v-btn color="info" block :disabled="currentStep >= nbSteps" @click="stepUp">
         <v-icon>mdi-arrow-right</v-icon>
       </v-btn>
     </v-col>

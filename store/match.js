@@ -4,9 +4,9 @@ export const state = () => ({
   matches: []
 })
 
-// export const getters = {
-//   nbSteps: (state) => state.matches.filter((match) => match.valid).length
-// }
+export const getters = {
+  nbSteps: (state) => state.matches.filter((match) => match.valid).length
+}
 
 // export const mutations = {
 //   RESET_MATCHES: (state) => {

@@ -1,5 +1,5 @@
 export const state = () => ({
-  currentStep: 1, // todo : 0
+  currentStep: 0,
   rankingFreshness: null,
   loading: false,
   errorMessage: null
@@ -21,13 +21,17 @@ export const mutations = {
   INIT_STATE_FAILURE: (state, { message }) => {
     state.loading = false
     state.errorMessage = message
+  },
+  STEP_UP: (state, maxStep) => {
+    if (state.currentStep < maxStep) {
+      state.currentStep += 1
+    }
+  },
+  STEP_DOWN: (state) => {
+    if (state.currentStep > 0) {
+      state.currentStep -= 1
+    }
   }
-  // STEP_UP: (state) => {
-  //   state.currentStep += 1
-  // },
-  // STEP_DOWN: (state) => {
-  //   state.currentStep -= 1
-  // }
 }
 
 export const actions = {
@@ -45,13 +49,14 @@ export const actions = {
     } catch (e) {
       commit('INIT_STATE_FAILURE', e)
     }
+  },
+  stepUp({ commit, getters }) {
+    // commit('STEP_UP', getters['match/nbSteps'])
+    commit('STEP_UP', 1)
+  },
+  stepDown({ commit }) {
+    commit('STEP_DOWN')
   }
-  // stepUp({ commit }) {
-  //   commit('STEP_UP')
-  // },
-  // stepDown({ commit }) {
-  //   commit('STEP_DOWN')
-  // },
   // calculate({ dispatch }) {
   // if (!this.$refs.matchForm.validate()) {
   //   return;
