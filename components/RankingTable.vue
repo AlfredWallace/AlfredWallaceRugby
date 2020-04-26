@@ -2,13 +2,13 @@
   <v-card class="mb-12" :class="[$vuetify.breakpoint.smAndDown ? 'pb-4' : 'pa-4']" :outlined="$vuetify.breakpoint.smAndDown">
     <v-data-table :headers="headers" :items="teamsForCurrentStep" :items-per-page="teamsForCurrentStep.length" :mobile-breakpoint="0" disable-sort hide-default-footer>
       <template v-slot:item.rank="{ item }">
-        <RankingTableCell :show-second-slot="!isFirstStep">
+        <RankingTableCell :show-second-slot="!isInitialStep">
           <template v-slot:first>
             <span :class="classes.slots.first">
               {{ item.rank }}
             </span>
           </template>
-          <template v-if="!isFirstStep" v-slot:second>
+          <template v-if="!isInitialStep" v-slot:second>
             &nbsp;
             <span :class="classes.slots.second"> ({{ item.previousRank }}) </span>
           </template>
@@ -26,13 +26,13 @@
       </template>
 
       <template v-slot:item.points="{ item }">
-        <RankingTableCell :show-second-slot="!isFirstStep">
+        <RankingTableCell :show-second-slot="!isInitialStep">
           <template v-slot:first>
             <span :class="classes.slots.first">
               {{ item.points }}
             </span>
           </template>
-          <template v-if="!isFirstStep" v-slot:second>
+          <template v-if="!isInitialStep" v-slot:second>
             &nbsp;
             <span :class="classes.slots.second"> ({{ item.previousPoints }}) </span>
           </template>
@@ -77,7 +77,7 @@ export default {
   },
   computed: {
     ...mapGetters('team', ['teamsForCurrentStep']),
-    ...mapGetters(['isFirstStep'])
+    ...mapGetters(['isInitialStep'])
   }
 }
 </script>

@@ -6,7 +6,8 @@ export const state = () => ({
 })
 
 export const getters = {
-  isFirstStep: (state) => state.currentStep === 0
+  isInitialStep: (state) => state.currentStep === 0,
+  isLastStep: (state, getters) => state.currentStep === getters['match/nbSteps']
 }
 
 export const mutations = {
@@ -22,15 +23,17 @@ export const mutations = {
     state.loading = false
     state.errorMessage = message
   },
-  STEP_UP: (state, maxStep) => {
-    if (state.currentStep < maxStep) {
-      state.currentStep += 1
-    }
+  STEP_MIN: (state) => {
+    state.currentStep = 0
+  },
+  STEP_UP: (state) => {
+    state.currentStep += 1
   },
   STEP_DOWN: (state) => {
-    if (state.currentStep > 0) {
-      state.currentStep -= 1
-    }
+    state.currentStep -= 1
+  },
+  STEP_MAX: (state, maxStep) => {
+    state.currentStep = maxStep
   }
 }
 
@@ -50,12 +53,21 @@ export const actions = {
       commit('INIT_STATE_FAILURE', e)
     }
   },
-  stepUp({ commit, getters }) {
-    // commit('STEP_UP', getters['match/nbSteps'])
-    commit('STEP_UP', 1)
+  stepMin({ commit }) {
+    commit('STEP_MIN')
   },
-  stepDown({ commit }) {
-    commit('STEP_DOWN')
+  stepUp({ commit, getters }) {
+    if (!getters.isLastStep) {
+      commit('STEP_UP')
+    }
+  },
+  stepDown({ commit, getters }) {
+    if (!getters.isInitialStep) {
+      commit('STEP_DOWN')
+    }
+  },
+  stepMax({ commit, getters }) {
+    commit('STEP_MAX', getters['match/nbSteps'])
   }
   // calculate({ dispatch }) {
   // if (!this.$refs.matchForm.validate()) {

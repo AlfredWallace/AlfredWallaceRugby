@@ -5,7 +5,7 @@ export const state = () => ({
 })
 
 export const getters = {
-  nbSteps: (state) => state.matches.filter((match) => match.valid).length
+  nbSteps: (state) => state.matches.length
 }
 
 // export const mutations = {

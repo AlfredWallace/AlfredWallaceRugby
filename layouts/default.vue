@@ -20,18 +20,7 @@
           <v-tab-item>
             <RankingTable></RankingTable>
             <v-bottom-navigation app grow>
-              <v-btn>
-                <v-icon>mdi-skip-backward</v-icon>
-              </v-btn>
-              <v-btn>
-                <v-icon>mdi-step-backward</v-icon>
-              </v-btn>
-              <v-btn>
-                <v-icon>mdi-step-forward</v-icon>
-              </v-btn>
-              <v-btn>
-                <v-icon>mdi-skip-forward</v-icon>
-              </v-btn>
+              <RankingActions></RankingActions>
             </v-bottom-navigation>
           </v-tab-item>
           <v-tab-item>
@@ -67,9 +56,11 @@
 <script>
 import RankingTable from '../components/RankingTable'
 import Calculator from '../components/Calculator'
+import RankingActions from '../components/RankingActions'
 
 export default {
   components: {
+    RankingActions,
     Calculator,
     RankingTable
   },
@@ -79,9 +70,6 @@ export default {
     isMounted: false
   }),
   computed: {
-    activeFab() {
-      return this.tabs[this.activeTab]
-    },
     smAndDown() {
       return this.isMounted && this.$vuetify.breakpoint.smAndDown
     }

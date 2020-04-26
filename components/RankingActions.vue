@@ -1,35 +1,30 @@
 <template>
-  <v-row>
-    <v-col cols="3">
-      <v-btn color="info" block :disabled="currentStep <= 0" @click="stepDown">
-        <v-icon>mdi-arrow-left</v-icon>
-      </v-btn>
-    </v-col>
-
-    <v-col cols="6" class="d-flex align-center justify-center">
-      current step &nbsp;
-      <v-chip outlined>{{ currentStep }}</v-chip>
-    </v-col>
-
-    <v-col cols="3">
-      <v-btn color="info" block :disabled="currentStep >= nbSteps" @click="stepUp">
-        <v-icon>mdi-arrow-right</v-icon>
-      </v-btn>
-    </v-col>
-  </v-row>
+  <div class="d-flex">
+    <v-btn :disabled="isInitialStep" @click="stepMin">
+      <v-icon>mdi-skip-backward</v-icon>
+    </v-btn>
+    <v-btn :disabled="isInitialStep" @click="stepDown">
+      <v-icon>mdi-step-backward</v-icon>
+    </v-btn>
+    <v-btn :disabled="isLastStep" @click="stepUp">
+      <v-icon>mdi-step-forward</v-icon>
+    </v-btn>
+    <v-btn :disabled="isLastStep" @click="stepMax">
+      <v-icon>mdi-skip-forward</v-icon>
+    </v-btn>
+  </div>
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'RankingActions',
   computed: {
-    ...mapState(['currentStep']),
-    ...mapGetters('match', ['nbSteps'])
+    ...mapGetters(['isInitialStep', 'isLastStep'])
   },
   methods: {
-    ...mapActions(['stepUp', 'stepDown'])
+    ...mapActions(['stepMin', 'stepUp', 'stepDown', 'stepMax'])
   }
 }
 </script>

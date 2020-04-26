@@ -18,13 +18,6 @@ function normalizeTeams(apiTeams) {
       rounded: roundingHelper.roundPoints(apiTeam.pts).toFixed(2)
     })
 
-    // todo : poubelle
-    team.ranks.push(apiTeam.pos)
-    team.points.push({
-      raw: apiTeam.pts,
-      rounded: roundingHelper.roundPoints(apiTeam.pts).toFixed(2)
-    })
-
     return team
   })
 }
@@ -41,8 +34,8 @@ export const getters = {
       abbreviation,
       rank: ranks[rootState.currentStep],
       points: points[rootState.currentStep].rounded,
-      previousRank: rootGetters.isFirstStep ? null : ranks[rootState.currentStep - 1],
-      previousPoints: rootGetters.isFirstStep ? null : points[rootState.currentStep - 1].rounded
+      previousRank: rootGetters.isInitialStep ? null : ranks[rootState.currentStep - 1],
+      previousPoints: rootGetters.isInitialStep ? null : points[rootState.currentStep - 1].rounded
     }))
 }
 
