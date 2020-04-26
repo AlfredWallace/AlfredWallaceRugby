@@ -48,7 +48,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'MatchTeam',
+  name: 'CalculatorPotentialMatchSide',
   props: {
     index: {
       type: Number,

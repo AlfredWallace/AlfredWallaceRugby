@@ -1,48 +1,48 @@
 <template>
   <div class="mb-12 pb-2">
-    <CalculatorMatch
-      v-for="(match, index) in matches"
+    <CalculatorPotentialMatch
+      v-for="(potentialMatch, index) in potentialMatches"
       ref="matches"
       :key="index"
-      :match="match"
+      :potential-match="potentialMatch"
       :index="index"
-      @delete-match="matches.splice(index, 1)"
-    ></CalculatorMatch>
+      @delete-potential-match="potentialMatches.splice(index, 1)"
+    ></CalculatorPotentialMatch>
   </div>
 </template>
 
 <script>
 // import { mapActions } from 'vuex';
 import Match from '../classes/Match'
-import CalculatorMatch from './CalculatorMatch.vue'
+import CalculatorPotentialMatch from './CalculatorPotentialMatch'
 
 export default {
   name: 'Calculator',
   components: {
-    CalculatorMatch
+    CalculatorPotentialMatch
   },
   data() {
     return {
-      matches: [new Match()]
+      potentialMatches: [new Match()]
     }
-  }
+  },
   // methods: {
   //   ...mapActions('match', ['updateMatch']),
   //   ...mapActions(['calculate']),
   // },
-  // mounted() {
-  //   // this.$root.$on('calculate', () => {
-  //   //   Promise.all(this.$refs.matches.map(match => match.validate()))
-  //   //     .then(() => {
-  //   //       this.calculate();
-  //   //     });
-  //   // });
-  //   this.$root.$on('add-match', () => {
-  //     this.matches.push(new Match())
-  //   })
-  //   // this.$root.$on('delete-match', (index) => {
-  //   //   this.matches.splice(index, 1);
-  //   // });
-  // }
+  mounted() {
+    // this.$root.$on('calculate', () => {
+    //   Promise.all(this.$refs.matches.map(match => match.validate()))
+    //     .then(() => {
+    //       this.calculate();
+    //     });
+    // });
+    this.$root.$on('add-potential-match', () => {
+      this.potentialMatches.push(new Match())
+    })
+    this.$root.$on('reset-potential-matches', () => {
+      this.potentialMatches = [new Match()]
+    })
+  }
 }
 </script>

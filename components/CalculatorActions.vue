@@ -1,31 +1,15 @@
 <template>
   <div class="d-flex justify-content justify-space-between" style="width: 100%">
-    <v-btn>
+    <v-btn @click="resetMatches">
       <v-icon>mdi-undo-variant</v-icon>
     </v-btn>
-    <v-btn>
+    <v-btn @click="calculate">
+      <v-icon>mdi-calculator</v-icon>
+    </v-btn>
+    <v-btn @click="addMatch">
       <v-icon>mdi-plus-box</v-icon>
     </v-btn>
   </div>
-  <!--  <v-row>-->
-  <!--    <v-col cols="3">-->
-  <!--      <v-btn color="error" block @click="reset">-->
-  <!--        <v-icon>mdi-eraser</v-icon>-->
-  <!--      </v-btn>-->
-  <!--    </v-col>-->
-
-  <!--    <v-col cols="6">-->
-  <!--      <v-btn color="info" block @click="calculate">-->
-  <!--        calculate-->
-  <!--      </v-btn>-->
-  <!--    </v-col>-->
-
-  <!--    <v-col cols="3">-->
-  <!--      <v-btn color="success" block @click="addMatch">-->
-  <!--        <v-icon>mdi-plus</v-icon>-->
-  <!--      </v-btn>-->
-  <!--    </v-col>-->
-  <!--  </v-row>-->
 </template>
 
 <script>
@@ -33,17 +17,13 @@ export default {
   name: 'CalculatorActions',
   methods: {
     addMatch() {
-      this.$root.$emit('add-match')
+      this.$root.$emit('add-potential-match')
     },
-    // ...mapActions('match', ['addMatch', 'resetMatches']),
-    // ...mapActions('team', ['resetSteps']),
-    async calculate() {
-      // await this.resetSteps();
-      // this.$root.$emit('calculate');
+    resetMatches() {
+      this.$root.$emit('reset-potential-matches')
     },
-    reset() {
-      // this.resetSteps();
-      // this.resetMatches();
+    calculate() {
+      this.$root.$emit('calculate')
     }
   }
 }
