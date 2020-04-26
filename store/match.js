@@ -8,44 +8,14 @@ export const getters = {
   nbSteps: (state) => state.matches.length
 }
 
-// export const mutations = {
-//   RESET_MATCHES: (state) => {
-//     state.matches = []
-//   },
-//   ADD_MATCH: (state) => {
-//     state.matches.push(new Match())
-//   },
-//   DELETE_MATCH: (state, index) => {
-//     state.matches.splice(index, 1)
-//   },
-//   UPDATE_NEUTRAL_GROUND: (state, { index, value }) => {
-//     state.matches[index].neutralGround = value
-//   },
-//   UPDATE_WORLD_CUP: (state, { index, value }) => {
-//     state.matches[index].worldCup = value
-//   },
-//   UPDATE_TEAM: (state, { index, ground, value }) => {
-//     state.matches[index][ground].team = value
-//   },
-//   UPDATE_SCORE: (state, { index, ground, value }) => {
-//     state.matches[index][ground].score = value
-//   },
-//   UPDATE_VALID: (state, { index, value }) => {
-//     state.matches[index].valid = value
-//   }
-// }
+export const mutations = {
+  SET_MATCHES: (state, matches) => {
+    state.matches = matches
+  }
+}
 
-// export const actions = {
-//   addMatch: ({ commit }) => {
-//     commit('ADD_MATCH')
-//   },
-//   deleteMatch: ({ commit }, index) => {
-//     commit('DELETE_MATCH', index)
-//   },
-//   updateMatch: ({ commit }, { name, data }) => {
-//     commit(`UPDATE_${name}`, data)
-//   },
-//   resetMatches: ({ commit }) => {
-//     commit('RESET_MATCHES')
-//   }
-// }
+export const actions = {
+  setMatches({ commit }, matches) {
+    commit('SET_MATCHES', matches)
+  }
+}
