@@ -22,6 +22,7 @@ export default {
     resetMatches() {
       this.$root.$emit('reset-potential-matches')
     },
+    // emits a root event because the button may pu put anywhere
     calculate() {
       this.$root.$emit('calculate')
     }

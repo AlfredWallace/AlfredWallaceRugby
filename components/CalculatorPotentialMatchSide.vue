@@ -5,6 +5,7 @@
         v-model="side.team"
         return-object
         :items="teamsForCurrentStep"
+        :rules="[validation.required]"
         item-text="name"
         placeholder="pick a team"
         dense
@@ -46,29 +47,36 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Match from '../classes/Match'
 
 export default {
   name: 'CalculatorPotentialMatchSide',
   props: {
-    index: {
-      type: Number,
+    potentialMatch: {
+      type: Match,
       required: true
     },
-    side: {
-      type: Object,
-      required: true
+    ground: {
+      type: String,
+      required: true,
+      validator(value) {
+        return ['home', 'away'].includes(value)
+      }
     }
   },
   data() {
     return {
       validation: {
-        required: (val) => !!val || 'Required.',
-        integer: (val) => /^[0-9]+$/.test(val) || 'Must be an positive integer.'
+        required: (val) => !!val,
+        integer: (val) => /^[0-9]+$/.test(val)
       }
     }
   },
   computed: {
-    ...mapGetters('team', ['teamsForCurrentStep'])
+    ...mapGetters('team', ['teamsForCurrentStep']),
+    side() {
+      return this.potentialMatch[this.ground]
+    }
   }
 }
 </script>

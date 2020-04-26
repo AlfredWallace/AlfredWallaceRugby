@@ -3,8 +3,8 @@
     <v-card-title> Match no. {{ potentialMatchNumber }} </v-card-title>
     <v-form ref="potentialMatchForm">
       <v-container>
-        <CalculatorPotentialMatchSide :index="index" :side="potentialMatch.home"></CalculatorPotentialMatchSide>
-        <CalculatorPotentialMatchSide :index="index" :side="potentialMatch.away"></CalculatorPotentialMatchSide>
+        <CalculatorPotentialMatchSide :index="index" :potential-match="potentialMatch" ground="home"></CalculatorPotentialMatchSide>
+        <CalculatorPotentialMatchSide :index="index" :potential-match="potentialMatch" ground="away"></CalculatorPotentialMatchSide>
         <v-row dense>
           <v-col>
             <v-switch v-model="potentialMatch.neutralGround" label="Played on neutral ground ?" hide-details> </v-switch>
@@ -46,6 +46,12 @@ export default {
   data() {
     return {
       potentialMatchNumber: this.index + 1
+    }
+  },
+  methods: {
+    // will validate the form and emit the result to the parent component
+    validate() {
+      this.$emit('validate-potential-match', { index: this.index, isValid: this.$refs.potentialMatchForm.validate() })
     }
   }
 }
