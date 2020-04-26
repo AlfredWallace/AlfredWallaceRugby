@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex">
+  <div class="d-flex justify-content justify-space-between" style="width: 100%">
     <v-btn :disabled="isInitialStep" @click="stepMin">
       <v-icon>mdi-skip-backward</v-icon>
     </v-btn>

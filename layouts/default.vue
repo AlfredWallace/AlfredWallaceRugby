@@ -1,11 +1,11 @@
 <template>
   <v-app>
-    <v-app-bar app dense :hide-on-scroll="smAndDown">
+    <v-app-bar app dense :hide-on-scroll="mobileLayout">
       <v-app-bar-nav-icon><v-icon>mdi-rugby</v-icon></v-app-bar-nav-icon>
 
       <v-toolbar-title>Alfred Wallace Rugby</v-toolbar-title>
 
-      <template v-if="smAndDown" v-slot:extension>
+      <template v-if="mobileLayout" v-slot:extension>
         <v-tabs v-model="activeTab" grow>
           <v-tab v-for="(tab, index) in tabs" :key="index">
             <v-icon>mdi-{{ tab }}</v-icon>
@@ -15,7 +15,7 @@
     </v-app-bar>
 
     <v-content>
-      <div v-if="smAndDown">
+      <div v-if="mobileLayout">
         <v-tabs-items v-model="activeTab">
           <v-tab-item>
             <RankingTable></RankingTable>
@@ -26,12 +26,7 @@
           <v-tab-item>
             <Calculator></Calculator>
             <v-bottom-navigation app grow>
-              <v-btn>
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
-              <v-btn>
-                <v-icon>mdi-plus-box</v-icon>
-              </v-btn>
+              <CalculatorActions></CalculatorActions>
             </v-bottom-navigation>
           </v-tab-item>
           <v-tab-item> </v-tab-item>
@@ -57,9 +52,11 @@
 import RankingTable from '../components/RankingTable'
 import Calculator from '../components/Calculator'
 import RankingActions from '../components/RankingActions'
+import CalculatorActions from '../components/CalculatorActions'
 
 export default {
   components: {
+    CalculatorActions,
     RankingActions,
     Calculator,
     RankingTable
@@ -70,7 +67,7 @@ export default {
     isMounted: false
   }),
   computed: {
-    smAndDown() {
+    mobileLayout() {
       return this.isMounted && this.$vuetify.breakpoint.smAndDown
     }
   },

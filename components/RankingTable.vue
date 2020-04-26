@@ -19,7 +19,7 @@
         <RankingTableCell :show-second-slot="false">
           <template v-slot:first>
             <span class="font-weight-bold">
-              {{ $vuetify.breakpoint.xsOnly ? item.abbreviation : item.name }}
+              {{ $vuetify.breakpoint.smAndDown ? item.abbreviation : item.name }}
             </span>
           </template>
         </RankingTableCell>
