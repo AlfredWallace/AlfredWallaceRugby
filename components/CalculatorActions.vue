@@ -17,14 +17,14 @@ export default {
   name: 'CalculatorActions',
   methods: {
     addMatch() {
-      this.$root.$emit('add-potential-match')
+      // this.$root.$emit('add-match')
     },
     resetMatches() {
-      this.$root.$emit('reset-potential-matches')
+      // this.$root.$emit('reset-matches')
     },
     // emits a root event because the button may pu put anywhere
     calculate() {
-      this.$root.$emit('calculate')
+      // this.$root.$emit('calculate')
     }
   }
 }

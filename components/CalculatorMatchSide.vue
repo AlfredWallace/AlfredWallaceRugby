@@ -1,18 +1,7 @@
 <template>
   <v-row dense>
     <v-col cols="12">
-      <v-autocomplete
-        v-model="side.team"
-        return-object
-        :items="teamsForCurrentStep"
-        :rules="[validation.required]"
-        item-text="name"
-        placeholder="pick a team"
-        dense
-        outlined
-        auto-select-first
-        hide-details
-      >
+      <v-autocomplete v-model="side.team" return-object :items="teamsForCurrentStep" :rules="[validation.required]" item-text="name" placeholder="pick a team" dense outlined auto-select-first hide-details>
         <template v-slot:item="{ item }">
           <v-row class="truncatedParent">
             <v-col cols="8" class="text-truncate d-flex align-center">
@@ -47,13 +36,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Match from '../classes/Match'
 
 export default {
-  name: 'CalculatorPotentialMatchSide',
+  name: 'CalculatorMatchSide',
   props: {
-    potentialMatch: {
-      type: Match,
+    match: {
+      type: Object,
       required: true
     },
     ground: {
@@ -75,7 +63,7 @@ export default {
   computed: {
     ...mapGetters('team', ['teamsForCurrentStep']),
     side() {
-      return this.potentialMatch[this.ground]
+      return this.match[this.ground]
     }
   }
 }

@@ -4,18 +4,22 @@ export default {
    ** Headers of the page
    */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
+    title: 'Alfred Wallace Rugby - Rugby union ranking calculator',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
+        content: 'Alfred Wallace Rugby is a tool designed to help you predict the ranking of national rugby union teams, by simulating fixtures. It is based on the official rankings and formula.'
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [
+      { rel: 'shortcut icon', href: '/awr.svg' },
+      { rel: 'icon', href: '/awr.svg' },
+      { rel: 'apple-touch-icon', href: '/awr.svg' },
+      { rel: 'apple-touch-icon-precomposed', href: '/awr.svg' }
+    ]
   },
   /*
    ** Customize the progress-bar color
