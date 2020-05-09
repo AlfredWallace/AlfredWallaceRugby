@@ -7,24 +7,25 @@
         <CalculatorMatchSide :index="index" :match="match" ground="away"></CalculatorMatchSide>
         <v-row dense>
           <v-col>
-            <v-switch v-model="match.neutralGround" label="Played on neutral ground ?" hide-details> </v-switch>
+            <v-switch v-model="neutralGroundProxy" label="Played on neutral ground ?" hide-details> </v-switch>
           </v-col>
         </v-row>
         <v-row dense>
           <v-col>
-            <v-switch v-model="match.worldCup" label="World Cup match ?" hide-details> </v-switch>
+            <v-switch v-model="worldCupProxy" label="World Cup match ?" hide-details> </v-switch>
           </v-col>
         </v-row>
       </v-container>
     </v-form>
 
     <v-card-actions class="d-flex justify-start">
-      <v-btn color="error" outlined @click="$emit('delete-match')"> Delete match no. {{ matchNumber }} </v-btn>
+      <v-btn color="error" outlined @click="deleteMatch(index)"> Delete match no. {{ matchNumber }} </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import CalculatorMatchSide from './CalculatorMatchSide.vue'
 
 export default {
@@ -46,6 +47,28 @@ export default {
     return {
       matchNumber: this.index + 1
     }
+  },
+  computed: {
+    ...mapGetters('match', ['getNeutralGround', 'getWorldCup']),
+    neutralGroundProxy: {
+      get() {
+        return this.getNeutralGround(this.index)
+      },
+      set(value) {
+        this.setNeutralGround({ index: this.index, value })
+      }
+    },
+    worldCupProxy: {
+      get() {
+        return this.getWorldCup(this.index)
+      },
+      set(value) {
+        this.setWorldCup({ index: this.index, value })
+      }
+    }
+  },
+  methods: {
+    ...mapActions('match', ['deleteMatch', 'setNeutralGround', 'setWorldCup'])
   }
   // methods: {
   //   // will validate the form and emit the result to the parent component
