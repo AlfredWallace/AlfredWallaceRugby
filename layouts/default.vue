@@ -57,6 +57,7 @@ import RankingActions from '../components/RankingActions'
 import CalculatorActions from '../components/CalculatorActions'
 
 export default {
+  name: 'Default',
   components: {
     CalculatorActions,
     RankingActions,

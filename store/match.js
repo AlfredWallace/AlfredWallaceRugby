@@ -33,7 +33,9 @@ export const getters = {
   nbSteps: (state) => state.matches.length,
   validMatches: (state) => state.matches.filter((match) => match.valid),
   getNeutralGround: (state) => (index) => state.matches[index].neutralGround,
-  getWorldCup: (state) => (index) => state.matches[index].worldCup
+  getWorldCup: (state) => (index) => state.matches[index].worldCup,
+  getTeam: (state) => ({ index, ground }) => state.matches[index][ground].team,
+  getScore: (state) => ({ index, ground }) => state.matches[index][ground].score
 }
 
 export const mutations = {
@@ -48,6 +50,12 @@ export const mutations = {
   },
   SET_WORLD_CUP: (state, { index, value }) => {
     state.matches[index].worldCup = value
+  },
+  SET_TEAM: (state, { index, ground, value }) => {
+    state.matches[index][ground].team = value
+  },
+  SET_SCORE: (state, { index, ground, value }) => {
+    state.matches[index][ground].score = value
   }
 }
 
@@ -63,5 +71,11 @@ export const actions = {
   },
   setWorldCup({ commit }, { index, value }) {
     commit('SET_WORLD_CUP', { index, value })
+  },
+  setTeam({ commit }, { index, ground, value }) {
+    commit('SET_TEAM', { index, ground, value })
+  },
+  setScore({ commit }, { index, ground, value }) {
+    commit('SET_SCORE', { index, ground, value })
   }
 }

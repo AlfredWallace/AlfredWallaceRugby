@@ -1,7 +1,7 @@
 <template>
   <v-row dense>
     <v-col cols="12">
-      <v-autocomplete v-model="side.team" return-object :items="teamsForCurrentStep" :rules="[validation.required]" item-text="name" placeholder="pick a team" dense outlined auto-select-first hide-details>
+      <v-autocomplete v-model="teamProxy" return-object :items="teamsForCurrentStep" :rules="[validation.required]" item-text="name" placeholder="pick a team" dense outlined auto-select-first hide-details>
         <template v-slot:item="{ item }">
           <v-row class="truncatedParent">
             <v-col cols="8" class="text-truncate d-flex align-center">
@@ -23,7 +23,7 @@
     </v-col>
 
     <v-col cols="3">
-      <v-text-field v-model="side.score" type="number" :rules="[validation.required, validation.integer]" placeholder="score" outlined hide-details dense> </v-text-field>
+      <v-text-field v-model="scoreProxy" type="number" :rules="[validation.required, validation.integer]" placeholder="score" outlined hide-details dense> </v-text-field>
     </v-col>
 
     <v-spacer></v-spacer>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'CalculatorMatchSide',
@@ -50,6 +50,10 @@ export default {
       validator(value) {
         return ['home', 'away'].includes(value)
       }
+    },
+    index: {
+      type: Number,
+      required: true
     }
   },
   data() {
@@ -61,10 +65,27 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('match', ['getTeam', 'getScore']),
     ...mapGetters('team', ['teamsForCurrentStep']),
-    side() {
-      return this.match[this.ground]
+    teamProxy: {
+      get() {
+        return this.getTeam({ index: this.index, ground: this.ground })
+      },
+      set(value) {
+        this.setTeam({ index: this.index, ground: this.ground, value })
+      }
+    },
+    scoreProxy: {
+      get() {
+        return this.getScore({ index: this.index, ground: this.ground })
+      },
+      set(value) {
+        this.setScore({ index: this.index, ground: this.ground, value })
+      }
     }
+  },
+  methods: {
+    ...mapActions('match', ['setTeam', 'setScore'])
   }
 }
 </script>
