@@ -13,19 +13,13 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'CalculatorActions',
   methods: {
-    addMatch() {
-      // this.$root.$emit('add-match')
-    },
-    resetMatches() {
-      // this.$root.$emit('reset-matches')
-    },
-    // emits a root event because the button may pu put anywhere
-    calculate() {
-      // this.$root.$emit('calculate')
-    }
+    ...mapActions('match', ['addMatch', 'resetMatches']),
+    calculate() {}
   }
 }
 </script>

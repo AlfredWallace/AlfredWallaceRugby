@@ -39,8 +39,37 @@ export const getters = {
 }
 
 export const mutations = {
-  SET_MATCHES: (state, matches) => {
-    state.matches = matches
+  RESET_MATCHES: (state) => {
+    state.matches = [
+      {
+        home: {
+          team: null,
+          score: null
+        },
+        away: {
+          team: null,
+          score: null
+        },
+        neutralGround: false,
+        worldCup: false,
+        valid: false
+      }
+    ]
+  },
+  ADD_MATCH: (state) => {
+    state.matches.push({
+      home: {
+        team: null,
+        score: null
+      },
+      away: {
+        team: null,
+        score: null
+      },
+      neutralGround: false,
+      worldCup: false,
+      valid: false
+    })
   },
   DELETE_MATCH: (state, index) => {
     state.matches.splice(index, 1)
@@ -60,11 +89,14 @@ export const mutations = {
 }
 
 export const actions = {
-  setMatches({ commit }, matches) {
-    commit('SET_MATCHES', matches)
+  resetMatches({ commit }) {
+    commit('RESET_MATCHES')
   },
   deleteMatch({ commit }, index) {
     commit('DELETE_MATCH', index)
+  },
+  addMatch({ commit }) {
+    commit('ADD_MATCH')
   },
   setNeutralGround({ commit }, { index, value }) {
     commit('SET_NEUTRAL_GROUND', { index, value })

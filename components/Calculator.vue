@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import CalculatorMatch from './CalculatorMatch'
 
 export default {
@@ -36,7 +36,7 @@ export default {
     //   })
   },
   methods: {
-    ...mapActions('match', ['setMatches']),
+    // ...mapActions('match', ['setMatches']),
     // will set the valid property of a match depending on the result of the form validataion mechanism
     validateMatch({ index, isValid }) {
       // this.matches[index].valid = isValid
