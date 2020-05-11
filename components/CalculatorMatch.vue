@@ -1,7 +1,7 @@
 <template>
   <v-card :outlined="$vuetify.breakpoint.smAndDown" class="mb-6">
     <v-card-title> Match no. {{ matchNumber }} </v-card-title>
-    <v-form ref="matchForm">
+    <v-form :ref="ref">
       <v-container>
         <CalculatorMatchSide :index="index" :match="match" ground="home"></CalculatorMatchSide>
         <CalculatorMatchSide :index="index" :match="match" ground="away"></CalculatorMatchSide>
@@ -45,7 +45,8 @@ export default {
   },
   data() {
     return {
-      matchNumber: this.index + 1
+      matchNumber: this.index + 1,
+      ref: `matchForm${this.index}`
     }
   },
   computed: {
@@ -67,14 +68,18 @@ export default {
       }
     }
   },
+  created() {
+    this.$root.$on('validate-all', () => {
+      this.validate()
+    })
+  },
   methods: {
-    ...mapActions('match', ['deleteMatch', 'setNeutralGround', 'setWorldCup'])
+    ...mapActions('match', ['deleteMatch', 'setNeutralGround', 'setWorldCup', 'setValid']),
+    validate() {
+      if (this.$refs[this.ref]) {
+        this.setValid({ index: this.index, value: this.$refs[this.ref].validate() })
+      }
+    }
   }
-  // methods: {
-  //   // will validate the form and emit the result to the parent component
-  //   validate() {
-  //     this.$emit('validate-match', { index: this.index, isValid: this.$refs.matchForm.validate() })
-  //   }
-  // }
 }
 </script>

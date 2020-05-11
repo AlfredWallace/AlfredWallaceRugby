@@ -74,6 +74,9 @@ export const mutations = {
   DELETE_MATCH: (state, index) => {
     state.matches.splice(index, 1)
   },
+  SET_VALID: (state, { index, value }) => {
+    state.matches[index].valid = value
+  },
   SET_NEUTRAL_GROUND: (state, { index, value }) => {
     state.matches[index].neutralGround = value
   },
@@ -92,11 +95,14 @@ export const actions = {
   resetMatches({ commit }) {
     commit('RESET_MATCHES')
   },
+  addMatch({ commit }) {
+    commit('ADD_MATCH')
+  },
   deleteMatch({ commit }, index) {
     commit('DELETE_MATCH', index)
   },
-  addMatch({ commit }) {
-    commit('ADD_MATCH')
+  setValid({ commit }, { index, value }) {
+    commit('SET_VALID', { index, value })
   },
   setNeutralGround({ commit }, { index, value }) {
     commit('SET_NEUTRAL_GROUND', { index, value })

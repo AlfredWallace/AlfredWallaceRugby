@@ -3,7 +3,7 @@
     <v-btn @click="resetMatches">
       <v-icon>mdi-undo-variant</v-icon>
     </v-btn>
-    <v-btn @click="calculate">
+    <v-btn @click="$root.$emit('validate-all')">
       <v-icon>mdi-calculator</v-icon>
     </v-btn>
     <v-btn @click="addMatch">
@@ -18,8 +18,7 @@ import { mapActions } from 'vuex'
 export default {
   name: 'CalculatorActions',
   methods: {
-    ...mapActions('match', ['addMatch', 'resetMatches']),
-    calculate() {}
+    ...mapActions('match', ['addMatch', 'resetMatches'])
   }
 }
 </script>
