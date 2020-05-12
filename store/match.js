@@ -30,8 +30,10 @@ export const state = () => ({
 })
 
 export const getters = {
-  nbSteps: (state) => state.matches.length,
   validMatches: (state) => state.matches.filter((match) => match.valid),
+  nbSteps: (state, getters) => getters.validMatches.length,
+
+  // function getters
   getNeutralGround: (state) => (index) => state.matches[index].neutralGround,
   getWorldCup: (state) => (index) => state.matches[index].worldCup,
   getTeam: (state) => ({ index, ground }) => state.matches[index][ground].team,

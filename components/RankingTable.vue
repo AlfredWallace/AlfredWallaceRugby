@@ -1,6 +1,6 @@
 <template>
   <v-card class="mb-12" :class="[$vuetify.breakpoint.smAndDown ? 'pb-4' : 'pa-4']" :outlined="$vuetify.breakpoint.smAndDown">
-    <v-data-table :headers="headers" :items="teamsForCurrentStep" :items-per-page="teamsForCurrentStep.length" :mobile-breakpoint="0" disable-sort hide-default-footer>
+    <v-data-table :headers="headers" :items="teams" :items-per-page="teams.length" :mobile-breakpoint="0" disable-sort hide-default-footer>
       <template v-slot:item.rank="{ item }">
         <RankingTableCell :show-second-slot="!isInitialStep">
           <template v-slot:first>
@@ -29,7 +29,7 @@
         <RankingTableCell :show-second-slot="!isInitialStep">
           <template v-slot:first>
             <span :class="classes.slots.first">
-              {{ item.points }}
+              {{ item.points | displayRounded }}
             </span>
           </template>
           <template v-if="!isInitialStep" v-slot:second>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import RankingTableCell from './RankingTableCell.vue'
 
 export default {
@@ -76,7 +76,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('team', ['teamsForCurrentStep']),
+    ...mapState('team', ['teams']),
     ...mapGetters(['isInitialStep'])
   }
 }

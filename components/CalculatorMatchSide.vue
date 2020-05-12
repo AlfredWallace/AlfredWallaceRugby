@@ -1,13 +1,13 @@
 <template>
   <v-row dense>
     <v-col cols="12">
-      <v-autocomplete v-model="teamProxy" return-object :items="teamsForCurrentStep" :rules="[validation.required]" item-text="name" placeholder="pick a team" dense outlined auto-select-first hide-details>
+      <v-autocomplete v-model="teamProxy" return-object :items="teams" :rules="[validation.required]" item-text="name" placeholder="pick a team" dense outlined auto-select-first hide-details>
         <template v-slot:item="{ item }">
           <v-row class="truncatedParent">
             <v-col cols="8" class="text-truncate d-flex align-center">
               {{ item.name }}
             </v-col>
-            <v-col cols="4" class="text-no-wrap d-flex align-center"> ({{ item.points }}) </v-col>
+            <v-col cols="4" class="text-no-wrap d-flex align-center"> ({{ item.points | displayRounded }}) </v-col>
           </v-row>
         </template>
 
@@ -16,7 +16,7 @@
             <v-col cols="8" class="text-truncate d-flex align-center">
               {{ item.name }}
             </v-col>
-            <v-col cols="4" class="text-no-wrap d-flex align-center"> ({{ item.points }}) </v-col>
+            <v-col cols="4" class="text-no-wrap d-flex align-center"> ({{ item.points | displayRounded }}) </v-col>
           </v-row>
         </template>
       </v-autocomplete>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'CalculatorMatchSide',
@@ -65,8 +65,8 @@ export default {
     }
   },
   computed: {
+    ...mapState('team', ['teams']),
     ...mapGetters('match', ['getTeam', 'getScore']),
-    ...mapGetters('team', ['teamsForCurrentStep']),
     teamProxy: {
       get() {
         return this.getTeam({ index: this.index, ground: this.ground })
