@@ -1,60 +1,81 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+    <v-app>
+        <v-app-bar app dense :hide-on-scroll="mobileLayout">
+            <v-img src="/awr.svg" alt="Alfred Wallace Rugby logo" height="2.5rem" width="2.5rem" contain class="flex-grow-0" />
+            <v-spacer></v-spacer>
+            <v-toolbar-title class="flex-grow-1">
+                Alfred Wallace Rugby
+            </v-toolbar-title>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+            <template v-if="mobileLayout" v-slot:extension>
+                <v-tabs v-model="activeTab" grow>
+                    <v-tab v-for="(tab, index) in tabs" :key="index">
+                        <v-icon>mdi-{{ tab }}</v-icon>
+                    </v-tab>
+                </v-tabs>
+            </template>
+        </v-app-bar>
 
-      <v-spacer></v-spacer>
+        <v-content>
+            <div v-if="mobileLayout">
+                <v-tabs-items v-model="activeTab">
+                    <v-tab-item>
+                        <RankingTable></RankingTable>
+                        <v-bottom-navigation app grow>
+                            <RankingActions></RankingActions>
+                        </v-bottom-navigation>
+                    </v-tab-item>
+                    <v-tab-item>
+                        <Calculator></Calculator>
+                        <v-bottom-navigation app grow>
+                            <CalculatorActions></CalculatorActions>
+                        </v-bottom-navigation>
+                    </v-tab-item>
+                    <v-tab-item> </v-tab-item>
+                </v-tabs-items>
+            </div>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-content>
-      <HelloWorld/>
-    </v-content>
-  </v-app>
+            <v-container v-else>
+                <v-row>
+                    <v-col>
+                        <RankingTable></RankingTable>
+                    </v-col>
+                    <v-col>
+                        <Calculator></Calculator>
+                    </v-col>
+                </v-row>
+                <v-row></v-row>
+            </v-container>
+        </v-content>
+    </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import RankingTable from './components/RankingTable.vue';
+import Calculator from './components/Calculator.vue';
+import RankingActions from './components/RankingActions.vue';
+import CalculatorActions from './components/CalculatorActions.vue';
 
 export default {
-  name: 'App',
-
+  name: 'Default',
   components: {
-    HelloWorld,
+    CalculatorActions,
+    RankingActions,
+    Calculator,
+    RankingTable,
   },
-
   data: () => ({
-    //
+    activeTab: null,
+    tabs: ['format-list-numbered', 'calculator', 'information'],
+    isMounted: false,
   }),
+  computed: {
+    mobileLayout() {
+      return this.isMounted && this.$vuetify.breakpoint.smAndDown;
+    },
+  },
+  mounted() {
+    this.isMounted = true;
+  },
 };
 </script>
