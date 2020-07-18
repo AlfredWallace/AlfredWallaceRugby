@@ -16,7 +16,7 @@
             </template>
         </v-app-bar>
 
-        <v-content>
+        <v-main>
             <div v-if="mobileLayout">
                 <v-tabs-items v-model="activeTab">
                     <v-tab-item>
@@ -46,11 +46,12 @@
                 </v-row>
                 <v-row></v-row>
             </v-container>
-        </v-content>
+        </v-main>
     </v-app>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import RankingTable from './components/RankingTable.vue';
 import Calculator from './components/Calculator.vue';
 import RankingActions from './components/RankingActions.vue';
@@ -76,6 +77,12 @@ export default {
   },
   mounted() {
     this.isMounted = true;
+  },
+  created() {
+    this.initWorldRugbyData();
+  },
+  methods: {
+    ...mapActions(['initWorldRugbyData']),
   },
 };
 </script>
