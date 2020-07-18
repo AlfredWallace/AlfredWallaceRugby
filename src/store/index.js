@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import match from './match';
-import team from './team';
+import axios from 'axios';
+import match from './modules/match';
+import team from './modules/team';
 
 Vue.use(Vuex);
 
@@ -48,17 +49,17 @@ const store = new Vuex.Store({
     },
   },
   actions: {
-    async nuxtServerInit({ commit, dispatch }) {
+    async initWorldRugbyData({ commit, dispatch }) {
       commit('INIT_STATE_LOADING');
       try {
-        const worldRugbyData = await this.$axios.$get('https://cmsapi.pulselive.com/rugby/rankings/mru.json');
+        const { data } = await axios.get('https://cmsapi.pulselive.com/rugby/rankings/mru.json');
 
-        if (!Object.prototype.hasOwnProperty.call(worldRugbyData, 'entries') || !Object.prototype.hasOwnProperty.call(worldRugbyData, 'effective') || !Object.prototype.hasOwnProperty.call(worldRugbyData.effective, 'millis')) {
+        if (!Object.prototype.hasOwnProperty.call(data, 'entries') || !Object.prototype.hasOwnProperty.call(data, 'effective') || !Object.prototype.hasOwnProperty.call(data.effective, 'millis')) {
           throw new Error('Data fetched from World Rugby is invalid');
         }
 
-        dispatch('team/initTeams', worldRugbyData.entries);
-        commit('INIT_STATE_SUCCESS', worldRugbyData.effective.millis);
+        dispatch('team/initTeams', data.entries);
+        commit('INIT_STATE_SUCCESS', data.effective.millis);
       } catch (e) {
         commit('INIT_STATE_FAILURE', e);
       }

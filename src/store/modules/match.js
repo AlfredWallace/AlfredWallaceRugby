@@ -1,4 +1,5 @@
 export default {
+  namespaced: true,
   state: () => ({
     matches: [
       {
@@ -32,18 +33,13 @@ export default {
 
   getters: {
     validMatches: (state) => state.matches.filter((match) => match.valid),
-    nbSteps:
-        (state, getters) => getters.validMatches.length,
+    nbSteps: (state, getters) => getters.validMatches.length,
 
     // function getters
-    getNeutralGround:
-        (state) => (index) => state.matches[index].neutralGround,
-    getWorldCup:
-        (state) => (index) => state.matches[index].worldCup,
-    getTeam:
-        (state) => ({ index, ground }) => state.matches[index][ground].team,
-    getScore:
-        (state) => ({ index, ground }) => state.matches[index][ground].score,
+    getNeutralGround: (state) => (index) => state.matches[index].neutralGround,
+    getWorldCup: (state) => (index) => state.matches[index].worldCup,
+    getTeam: (state) => ({ index, ground }) => state.matches[index][ground].team,
+    getScore: (state) => ({ index, ground }) => state.matches[index][ground].score,
   },
 
   mutations: {
