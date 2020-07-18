@@ -20,9 +20,11 @@ import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'RankingActions',
+
   computed: {
     ...mapGetters(['isInitialStep', 'isLastStep']),
   },
+
   methods: {
     ...mapActions(['stepMin', 'stepUp', 'stepDown', 'stepMax']),
   },

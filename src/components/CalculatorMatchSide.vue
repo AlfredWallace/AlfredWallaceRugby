@@ -39,11 +39,13 @@ import { mapState, mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'CalculatorMatchSide',
+
   props: {
     match: {
       type: Object,
       required: true,
     },
+
     ground: {
       type: String,
       required: true,
@@ -51,11 +53,13 @@ export default {
         return ['home', 'away'].includes(value);
       },
     },
+
     index: {
       type: Number,
       required: true,
     },
   },
+
   data() {
     return {
       validation: {
@@ -64,9 +68,11 @@ export default {
       },
     };
   },
+
   computed: {
     ...mapState('team', ['teams']),
     ...mapGetters('match', ['getTeam', 'getScore']),
+
     teamProxy: {
       get() {
         return this.getTeam({ index: this.index, ground: this.ground });
@@ -75,6 +81,7 @@ export default {
         this.setTeam({ index: this.index, ground: this.ground, value });
       },
     },
+
     scoreProxy: {
       get() {
         return this.getScore({ index: this.index, ground: this.ground });
@@ -84,6 +91,7 @@ export default {
       },
     },
   },
+
   methods: {
     ...mapActions('match', ['setTeam', 'setScore']),
   },

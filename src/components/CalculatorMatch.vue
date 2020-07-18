@@ -30,27 +30,33 @@ import CalculatorMatchSide from './CalculatorMatchSide.vue';
 
 export default {
   name: 'CalculatorMatch',
+
   components: {
     CalculatorMatchSide,
   },
+
   props: {
     index: {
       type: Number,
       required: true,
     },
+
     match: {
       type: Object,
       required: true,
     },
   },
+
   data() {
     return {
       matchNumber: this.index + 1,
       ref: `matchForm${this.index}`,
     };
   },
+
   computed: {
     ...mapGetters('match', ['getNeutralGround', 'getWorldCup']),
+
     neutralGroundProxy: {
       get() {
         return this.getNeutralGround(this.index);
@@ -59,6 +65,7 @@ export default {
         this.setNeutralGround({ index: this.index, value });
       },
     },
+
     worldCupProxy: {
       get() {
         return this.getWorldCup(this.index);
@@ -68,13 +75,16 @@ export default {
       },
     },
   },
+
   created() {
     this.$root.$on('validate-all', () => {
       this.validate();
     });
   },
+
   methods: {
     ...mapActions('match', ['deleteMatch', 'setNeutralGround', 'setWorldCup', 'setValid']),
+
     validate() {
       if (this.$refs[this.ref]) {
         this.setValid({ index: this.index, value: this.$refs[this.ref].validate() });

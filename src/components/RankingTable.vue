@@ -48,9 +48,11 @@ import RankingTableCell from './RankingTableCell.vue';
 
 export default {
   name: 'RankingTable',
+
   components: {
     RankingTableCell,
   },
+
   data() {
     return {
       classes: {
@@ -59,6 +61,7 @@ export default {
           second: 'font-italic caption',
         },
       },
+
       headers: [
         {
           text: 'Rank',
@@ -75,6 +78,7 @@ export default {
       ],
     };
   },
+
   computed: {
     ...mapState('team', ['teams']),
     ...mapGetters(['isInitialStep']),

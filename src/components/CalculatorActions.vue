@@ -17,6 +17,7 @@ import { mapActions } from 'vuex';
 
 export default {
   name: 'CalculatorActions',
+
   methods: {
     ...mapActions('match', ['addMatch', 'resetMatches']),
   },

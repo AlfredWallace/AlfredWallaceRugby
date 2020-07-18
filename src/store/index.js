@@ -12,42 +12,52 @@ const store = new Vuex.Store({
     match,
     team,
   },
+
   state: () => ({
     currentStep: 0,
     rankingFreshness: null,
     loading: false,
     errorMessage: null,
   }),
+
   getters: {
     isInitialStep: (state) => state.currentStep === 0,
     isLastStep: (state, getters) => state.currentStep === getters['match/nbSteps'],
   },
+
   mutations: {
     INIT_STATE_LOADING: (state) => {
       state.loading = true;
     },
+
     INIT_STATE_SUCCESS: (state, timestamp) => {
       state.loading = false;
       state.rankingFreshness = timestamp;
       state.errorMessage = null;
     },
+
     INIT_STATE_FAILURE: (state, { message }) => {
       state.loading = false;
       state.errorMessage = message;
     },
+
     STEP_MIN: (state) => {
       state.currentStep = 0;
     },
+
     STEP_UP: (state) => {
       state.currentStep += 1;
     },
+
     STEP_DOWN: (state) => {
       state.currentStep -= 1;
     },
+
     STEP_MAX: (state, maxStep) => {
       state.currentStep = maxStep;
     },
   },
+
   actions: {
     async initWorldRugbyData({ commit, dispatch }) {
       commit('INIT_STATE_LOADING');
@@ -64,22 +74,27 @@ const store = new Vuex.Store({
         commit('INIT_STATE_FAILURE', e);
       }
     },
+
     stepMin({ commit }) {
       commit('STEP_MIN');
     },
+
     stepUp({ commit, getters }) {
       if (!getters.isLastStep) {
         commit('STEP_UP');
       }
     },
+
     stepDown({ commit, getters }) {
       if (!getters.isInitialStep) {
         commit('STEP_DOWN');
       }
     },
+
     stepMax({ commit, getters }) {
       commit('STEP_MAX', getters['match/nbSteps']);
     },
+
     // calculate({ dispatch }) {
     // if (!this.$refs.matchForm.validate()) {
     //   return;

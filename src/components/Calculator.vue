@@ -10,9 +10,11 @@ import CalculatorMatch from './CalculatorMatch.vue';
 
 export default {
   name: 'Calculator',
+
   components: {
     CalculatorMatch,
   },
+
   computed: {
     ...mapState('match', ['matches']),
   },
