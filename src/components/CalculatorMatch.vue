@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       matchNumber: this.index + 1,
-      ref: `matchForm${this.index}`,
+      ref: `match-form-${this.index}`,
     };
   },
 
@@ -74,12 +74,6 @@ export default {
         this.setWorldCup({ index: this.index, value });
       },
     },
-  },
-
-  created() {
-    this.$root.$on('validate-all', () => {
-      this.validate();
-    });
   },
 
   methods: {

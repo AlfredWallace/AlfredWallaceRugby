@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import CalculatorMatch from './CalculatorMatch.vue';
 
 export default {
@@ -15,8 +15,22 @@ export default {
     CalculatorMatch,
   },
 
+  created() {
+    this.$root.$on('validate-all', () => {
+      this.$refs.matches.forEach((ref) => {
+        ref.validate();
+      });
+
+      this.calculate();
+    });
+  },
+
   computed: {
     ...mapState('match', ['matches']),
+  },
+
+  methods: {
+    ...mapActions(['calculate']),
   },
 };
 </script>

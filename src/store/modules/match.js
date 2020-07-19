@@ -35,8 +35,6 @@ export default {
   getters: {
     validMatches: (state) => state.matches.filter((match) => match.valid),
 
-    nbSteps: (state, getters) => getters.validMatches.length,
-
     // function getters
     getNeutralGround: (state) => (index) => state.matches[index].neutralGround,
 

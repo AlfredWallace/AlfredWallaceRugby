@@ -6,16 +6,6 @@ export default {
   }),
 
   getters: {
-    // teamsForCurrentStep: (state, getters, rootState, rootGetters) =>
-    //   state.teams.map(({ id, name, abbreviation, ranks, points }) => ({
-    //     id,
-    //     name,
-    //     abbreviation,
-    //     rank: ranks[rootState.currentStep],
-    //     points: points[rootState.currentStep].rounded,
-    //     previousRank: rootGetters.isInitialStep ? null : ranks[rootState.currentStep - 1],
-    //     previousPoints: rootGetters.isInitialStep ? null : points[rootState.currentStep - 1].rounded
-    //   }))
   },
 
   mutations: {
@@ -25,19 +15,20 @@ export default {
   },
 
   actions: {
-    initTeams: ({ commit }, teams) => {
+    initTeams({ commit, dispatch }, teams) {
       const normalizedTeams = teams.map((team) => ({
         id: team.team.id,
         name: team.team.name,
         abbreviation: team.team.abbreviation,
-        rank: team.pos,
-        points: team.pts,
-        previousRank: null,
-        previousPoints: null,
       }));
 
-      commit('INIT_TEAMS', normalizedTeams);
-    },
+      const initialStep = teams.reduce((acc, team) => {
+        acc[team.team.id] = team.pts;
+        return acc;
+      }, {});
 
+      commit('INIT_TEAMS', normalizedTeams);
+      dispatch('setSteps', [initialStep], { root: true });
+    },
   },
 };

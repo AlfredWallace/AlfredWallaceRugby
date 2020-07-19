@@ -15,6 +15,7 @@ const store = new Vuex.Store({
 
   state: () => ({
     currentStep: 0,
+    steps: [],
     rankingFreshness: null,
     loading: false,
     errorMessage: null,
@@ -22,7 +23,28 @@ const store = new Vuex.Store({
 
   getters: {
     isInitialStep: (state) => state.currentStep === 0,
-    isLastStep: (state, getters) => state.currentStep === getters['match/nbSteps'],
+
+    isLastStep: (state) => state.currentStep === state.steps.length - 1,
+
+    currentRanking: (state, getters) => {
+      const enrichedTeams = state.team.teams.map((teamToEnrich) => {
+        const enrichedTeam = { ...teamToEnrich };
+
+        if (getters.isInitialStep || !Object.prototype.hasOwnProperty.call(state.steps[state.currentStep], teamToEnrich.id)) {
+          enrichedTeam.points = state.steps[0][teamToEnrich.id];
+          enrichedTeam.previousPoints = null;
+        } else {
+          enrichedTeam.points = state.steps[state.currentStep][teamToEnrich.id];
+          enrichedTeam.previousPoints = state.steps[state.currentStep - 1][teamToEnrich.id];
+        }
+
+        return enrichedTeam;
+      });
+
+      enrichedTeams.sort((teamA, teamB) => teamB.points - teamA.points);
+
+      return enrichedTeams;
+    },
   },
 
   mutations: {
@@ -46,15 +68,26 @@ const store = new Vuex.Store({
     },
 
     STEP_UP: (state) => {
+      if (state.currentStep >= state.steps.length - 1) {
+        throw new Error('Trying to STEP_UP outside of bounds.');
+      }
       state.currentStep += 1;
     },
 
     STEP_DOWN: (state) => {
+      if (state.currentStep <= 0) {
+        throw new Error('Trying to STEP_DOWN outside of bounds.');
+      }
+
       state.currentStep -= 1;
     },
 
-    STEP_MAX: (state, maxStep) => {
-      state.currentStep = maxStep;
+    STEP_MAX: (state) => {
+      state.currentStep = state.steps.length - 1;
+    },
+
+    SET_STEPS: (state, steps) => {
+      state.steps = steps;
     },
   },
 
@@ -79,64 +112,70 @@ const store = new Vuex.Store({
       commit('STEP_MIN');
     },
 
-    stepUp({ commit, getters }) {
-      if (!getters.isLastStep) {
-        commit('STEP_UP');
+    stepUp({ commit }) {
+      commit('STEP_UP');
+    },
+
+    stepDown({ commit }) {
+      commit('STEP_DOWN');
+    },
+
+    stepMax({ commit }) {
+      commit('STEP_MAX');
+    },
+
+    setSteps({ commit }, steps) {
+      commit('SET_STEPS', steps);
+    },
+
+    calculate({ state, getters, commit }) {
+      commit('STEP_MIN');
+      commit('SET_STEPS', [].concat(state.steps[0]));
+
+      for (let i = 0, len = getters['match/validMatches'].length; i < len; i += 1) {
+        const validMatch = getters['match/validMatches'][i];
+        const homeTeamId = validMatch.home.team.id;
+        const awayTeamId = validMatch.away.team.id;
+        const homePoints = getters.currentRanking.find((t) => t.id === homeTeamId).points;
+        const awayPoints = getters.currentRanking.find((t) => t.id === awayTeamId).points;
+
+        const homeAdvantage = validMatch.neutralGround ? 0 : 3;
+
+        let pointsDifference = homePoints + homeAdvantage - awayPoints;
+
+        if (pointsDifference < -10) {
+          pointsDifference = -10;
+        } else if (pointsDifference > 10) {
+          pointsDifference = 10;
+        }
+
+        const scoreDifference = validMatch.home.score - validMatch.away.score;
+        let p;
+
+        if (scoreDifference > 0) {
+          p = 1 - (pointsDifference / 10);
+        } else if (scoreDifference < 0) {
+          p = (1 + (pointsDifference / 10)) * (-1);
+        } else {
+          p = (scoreDifference / 10) * (-1);
+        }
+
+        if (Math.abs(scoreDifference) > 15) {
+          p *= 1.5;
+        }
+
+        if (validMatch.worldCup) {
+          p *= 2;
+        }
+
+        const newStep = getters.isInitialStep ? {} : { ...state.steps[state.currentStep] };
+        newStep[homeTeamId] = homePoints + p;
+        newStep[awayTeamId] = awayPoints - p;
+
+        commit('SET_STEPS', state.steps.concat(newStep));
+        commit('STEP_MAX');
       }
     },
-
-    stepDown({ commit, getters }) {
-      if (!getters.isInitialStep) {
-        commit('STEP_DOWN');
-      }
-    },
-
-    stepMax({ commit, getters }) {
-      commit('STEP_MAX', getters['match/nbSteps']);
-    },
-
-    // calculate({ dispatch }) {
-    // if (!this.$refs.matchForm.validate()) {
-    //   return;
-    // }
-    //
-    // const match = this.matches[this.index];
-    // const homeAdvantage = match.neutralGround ? 0 : 3;
-    // const homePoints = match.home.team.points[this.currentStep].raw;
-    // const awayPoints = match.away.team.points[this.currentStep].raw;
-    //
-    // let pointsDifference = homePoints + homeAdvantage - awayPoints;
-    // if (pointsDifference < -10) {
-    //   pointsDifference = -10;
-    // } else if (pointsDifference > 10) {
-    //   pointsDifference = 10;
-    // }
-    //
-    // const scoreDifference = match.home.score - match.away.score;
-    // let p;
-    // if (scoreDifference > 0) {
-    //   p = (-10 - scoreDifference) / 10;
-    // } else if (scoreDifference < 0) {
-    //   p = (10 - scoreDifference) / 10;
-    // } else {
-    //   p = (-scoreDifference) / 10;
-    // }
-    //
-    // if (Math.abs(scoreDifference) > 15) {
-    //   p *= 1.5;
-    // }
-    //
-    // if (match.worldCup) {
-    //   p *= 2;
-    // }
-    // const homeTeam = match.home.team;
-    // const awayTeam = match.away.team;
-    //
-    // this.makeNewStep({
-    //   home: { id: homeTeam.id, rank: homeTeam.rank, points: homePoints + p },
-    //   away: { id: awayTeam.id, rank: awayTeam.rank, points: awayPoints - p },
-    // });
-    // }
   },
 });
 
