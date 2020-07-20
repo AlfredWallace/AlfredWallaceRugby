@@ -108,6 +108,8 @@ const store = new Vuex.Store({
     calculate({
       state, getters, commit, dispatch,
     }) {
+      commit('team/RESET_STEPS');
+
       for (let i = 0, len = getters['match/validMatches'].length; i < len; i += 1) {
         commit('team/INIT_NEW_STEP');
 

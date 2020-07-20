@@ -13,6 +13,13 @@ export default {
       state.teams = teams;
     },
 
+    RESET_STEPS: (state) => {
+      for (let i = 0, len = state.teams.length; i < len; i += 1) {
+        const team = state.teams[i];
+        team.steps = [].concat(team.steps[0]);
+      }
+    },
+
     INIT_NEW_STEP: (state) => {
       let lastStepIndex;
       for (let i = 0, len = state.teams.length; i < len; i += 1) {
