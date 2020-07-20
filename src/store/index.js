@@ -27,7 +27,7 @@ const store = new Vuex.Store({
 
     isInitialStep: (state) => state.currentStep === 0,
 
-    isLastStep: (state, getters) => state.currentStep === getters.nbSteps - 1,
+    isLastStep: (state, getters) => state.currentStep === getters.nbSteps,
 
     currentRanking: (state, getters) => {
       const ranking = state.team.teams.map(({
@@ -64,27 +64,8 @@ const store = new Vuex.Store({
       state.errorMessage = message;
     },
 
-    STEP_MIN: (state) => {
-      state.currentStep = 0;
-    },
-
-    STEP_UP: (state) => {
-      if (state.currentStep >= state.steps.length - 1) {
-        throw new Error('Trying to STEP_UP outside of bounds.');
-      }
-      state.currentStep += 1;
-    },
-
-    STEP_DOWN: (state) => {
-      if (state.currentStep <= 0) {
-        throw new Error('Trying to STEP_DOWN outside of bounds.');
-      }
-
-      state.currentStep -= 1;
-    },
-
-    STEP_MAX: (state) => {
-      state.currentStep = state.steps.length - 1;
+    SET_STEP: (state, step) => {
+      state.currentStep = step;
     },
   },
 
@@ -106,19 +87,23 @@ const store = new Vuex.Store({
     },
 
     stepMin({ commit }) {
-      commit('STEP_MIN');
+      commit('SET_STEP', 0);
     },
 
-    stepUp({ commit }) {
-      commit('STEP_UP');
+    stepUp({ state, commit, getters }) {
+      if (!getters.isLastStep) {
+        commit('SET_STEP', state.currentStep + 1);
+      }
     },
 
-    stepDown({ commit }) {
-      commit('STEP_DOWN');
+    stepDown({ state, commit, getters }) {
+      if (!getters.isInitialStep) {
+        commit('SET_STEP', state.currentStep - 1);
+      }
     },
 
-    stepMax({ commit }) {
-      commit('STEP_MAX');
+    stepMax({ commit, getters }) {
+      commit('SET_STEP', getters.nbSteps);
     },
 
     calculate({ state, getters, commit }) {
