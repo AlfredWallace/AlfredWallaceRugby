@@ -22,28 +22,29 @@ const store = new Vuex.Store({
   }),
 
   getters: {
+
+    nbSteps: (state, getters) => getters['match/validMatches'].length,
+
     isInitialStep: (state) => state.currentStep === 0,
 
-    isLastStep: (state) => state.currentStep === state.steps.length - 1,
+    isLastStep: (state, getters) => state.currentStep === getters.nbSteps - 1,
 
     currentRanking: (state, getters) => {
-      const enrichedTeams = state.team.teams.map((teamToEnrich) => {
-        const enrichedTeam = { ...teamToEnrich };
+      const ranking = state.team.teams.map(({
+        id, name, abbreviation, steps,
+      }) => ({
+        id,
+        name,
+        abbreviation,
+        rank: steps[state.currentStep].rank,
+        previousRank: getters.isInitialStep ? null : steps[state.currentStep - 1].rank,
+        points: steps[state.currentStep].points,
+        previousPoints: getters.isInitialStep ? null : steps[state.currentStep - 1].points,
+      }));
 
-        if (getters.isInitialStep || !Object.prototype.hasOwnProperty.call(state.steps[state.currentStep], teamToEnrich.id)) {
-          enrichedTeam.points = state.steps[0][teamToEnrich.id];
-          enrichedTeam.previousPoints = null;
-        } else {
-          enrichedTeam.points = state.steps[state.currentStep][teamToEnrich.id];
-          enrichedTeam.previousPoints = state.steps[state.currentStep - 1][teamToEnrich.id];
-        }
+      ranking.sort((teamA, teamB) => teamB.points - teamA.points);
 
-        return enrichedTeam;
-      });
-
-      enrichedTeams.sort((teamA, teamB) => teamB.points - teamA.points);
-
-      return enrichedTeams;
+      return ranking;
     },
   },
 
@@ -85,10 +86,6 @@ const store = new Vuex.Store({
     STEP_MAX: (state) => {
       state.currentStep = state.steps.length - 1;
     },
-
-    SET_STEPS: (state, steps) => {
-      state.steps = steps;
-    },
   },
 
   actions: {
@@ -124,20 +121,15 @@ const store = new Vuex.Store({
       commit('STEP_MAX');
     },
 
-    setSteps({ commit }, steps) {
-      commit('SET_STEPS', steps);
-    },
-
     calculate({ state, getters, commit }) {
-      commit('STEP_MIN');
-      commit('SET_STEPS', [].concat(state.steps[0]));
-
       for (let i = 0, len = getters['match/validMatches'].length; i < len; i += 1) {
+        commit('team/INIT_NEW_STEP');
+
         const validMatch = getters['match/validMatches'][i];
         const homeTeamId = validMatch.home.team.id;
         const awayTeamId = validMatch.away.team.id;
-        const homePoints = getters.currentRanking.find((t) => t.id === homeTeamId).points;
-        const awayPoints = getters.currentRanking.find((t) => t.id === awayTeamId).points;
+        const homePoints = state.team.teams.find((browsedTeam) => browsedTeam.id === homeTeamId).steps[i].points;
+        const awayPoints = state.team.teams.find((browsedTeam) => browsedTeam.id === awayTeamId).steps[i].points;
 
         const homeAdvantage = validMatch.neutralGround ? 0 : 3;
 
@@ -168,12 +160,10 @@ const store = new Vuex.Store({
           p *= 2;
         }
 
-        const newStep = getters.isInitialStep ? {} : { ...state.steps[state.currentStep] };
-        newStep[homeTeamId] = homePoints + p;
-        newStep[awayTeamId] = awayPoints - p;
-
-        commit('SET_STEPS', state.steps.concat(newStep));
-        commit('STEP_MAX');
+        commit('team/SET_POINTS', { teamId: homeTeamId, step: i + 1, points: homePoints + p });
+        commit('team/SET_POINTS', { teamId: awayTeamId, step: i + 1, points: awayPoints - p });
+        commit('team/SORT_TEAMS', i + 1);
+        commit('team/SET_RANKS', i + 1);
       }
     },
   },

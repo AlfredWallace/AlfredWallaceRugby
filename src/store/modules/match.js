@@ -16,19 +16,6 @@ export default {
         worldCup: false,
         valid: false,
       },
-      {
-        home: {
-          team: null,
-          score: null,
-        },
-        away: {
-          team: null,
-          score: null,
-        },
-        neutralGround: false,
-        worldCup: false,
-        valid: false,
-      },
     ],
   }),
 
