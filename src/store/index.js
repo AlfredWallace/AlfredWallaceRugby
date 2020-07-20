@@ -15,7 +15,6 @@ const store = new Vuex.Store({
 
   state: () => ({
     currentStep: 0,
-    steps: [],
     rankingFreshness: null,
     loading: false,
     errorMessage: null,
@@ -106,7 +105,9 @@ const store = new Vuex.Store({
       commit('SET_STEP', getters.nbSteps);
     },
 
-    calculate({ state, getters, commit }) {
+    calculate({
+      state, getters, commit, dispatch,
+    }) {
       for (let i = 0, len = getters['match/validMatches'].length; i < len; i += 1) {
         commit('team/INIT_NEW_STEP');
 
@@ -150,6 +151,8 @@ const store = new Vuex.Store({
         commit('team/SORT_TEAMS', i + 1);
         commit('team/SET_RANKS', i + 1);
       }
+
+      dispatch('stepMax');
     },
   },
 });

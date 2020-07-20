@@ -1,7 +1,7 @@
 <template>
   <v-row dense>
     <v-col cols="12">
-      <v-autocomplete v-model="teamProxy" return-object :items="teams" :rules="[validation.required]" item-text="name" placeholder="pick a team" dense outlined auto-select-first hide-details>
+      <v-autocomplete v-model="teamProxy" return-object :items="currentRanking" :rules="[validation.required]" item-text="name" placeholder="pick a team" dense outlined auto-select-first hide-details>
         <template v-slot:item="{ item }">
           <v-row class="truncatedParent">
             <v-col cols="8" class="text-truncate d-flex align-center">
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'CalculatorMatchSide',
@@ -70,7 +70,7 @@ export default {
   },
 
   computed: {
-    ...mapState('team', ['teams']),
+    ...mapGetters(['currentRanking']), // todo : utiliser pour chaque match le ranking progressif et pas le ranking final
     ...mapGetters('match', ['getTeam', 'getScore']),
 
     teamProxy: {
