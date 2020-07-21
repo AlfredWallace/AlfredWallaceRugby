@@ -38,13 +38,24 @@
             <v-container v-else>
                 <v-row>
                     <v-col>
+                        <v-bottom-navigation grow>
+                            <RankingActions></RankingActions>
+                        </v-bottom-navigation>
+                    </v-col>
+                    <v-col>
+                        <v-bottom-navigation grow>
+                            <CalculatorActions></CalculatorActions>
+                        </v-bottom-navigation>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col>
                         <RankingTable></RankingTable>
                     </v-col>
                     <v-col>
                         <Calculator></Calculator>
                     </v-col>
                 </v-row>
-                <v-row></v-row>
             </v-container>
         </v-main>
     </v-app>
