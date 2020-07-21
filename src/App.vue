@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-app-bar app dense :hide-on-scroll="mobileLayout">
-            <v-img src="/awr.svg" alt="Alfred Wallace Rugby logo" height="2.5rem" width="2.5rem" contain class="flex-grow-0" />
+            <v-img :src="require('./assets/awr.svg')" alt="Alfred Wallace Rugby logo" height="2.5rem" width="2.5rem" contain class="flex-grow-0" />
             <v-spacer></v-spacer>
             <v-toolbar-title class="flex-grow-1">
                 Alfred Wallace Rugby
