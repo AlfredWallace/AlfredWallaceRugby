@@ -50,7 +50,8 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import RankingTableCell from './RankingTableCell.vue';
+
+const RankingTableCell = () => import('./RankingTableCell.vue');
 
 export default {
   name: 'RankingTable',

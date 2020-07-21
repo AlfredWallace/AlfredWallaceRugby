@@ -70,19 +70,20 @@
 
 <script>
 import { mapActions } from 'vuex';
-import RankingTable from './components/RankingTable.vue';
-import Calculator from './components/Calculator.vue';
-import RankingActions from './components/RankingActions.vue';
-import CalculatorActions from './components/CalculatorActions.vue';
-import About from './components/About.vue';
+
+const About = () => import('./components/About.vue');
+const Calculator = () => import('./components/Calculator.vue');
+const CalculatorActions = () => import('./components/CalculatorActions.vue');
+const RankingActions = () => import('./components/RankingActions.vue');
+const RankingTable = () => import('./components/RankingTable.vue');
 
 export default {
   name: 'Default',
   components: {
     About,
+    Calculator,
     CalculatorActions,
     RankingActions,
-    Calculator,
     RankingTable,
   },
   data: () => ({
