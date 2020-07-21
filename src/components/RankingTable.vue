@@ -1,6 +1,14 @@
 <template>
   <v-card class="mb-12" :class="[$vuetify.breakpoint.smAndDown ? 'pb-4' : 'pa-4']" :outlined="$vuetify.breakpoint.smAndDown">
-    <v-data-table :headers="headers" :items="currentRanking" :items-per-page="currentRanking.length" :item-class="rowClasses" :mobile-breakpoint="0" disable-sort hide-default-footer>
+    <v-data-table
+        :headers="headers"
+        :items="currentRanking"
+        :items-per-page="itemsPerPage"
+        :footer-props="footerProps"
+        :item-class="rowClasses"
+        :mobile-breakpoint="0"
+        disable-sort
+    >
       <template v-slot:item.rank="{ item }">
         <RankingTableCell :show-second-slot="!isInitialStep">
           <template v-slot:first>
@@ -80,6 +88,21 @@ export default {
   computed: {
     ...mapState(['currentStep']),
     ...mapGetters(['isInitialStep', 'currentRanking']),
+
+    itemsPerPage() {
+      return this.$vuetify.breakpoint.smAndDown ? this.currentRanking.length : 10;
+    },
+
+    footerProps() {
+      if (this.$vuetify.breakpoint.smAndDown) {
+        return {};
+      }
+
+      return {
+        'items-per-page-options': [10, 20, -1],
+        'items-per-page-text': 'Show',
+      };
+    },
   },
 
   methods: {
