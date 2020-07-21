@@ -31,7 +31,9 @@
                             <CalculatorActions></CalculatorActions>
                         </v-bottom-navigation>
                     </v-tab-item>
-                    <v-tab-item> </v-tab-item>
+                    <v-tab-item>
+                        <About></About>
+                    </v-tab-item>
                 </v-tabs-items>
             </div>
 
@@ -56,6 +58,11 @@
                         <Calculator></Calculator>
                     </v-col>
                 </v-row>
+                <v-row>
+                    <v-col>
+                        <About></About>
+                    </v-col>
+                </v-row>
             </v-container>
         </v-main>
     </v-app>
@@ -67,10 +74,12 @@ import RankingTable from './components/RankingTable.vue';
 import Calculator from './components/Calculator.vue';
 import RankingActions from './components/RankingActions.vue';
 import CalculatorActions from './components/CalculatorActions.vue';
+import About from './components/About.vue';
 
 export default {
   name: 'Default',
   components: {
+    About,
     CalculatorActions,
     RankingActions,
     Calculator,

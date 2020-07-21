@@ -137,10 +137,10 @@ const store = new Vuex.Store({
         } else if (scoreDifference < 0) {
           p = (1 + (pointsDifference / 10)) * (-1);
         } else {
-          p = (scoreDifference / 10) * (-1);
+          p = (pointsDifference / 10) * (-1);
         }
 
-        if (Math.abs(scoreDifference) > 15) {
+        if (Math.abs(pointsDifference) > 15) {
           p *= 1.5;
         }
 
