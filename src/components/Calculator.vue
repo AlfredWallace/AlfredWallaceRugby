@@ -7,7 +7,7 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 
-const CalculatorMatch = () => import('./CalculatorMatch.vue');
+import CalculatorMatch from './CalculatorMatch.vue';
 
 export default {
   name: 'Calculator',

@@ -27,7 +27,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
-const CalculatorMatchSide = () => import('./CalculatorMatchSide.vue');
+import CalculatorMatchSide from './CalculatorMatchSide.vue';
 
 export default {
   name: 'CalculatorMatch',
