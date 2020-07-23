@@ -35,11 +35,12 @@ const store = new Vuex.Store({
         id,
         name,
         abbreviation,
-        originalRank: steps[0].rank,
         rank: steps[state.currentStep].rank,
         previousRank: getters.isInitialStep ? null : steps[state.currentStep - 1].rank,
+        originalRank: steps[0].rank,
         points: steps[state.currentStep].points,
         previousPoints: getters.isInitialStep ? null : steps[state.currentStep - 1].points,
+        originalPoints: steps[0].points,
       }));
 
       ranking.sort((teamA, teamB) => teamB.points - teamA.points);
