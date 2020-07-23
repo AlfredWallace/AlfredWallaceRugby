@@ -1,11 +1,12 @@
 <template>
-    <v-app>
+    <v-app :dark="isDark">
         <v-app-bar app dense :hide-on-scroll="mobileLayout">
             <v-img :src="require('./assets/awr.svg')" alt="Alfred Wallace Rugby logo" height="2.5rem" width="2.5rem" contain class="flex-grow-0" />
             <v-spacer></v-spacer>
             <v-toolbar-title class="flex-grow-1">
-                Alfred Wallace Rugby
+                {{ siteTitle }}
             </v-toolbar-title>
+            <v-switch hide-details v-model="isDark" append-icon="mdi-weather-night"></v-switch>
 
             <template v-if="mobileLayout" v-slot:extension>
                 <v-tabs v-model="activeTab" grow>
@@ -95,9 +96,24 @@ export default {
     mobileLayout() {
       return this.isMounted && this.$vuetify.breakpoint.smAndDown;
     },
+
+    siteTitle() {
+      return this.mobileLayout ? 'AWR' : 'Alfred Wallace Rugby';
+    },
+
+    isDark: {
+      get() {
+        return this.$vuetify.theme.dark;
+      },
+      set(value) {
+        this.$vuetify.theme.dark = value;
+        localStorage.setItem('awr-theme-choice', value ? 'DARK' : 'LIGHT');
+      },
+    },
   },
   mounted() {
     this.isMounted = true;
+    this.$vuetify.theme.dark = localStorage.getItem('awr-theme-choice') === 'DARK';
   },
   created() {
     this.initWorldRugbyData();
