@@ -120,7 +120,7 @@ export default {
         return 'red lighten-5';
       }
 
-      if (item.points !== item.previousPoints) {
+      if (item.rank !== item.originalRank || item.points !== item.previousPoints) {
         return 'blue lighten-5';
       }
 

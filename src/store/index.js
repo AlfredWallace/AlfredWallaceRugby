@@ -35,6 +35,7 @@ const store = new Vuex.Store({
         id,
         name,
         abbreviation,
+        originalRank: steps[0].rank,
         rank: steps[state.currentStep].rank,
         previousRank: getters.isInitialStep ? null : steps[state.currentStep - 1].rank,
         points: steps[state.currentStep].points,
