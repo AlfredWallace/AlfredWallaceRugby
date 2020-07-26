@@ -5,12 +5,14 @@ export default {
 
   state: () => ({
     matches: [
-      new Match(),
+      new Match(1),
     ],
   }),
 
   getters: {
     validMatches: (state) => state.matches.filter((match) => match.valid),
+
+    matchMaxNumber: (state) => Math.max(...state.matches.map((match) => match.number)),
 
     // function getters
     getNeutralGround: (state) => (index) => state.matches[index].neutralGround,
@@ -25,12 +27,12 @@ export default {
   mutations: {
     RESET_MATCHES: (state) => {
       state.matches = [
-        new Match(),
+        new Match(1),
       ];
     },
 
-    ADD_MATCH: (state) => {
-      state.matches.push(new Match());
+    ADD_MATCH: (state, matchNumber) => {
+      state.matches.push(new Match(matchNumber));
     },
 
     DELETE_MATCH: (state, index) => {
@@ -63,8 +65,8 @@ export default {
       commit('RESET_MATCHES');
     },
 
-    addMatch({ commit }) {
-      commit('ADD_MATCH');
+    addMatch({ commit, getters }) {
+      commit('ADD_MATCH', getters.matchMaxNumber + 1);
     },
 
     deleteMatch({ commit }, index) {

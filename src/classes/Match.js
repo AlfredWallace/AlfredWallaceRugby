@@ -1,5 +1,6 @@
 export default class Match {
-  constructor() {
+  constructor(matchNumber) {
+    this.number = matchNumber;
     this.home = {
       team: null,
       score: null,

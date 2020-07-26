@@ -1,6 +1,6 @@
 <template>
   <v-card :outlined="$vuetify.breakpoint.smAndDown" class="mb-6">
-    <v-card-title> Match no. {{ matchNumber }} </v-card-title>
+    <v-card-title> Match no. {{ match.number }} </v-card-title>
     <v-form :ref="ref">
       <v-container>
         <CalculatorMatchSide :index="index" :match="match" ground="home"></CalculatorMatchSide>
@@ -19,7 +19,7 @@
     </v-form>
 
     <v-card-actions class="d-flex justify-start">
-      <v-btn color="error" outlined @click="deleteMatch(index)"> Delete match no. {{ matchNumber }} </v-btn>
+      <v-btn color="error" outlined @click="deleteMatch(index)"> Delete match no. {{ match.number }} </v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -51,7 +51,6 @@ export default {
 
   data() {
     return {
-      matchNumber: this.index + 1,
       ref: `match-form-${this.index}`,
     };
   },
