@@ -28,6 +28,7 @@
 import { mapActions, mapGetters } from 'vuex';
 
 import CalculatorMatchSide from './CalculatorMatchSide.vue';
+import Match from '../classes/Match';
 
 export default {
   name: 'CalculatorMatch',
@@ -43,7 +44,7 @@ export default {
     },
 
     match: {
-      type: Object,
+      type: Match,
       required: true,
     },
   },

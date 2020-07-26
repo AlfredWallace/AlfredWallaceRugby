@@ -1,21 +1,11 @@
+import Match from '../../classes/Match';
+
 export default {
   namespaced: true,
 
   state: () => ({
     matches: [
-      {
-        home: {
-          team: null,
-          score: null,
-        },
-        away: {
-          team: null,
-          score: null,
-        },
-        neutralGround: false,
-        worldCup: false,
-        valid: false,
-      },
+      new Match(),
     ],
   }),
 
@@ -35,36 +25,12 @@ export default {
   mutations: {
     RESET_MATCHES: (state) => {
       state.matches = [
-        {
-          home: {
-            team: null,
-            score: null,
-          },
-          away: {
-            team: null,
-            score: null,
-          },
-          neutralGround: false,
-          worldCup: false,
-          valid: false,
-        },
+        new Match(),
       ];
     },
 
     ADD_MATCH: (state) => {
-      state.matches.push({
-        home: {
-          team: null,
-          score: null,
-        },
-        away: {
-          team: null,
-          score: null,
-        },
-        neutralGround: false,
-        worldCup: false,
-        valid: false,
-      });
+      state.matches.push(new Match());
     },
 
     DELETE_MATCH: (state, index) => {
