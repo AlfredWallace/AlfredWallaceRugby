@@ -12,7 +12,13 @@ export default {
   getters: {
     validMatches: (state) => state.matches.filter((match) => match.valid),
 
-    matchMaxNumber: (state) => Math.max(...state.matches.map((match) => match.number)),
+    matchMaxNumber: (state) => {
+      if (state.matches.length === 0) {
+        return 0;
+      }
+
+      return Math.max(...state.matches.map((match) => match.number));
+    },
 
     // function getters
     getNeutralGround: (state) => (index) => state.matches[index].neutralGround,
@@ -22,6 +28,20 @@ export default {
     getTeam: (state) => ({ index, ground }) => state.matches[index][ground].team,
 
     getScore: (state) => ({ index, ground }) => state.matches[index][ground].score,
+
+    getFirstPreviousValidMatchStep: (state) => (matchIndex) => {
+      if (matchIndex === 0) {
+        return 0;
+      }
+
+      for (let i = matchIndex - 1; i >= 0; i -= 1) {
+        if (state.matches[i].valid) {
+          return state.matches[i].associatedStep;
+        }
+      }
+
+      return 0;
+    },
   },
 
   mutations: {
@@ -41,6 +61,10 @@ export default {
 
     SET_VALID: (state, { index, value }) => {
       state.matches[index].valid = value;
+    },
+
+    SET_ASSOCIATED_STEP: (state, { index, associatedStep }) => {
+      state.matches[index].associatedStep = associatedStep;
     },
 
     SET_NEUTRAL_GROUND: (state, { index, value }) => {

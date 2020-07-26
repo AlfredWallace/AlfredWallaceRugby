@@ -47,6 +47,22 @@ const store = new Vuex.Store({
 
       return ranking;
     },
+
+    // function getters
+    getSimpleRankingForStep: (state) => (step) => {
+      const ranking = state.team.teams.map(({
+        id, name, abbreviation, steps,
+      }) => ({
+        id,
+        name,
+        abbreviation,
+        points: steps[step].points,
+      }));
+
+      ranking.sort((teamA, teamB) => teamB.points - teamA.points);
+
+      return ranking;
+    },
   },
 
   mutations: {
@@ -113,9 +129,11 @@ const store = new Vuex.Store({
       commit('team/RESET_STEPS');
 
       for (let i = 0, len = getters['match/validMatches'].length; i < len; i += 1) {
-        commit('team/INIT_NEW_STEP');
-
         const validMatch = getters['match/validMatches'][i];
+
+        commit('team/INIT_NEW_STEP');
+        commit('match/SET_ASSOCIATED_STEP', { index: state.match.matches.findIndex((m) => m.number === validMatch.number), associatedStep: getters['team/maxStep'] });
+
         const homeTeamId = validMatch.home.team.id;
         const awayTeamId = validMatch.away.team.id;
         const homePoints = state.team.teams.find((browsedTeam) => browsedTeam.id === homeTeamId).steps[i].points;

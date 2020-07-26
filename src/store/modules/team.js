@@ -6,6 +6,7 @@ export default {
   }),
 
   getters: {
+    maxStep: (state) => state.teams[0].steps.length - 1,
   },
 
   mutations: {
