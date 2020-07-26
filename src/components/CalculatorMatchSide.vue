@@ -29,7 +29,7 @@
     <v-spacer></v-spacer>
 
     <v-col cols="8" class="d-flex align-center">
-      new rank:
+      result: {{ result | displayRounded }}
     </v-col>
   </v-row>
 </template>
@@ -73,6 +73,15 @@ export default {
   computed: {
     ...mapGetters(['getSimpleRankingForStep', 'currentRanking']),
     ...mapGetters('match', ['getTeam', 'getScore', 'getFirstPreviousValidMatchStep']),
+    ...mapGetters('team', ['getPointsForStep']),
+
+    result() {
+      if (!this.match.valid || this.match.associatedStep === null) {
+        return '';
+      }
+
+      return this.getPointsForStep({ teamId: this.match[this.ground].team.id, step: this.match.associatedStep });
+    },
 
     localRanking() {
       return this.getSimpleRankingForStep(this.getFirstPreviousValidMatchStep(this.index));

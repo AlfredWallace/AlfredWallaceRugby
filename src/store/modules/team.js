@@ -7,6 +7,9 @@ export default {
 
   getters: {
     maxStep: (state) => state.teams[0].steps.length - 1,
+
+    // function getters
+    getPointsForStep: (state) => ({ teamId, step }) => state.teams.find((t) => t.id === teamId).steps[step].points,
   },
 
   mutations: {
