@@ -4,6 +4,7 @@
         :headers="headers"
         :items="currentRanking"
         :items-per-page="itemsPerPage"
+        :hide-default-footer="$vuetify.breakpoint.smAndDown"
         :footer-props="footerProps"
         :item-class="rowClasses"
         :mobile-breakpoint="0"
