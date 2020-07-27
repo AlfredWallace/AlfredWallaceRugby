@@ -7,12 +7,12 @@
         <CalculatorMatchSide :index="index" :match="match" ground="away"></CalculatorMatchSide>
         <v-row dense>
           <v-col>
-            <v-switch v-model="neutralGroundProxy" label="Played on neutral ground ?" hide-details> </v-switch>
+            <v-switch color="info" v-model="neutralGroundProxy" label="Played on neutral ground ?" hide-details> </v-switch>
           </v-col>
         </v-row>
         <v-row dense>
           <v-col>
-            <v-switch v-model="worldCupProxy" label="World Cup match ?" hide-details> </v-switch>
+            <v-switch color="info" v-model="worldCupProxy" label="World Cup match ?" hide-details> </v-switch>
           </v-col>
         </v-row>
       </v-container>

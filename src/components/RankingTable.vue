@@ -114,15 +114,15 @@ export default {
       }
 
       if (item.rank < item.previousRank) {
-        return `green ${this.$vuetify.theme.dark ? 'darken-4' : 'lighten-5'}`;
+        return 'success--text';
       }
 
       if (item.rank > item.previousRank) {
-        return `red ${this.$vuetify.theme.dark ? 'darken-4' : 'lighten-5'}`;
+        return 'error--text';
       }
 
       if (item.rank !== item.originalRank || item.points !== item.originalPoints) {
-        return `blue ${this.$vuetify.theme.dark ? 'darken-4' : 'lighten-5'}`;
+        return 'info--text';
       }
 
       return '';

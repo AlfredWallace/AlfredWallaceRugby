@@ -6,10 +6,10 @@
             <v-toolbar-title class="flex-grow-1">
                 {{ siteTitle }}
             </v-toolbar-title>
-            <v-switch hide-details v-model="isDark" append-icon="mdi-weather-night"></v-switch>
+            <v-switch color="info" hide-details v-model="isDark" append-icon="mdi-weather-night"></v-switch>
 
             <template v-if="mobileLayout" v-slot:extension>
-                <v-tabs v-model="activeTab" grow>
+                <v-tabs color="info" v-model="activeTab" grow>
                     <v-tab v-for="(tab, index) in tabs" :key="index">
                         <v-icon>mdi-{{ tab }}</v-icon>
                     </v-tab>
@@ -80,6 +80,7 @@ import RankingTable from './components/RankingTable.vue';
 
 export default {
   name: 'Default',
+
   components: {
     About,
     Calculator,
@@ -87,11 +88,13 @@ export default {
     RankingActions,
     RankingTable,
   },
+
   data: () => ({
     activeTab: null,
     tabs: ['format-list-numbered', 'calculator', 'information'],
     isMounted: false,
   }),
+
   computed: {
     mobileLayout() {
       return this.isMounted && this.$vuetify.breakpoint.smAndDown;
@@ -111,13 +114,16 @@ export default {
       },
     },
   },
+
   mounted() {
     this.isMounted = true;
     this.$vuetify.theme.dark = localStorage.getItem('awr-theme-choice') === 'DARK';
   },
+
   created() {
     this.initWorldRugbyData();
   },
+
   methods: {
     ...mapActions(['initWorldRugbyData']),
   },
