@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import axios from 'axios';
 import match from './modules/match';
 import team from './modules/team';
+import calculateCoeff from '../services/calculateCoeff';
 
 Vue.use(Vuex);
 
@@ -139,34 +140,7 @@ const store = new Vuex.Store({
         const homePoints = state.team.teams.find((browsedTeam) => browsedTeam.id === homeTeamId).steps[i].points;
         const awayPoints = state.team.teams.find((browsedTeam) => browsedTeam.id === awayTeamId).steps[i].points;
 
-        const homeAdvantage = validMatch.neutralGround ? 0 : 3;
-
-        let pointsDifference = homePoints + homeAdvantage - awayPoints;
-
-        if (pointsDifference < -10) {
-          pointsDifference = -10;
-        } else if (pointsDifference > 10) {
-          pointsDifference = 10;
-        }
-
-        const scoreDifference = validMatch.home.score - validMatch.away.score;
-        let p;
-
-        if (scoreDifference > 0) {
-          p = 1 - (pointsDifference / 10);
-        } else if (scoreDifference < 0) {
-          p = (1 + (pointsDifference / 10)) * (-1);
-        } else {
-          p = (pointsDifference / 10) * (-1);
-        }
-
-        if (Math.abs(pointsDifference) > 15) {
-          p *= 1.5;
-        }
-
-        if (validMatch.worldCup) {
-          p *= 2;
-        }
+        const p = calculateCoeff({ match: validMatch, homePoints, awayPoints });
 
         commit('team/SET_POINTS', { teamId: homeTeamId, step: i + 1, points: homePoints + p });
         commit('team/SET_POINTS', { teamId: awayTeamId, step: i + 1, points: awayPoints - p });
