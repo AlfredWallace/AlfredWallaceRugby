@@ -10,7 +10,7 @@
         :mobile-breakpoint="0"
         disable-sort
     >
-      <template v-slot:item.rank="{ item }">
+      <template v-slot:[`item.rank`]="{ item }">
         <RankingTableCell :show-second-slot="!isInitialStep">
           <template v-slot:first>
             <span :class="classes.slots.first">
@@ -23,7 +23,7 @@
         </RankingTableCell>
       </template>
 
-      <template v-slot:item.team="{ item }">
+      <template v-slot:[`item.team`]="{ item }">
         <RankingTableCell :show-second-slot="false">
           <template v-slot:first>
             <span class="font-weight-bold">
@@ -33,7 +33,7 @@
         </RankingTableCell>
       </template>
 
-      <template v-slot:item.points="{ item }">
+      <template v-slot:[`item.points`]="{ item }">
         <RankingTableCell :show-second-slot="!isInitialStep">
           <template v-slot:first>
             <span :class="classes.slots.first">
