@@ -81,17 +81,65 @@ describe('Calculator', () => {
     {
       homeScore: 25, awayScore: 22, neutralGround: true, worldCup: false, homePoints: 76.24, awayPoints: 76.24, result: 1,
     },
+    {
+      homeScore: 25, awayScore: 22, neutralGround: true, worldCup: false, homePoints: 76.24, awayPoints: 74.11, result: 0.79,
+    },
+    {
+      homeScore: 25, awayScore: 22, neutralGround: true, worldCup: false, homePoints: 76.24, awayPoints: 52.19, result: 0,
+    },
+    {
+      homeScore: 25, awayScore: 22, neutralGround: true, worldCup: false, homePoints: 76.24, awayPoints: 79.11, result: 1.29,
+    },
+    {
+      homeScore: 25, awayScore: 22, neutralGround: true, worldCup: false, homePoints: 76.24, awayPoints: 94.53, result: 2,
+    },
     //
     {
       homeScore: 25, awayScore: 22, neutralGround: true, worldCup: true, homePoints: 76.24, awayPoints: 76.24, result: 2,
+    },
+    {
+      homeScore: 25, awayScore: 22, neutralGround: true, worldCup: true, homePoints: 76.24, awayPoints: 74.11, result: 1.57,
+    },
+    {
+      homeScore: 25, awayScore: 22, neutralGround: true, worldCup: true, homePoints: 76.24, awayPoints: 52.19, result: 0,
+    },
+    {
+      homeScore: 25, awayScore: 22, neutralGround: true, worldCup: true, homePoints: 76.24, awayPoints: 79.11, result: 2.57,
+    },
+    {
+      homeScore: 25, awayScore: 22, neutralGround: true, worldCup: true, homePoints: 76.24, awayPoints: 94.53, result: 4,
     },
     //
     {
       homeScore: 25, awayScore: 22, neutralGround: false, worldCup: false, homePoints: 76.24, awayPoints: 76.24, result: 0.7,
     },
+    {
+      homeScore: 25, awayScore: 22, neutralGround: false, worldCup: false, homePoints: 76.24, awayPoints: 74.11, result: 0.49,
+    },
+    {
+      homeScore: 25, awayScore: 22, neutralGround: false, worldCup: false, homePoints: 76.24, awayPoints: 52.19, result: 0,
+    },
+    {
+      homeScore: 25, awayScore: 22, neutralGround: false, worldCup: false, homePoints: 76.24, awayPoints: 79.11, result: 0.99,
+    },
+    {
+      homeScore: 25, awayScore: 22, neutralGround: false, worldCup: false, homePoints: 76.24, awayPoints: 94.53, result: 2,
+    },
     //
     {
       homeScore: 25, awayScore: 22, neutralGround: false, worldCup: true, homePoints: 76.24, awayPoints: 76.24, result: 1.4,
+    },
+    {
+      homeScore: 25, awayScore: 22, neutralGround: false, worldCup: true, homePoints: 76.24, awayPoints: 74.11, result: 0.97,
+    },
+    {
+      homeScore: 25, awayScore: 22, neutralGround: false, worldCup: true, homePoints: 76.24, awayPoints: 52.19, result: 0,
+    },
+    {
+      homeScore: 25, awayScore: 22, neutralGround: false, worldCup: true, homePoints: 76.24, awayPoints: 79.11, result: 1.97,
+    },
+    {
+      homeScore: 25, awayScore: 22, neutralGround: false, worldCup: true, homePoints: 76.24, awayPoints: 94.53, result: 4,
     },
     //
     {
