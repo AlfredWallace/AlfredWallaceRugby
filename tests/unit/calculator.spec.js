@@ -32,17 +32,23 @@ describe('Calculator', () => {
     {
       homeScore: 8, awayScore: 0, neutralGround: true, worldCup: true, homePoints: 0, awayPoints: 0, result: 2,
     },
-    // {
-    //   homeScore: 8, awayScore: 0, neutralGround: false, worldCup: false, homePoints: 0, awayPoints: 0, result: 1,
-    // },
-    // {
-    //   homeScore: 8, awayScore: 0, neutralGround: false, worldCup: true, homePoints: 0, awayPoints: 0, result: 2,
-    // },
+    {
+      homeScore: 8, awayScore: 0, neutralGround: false, worldCup: false, homePoints: 0, awayPoints: 0, result: 0.7,
+    },
+    {
+      homeScore: 8, awayScore: 0, neutralGround: false, worldCup: true, homePoints: 0, awayPoints: 0, result: 1.4,
+    },
     {
       homeScore: 17, awayScore: 0, neutralGround: true, worldCup: false, homePoints: 0, awayPoints: 0, result: 1.5,
     },
     {
       homeScore: 17, awayScore: 0, neutralGround: true, worldCup: true, homePoints: 0, awayPoints: 0, result: 3,
+    },
+    {
+      homeScore: 17, awayScore: 0, neutralGround: false, worldCup: false, homePoints: 0, awayPoints: 0, result: 1.05,
+    },
+    {
+      homeScore: 17, awayScore: 0, neutralGround: false, worldCup: true, homePoints: 0, awayPoints: 0, result: 2.1,
     },
     {
       homeScore: 0, awayScore: 8, neutralGround: true, worldCup: false, homePoints: 0, awayPoints: 0, result: -1,
@@ -51,10 +57,22 @@ describe('Calculator', () => {
       homeScore: 0, awayScore: 8, neutralGround: true, worldCup: true, homePoints: 0, awayPoints: 0, result: -2,
     },
     {
+      homeScore: 0, awayScore: 8, neutralGround: false, worldCup: false, homePoints: 0, awayPoints: 0, result: -1.3,
+    },
+    {
+      homeScore: 0, awayScore: 8, neutralGround: false, worldCup: true, homePoints: 0, awayPoints: 0, result: -2.6,
+    },
+    {
       homeScore: 0, awayScore: 17, neutralGround: true, worldCup: false, homePoints: 0, awayPoints: 0, result: -1.5,
     },
     {
       homeScore: 0, awayScore: 17, neutralGround: true, worldCup: true, homePoints: 0, awayPoints: 0, result: -3,
+    },
+    {
+      homeScore: 0, awayScore: 17, neutralGround: false, worldCup: false, homePoints: 0, awayPoints: 0, result: -1.95,
+    },
+    {
+      homeScore: 0, awayScore: 17, neutralGround: false, worldCup: true, homePoints: 0, awayPoints: 0, result: -3.9,
     },
     {
       homeScore: 25, awayScore: 25, neutralGround: true, worldCup: false, homePoints: 13.37, awayPoints: 13.37, result: 0,
@@ -75,10 +93,22 @@ describe('Calculator', () => {
       homeScore: 25, awayScore: 22, neutralGround: true, worldCup: true, homePoints: 13.37, awayPoints: 13.37, result: 2,
     },
     {
+      homeScore: 25, awayScore: 22, neutralGround: false, worldCup: false, homePoints: 13.37, awayPoints: 13.37, result: 0.7,
+    },
+    {
+      homeScore: 25, awayScore: 22, neutralGround: false, worldCup: true, homePoints: 13.37, awayPoints: 13.37, result: 1.4,
+    },
+    {
       homeScore: 25, awayScore: 9, neutralGround: true, worldCup: false, homePoints: 13.37, awayPoints: 13.37, result: 1.5,
     },
     {
       homeScore: 25, awayScore: 9, neutralGround: true, worldCup: true, homePoints: 13.37, awayPoints: 13.37, result: 3,
+    },
+    {
+      homeScore: 25, awayScore: 9, neutralGround: false, worldCup: false, homePoints: 13.37, awayPoints: 13.37, result: 1.05,
+    },
+    {
+      homeScore: 25, awayScore: 9, neutralGround: false, worldCup: true, homePoints: 13.37, awayPoints: 13.37, result: 2.1,
     },
     {
       homeScore: 22, awayScore: 25, neutralGround: true, worldCup: false, homePoints: 13.37, awayPoints: 13.37, result: -1,
@@ -87,10 +117,22 @@ describe('Calculator', () => {
       homeScore: 22, awayScore: 25, neutralGround: true, worldCup: true, homePoints: 13.37, awayPoints: 13.37, result: -2,
     },
     {
+      homeScore: 22, awayScore: 25, neutralGround: false, worldCup: false, homePoints: 13.37, awayPoints: 13.37, result: -1.3,
+    },
+    {
+      homeScore: 22, awayScore: 25, neutralGround: false, worldCup: true, homePoints: 13.37, awayPoints: 13.37, result: -2.6,
+    },
+    {
       homeScore: 9, awayScore: 25, neutralGround: true, worldCup: false, homePoints: 13.37, awayPoints: 13.37, result: -1.5,
     },
     {
       homeScore: 9, awayScore: 25, neutralGround: true, worldCup: true, homePoints: 13.37, awayPoints: 13.37, result: -3,
+    },
+    {
+      homeScore: 9, awayScore: 25, neutralGround: false, worldCup: false, homePoints: 13.37, awayPoints: 13.37, result: -1.95,
+    },
+    {
+      homeScore: 9, awayScore: 25, neutralGround: false, worldCup: true, homePoints: 13.37, awayPoints: 13.37, result: -3.9,
     },
   ];
 
