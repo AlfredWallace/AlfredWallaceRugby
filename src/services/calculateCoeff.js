@@ -28,5 +28,9 @@ export default function ({ match, homePoints, awayPoints }) {
     p *= 2;
   }
 
+  if (Object.is(p, -0)) {
+    p = 0;
+  }
+
   return p;
 }
