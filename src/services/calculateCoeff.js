@@ -1,5 +1,7 @@
-export default function ({ match, homePoints, awayPoints }) {
-  const homeAdvantage = match.neutralGround ? 0 : 3;
+export default function ({
+  homeScore, awayScore, neutralGround, worldCup, homePoints, awayPoints,
+}) {
+  const homeAdvantage = neutralGround ? 0 : 3;
 
   let weightedPointsDifference = homePoints + homeAdvantage - awayPoints;
 
@@ -9,7 +11,7 @@ export default function ({ match, homePoints, awayPoints }) {
     weightedPointsDifference = 10;
   }
 
-  const scoreDifference = match.home.score - match.away.score;
+  const scoreDifference = homeScore - awayScore;
   let p;
 
   if (scoreDifference > 0) {
@@ -24,7 +26,7 @@ export default function ({ match, homePoints, awayPoints }) {
     p *= 1.5;
   }
 
-  if (match.worldCup) {
+  if (worldCup) {
     p *= 2;
   }
 

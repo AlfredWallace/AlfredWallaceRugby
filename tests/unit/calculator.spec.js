@@ -1,16 +1,4 @@
-import Match from '../../src/classes/Match';
 import calculateCoeff from '../../src/services/calculateCoeff';
-
-function makeTestMatch({
-  homeScore, awayScore, neutralGround = false, worldCup = false,
-}) {
-  const match = new Match(0);
-  match.home.score = homeScore;
-  match.away.score = awayScore;
-  match.neutralGround = neutralGround;
-  match.worldCup = worldCup;
-  return match;
-}
 
 describe('Calculator', () => {
   const dataSet = [
@@ -339,10 +327,19 @@ describe('Calculator', () => {
     homeScore, awayScore, neutralGround, worldCup, homePoints, awayPoints, result,
   }) => {
     test(`calculateCoeff: Team A (rank: ${homePoints}) scores ${homeScore} / Team B (rank: ${awayPoints}) scores ${awayScore} / neutral ground : ${neutralGround} / world cup : ${worldCup} / points exchanged should be : ${result}`, () => {
-      const match = makeTestMatch({
-        homeScore, awayScore, neutralGround, worldCup,
+      let coeff = calculateCoeff({
+        homeScore,
+        awayScore,
+        neutralGround,
+        worldCup,
+        homePoints,
+        awayPoints,
       });
-      expect((Math.round((Math.round(calculateCoeff({ match, homePoints, awayPoints }) * 1000) / 1000) * 100)) / 100).toEqual(result);
+
+      coeff = Math.round(coeff * 1000) / 1000;
+      coeff = Math.round(coeff * 100) / 100;
+
+      expect(coeff).toEqual(result);
     });
   });
 });

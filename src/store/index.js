@@ -140,7 +140,14 @@ const store = new Vuex.Store({
         const homePoints = state.team.teams.find((browsedTeam) => browsedTeam.id === homeTeamId).steps[i].points;
         const awayPoints = state.team.teams.find((browsedTeam) => browsedTeam.id === awayTeamId).steps[i].points;
 
-        const p = calculateCoeff({ match: validMatch, homePoints, awayPoints });
+        const p = calculateCoeff({
+          homeScore: validMatch.home.score,
+          awayScore: validMatch.away.score,
+          neutralGround: validMatch.neutralGround,
+          worldCup: validMatch.worldCup,
+          homePoints,
+          awayPoints,
+        });
 
         commit('team/SET_POINTS', { teamId: homeTeamId, step: i + 1, points: homePoints + p });
         commit('team/SET_POINTS', { teamId: awayTeamId, step: i + 1, points: awayPoints - p });
